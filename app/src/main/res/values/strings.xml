@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">EconomyKanban</string>
+    <string name="Login">Login</string>
+    <string name="SubLogin">SubLogin</string>
+    <string name="Email">Email</string>
+    <string name="Passw">Password</string>
+    <string name="cPassw">Confirm Password</string>
+    <string name="cLogin">Login</string>
+    <string name="Register">Register</string>
+    <string name="fPassw">Remember your password</string>
 </resources>
