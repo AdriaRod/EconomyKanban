@@ -8,4 +8,6 @@
     <string name="cLogin">Login</string>
     <string name="Register">Register</string>
     <string name="fPassw">Remember your password</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
