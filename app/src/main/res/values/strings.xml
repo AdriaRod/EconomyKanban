@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EconomyKanban</string>
+    <string name="app_name">Economy Kanban 1.0</string>
     <string name="Login">Login</string>
     <string name="SubLogin">SubLogin</string>
     <string name="Email">Email</string>
@@ -12,4 +12,20 @@
     <string name="CreateAcc">Create new account</string>
     <string name="AlrAcc">Already have an account</string>
     <string name="contWith">Or continue with</string>
+
+    <!-- Welcome Screen-->
+    <string name="welcome_title">Master Your Personal Finances</string>
+    <string name="welcome_paragraph">Take control of your spending, save for your goals, and seize control of your future</string>
+    <string name="welcome_login_btn">Login</string>
+    <string name="welcome_register_btn">Register</string>
+
+    <!-- Register Screen -->
+    <string name="register_title">Create Account</string>
+    <string name="register_paragraph">Create an account so you can take control of your finance future</string>
+    <string name="register_email">Email</string>
+    <string name="register_passwd">Password</string>
+    <string name="register_confirm_passwd">Confirm Password</string>
+    <string name="register_singUp">Sing up</string>
+    <string name="register_have_an_account">Already have an account</string>
+    <string name="register_continue_with">Or continue with</string>
 </resources>
