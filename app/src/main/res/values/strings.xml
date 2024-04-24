@@ -6,8 +6,10 @@
     <string name="Passw">Password</string>
     <string name="cPassw">Confirm Password</string>
     <string name="cLogin">Login</string>
+    <string name="cSignUp">Sign Up</string>
     <string name="Register">Register</string>
-    <string name="fPassw">Remember your password</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fPassw">Forgot your password?</string>
+    <string name="CreateAcc">Create new account</string>
+    <string name="AlrAcc">Already have an account</string>
+    <string name="contWith">Or continue with</string>
 </resources>
