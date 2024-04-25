@@ -37,5 +37,12 @@
     <string name="CreateAcc">Create new account</string>
     <string name="google_login">Login with Google</string>
 
+    <!-- Bottom navigation menu -->
+    <string name="transactions">Transactions</string>
+    <string name="Categories">Categories</string>
+    <string name="Graphics">Graphics</string>
+    <string name="Settings">Settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
