@@ -48,7 +48,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
-
     <androidx.cardview.widget.CardView
         android:id="@+id/bottomSheet"
         android:layout_width="0dp"
@@ -84,7 +83,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp">
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="60dp">
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -98,13 +98,19 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
             </androidx.recyclerview.widget.RecyclerView>
+
             <Button
                 android:layout_width="0dp"
-                android:layout_height="40dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="48dp"
+                android:backgroundTint="#1381E6"
+                android:elevation="16dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Add"
                 app:layout_constraintEnd_toEndOf="parent"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recyclerView" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
