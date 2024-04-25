@@ -147,45 +147,25 @@
             android:id="@+id/textView7"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:fontFamily="@font/poppins_regular"
-            android:text="@string/register_continue_with"
+            android:text="@string/or"
             android:textAlignment="center"
             android:textColor="@color/pink" />
 
-        <LinearLayout
-            android:layout_width="200dp"
+        <Button
+            android:id="@+id/buttonWithIcon"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
-
-
-            <ImageButton
-                android:id="@+id/imageButton5"
-                android:layout_width="60dp"
-                android:layout_height="44dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/ic_background_color"
-                android:src="@drawable/google" />
-
-            <ImageButton
-                android:id="@+id/imageButton6"
-                android:layout_width="60dp"
-                android:layout_height="44dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/ic_background_color"
-                android:src="@drawable/facebook" />
-
-            <ImageButton
-                android:id="@+id/imageButton4"
-                android:layout_width="60dp"
-                android:layout_height="44dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/ic_background_color"
-                android:src="@drawable/apple" />
-
-        </LinearLayout>
+            android:backgroundTint="@color/ic_background_color"
+            android:drawableLeft="@drawable/icons8_logo_de_google"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/google_sing_up"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
 
 
     </LinearLayout>

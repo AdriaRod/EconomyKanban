@@ -27,5 +27,7 @@
     <string name="register_confirm_passwd">Confirm Password</string>
     <string name="register_singUp">Sing up</string>
     <string name="register_have_an_account">Already have an account</string>
-    <string name="register_continue_with">Or continue with</string>
+    <string name="or">Or</string>
+    <string name="google_continue">Continue with Google</string>
+    <string name="google_sing_up">Sing up with Google</string>
 </resources>
