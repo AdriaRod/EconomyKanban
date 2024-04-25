@@ -23,14 +23,22 @@ public class Login extends AppCompatActivity {
           }
       });
 
+      loginButton = findViewById(R.id.btn_login);
+      loginButton.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              openMain();
+          }
+      });
+
     }//fin del OnCreate
 
     public void openSignup() {
         Intent intent = new Intent(Login.this, Register.class);
         startActivity(intent);
     }
-    public void openMain(View v) {
-        Intent intent = new Intent(Login.this, MainActivity.class);
+    public void openMain() {
+        Intent intent = new Intent(Login.this, Central.class);
         startActivity(intent);
     }
 }
