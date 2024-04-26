@@ -1,9 +1,21 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Base application theme. -->
     <style name="Base.Theme.EconomyKanban" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- PENDIENTE: AQUÍ TENGO QUE OPTIMIZAR LA APP PARA QUE PUEDA USAR LOS THEMES DE LIGHT Y DARK -->
+        <item name="android:statusBarColor" tools:targetApi="1">@color/pink</item>
+        <item name="android:navigationBarColor">@color/bottom_navigation_background</item>
+    </style>
+
+    <!-- Tema del login y el register -->
+    <style name="login_register_theme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:statusBarColor" tools:targetApi="1">@color/white</item>
+        <item name="android:navigationBarColor">@color/bottom_navigation_background</item>
+        <item name="android:windowLightStatusBar">True</item>
+        <item name="android:windowLightNavigationBar">True</item>
     </style>
 
     <style name="Theme.EconomyKanban" parent="Base.Theme.EconomyKanban" />
+    
+
 </resources>

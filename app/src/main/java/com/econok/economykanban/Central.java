@@ -1,5 +1,6 @@
 package com.econok.economykanban;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -15,10 +16,13 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.econok.economykanban.databinding.ActivityCentralBinding;
 import com.econok.economykanban.fragments.SectionsPagerAdapter;
 import com.econok.economykanban.fragments.TransactionsFragment;
+import com.google.accompanist.systemuicontroller.SystemUiController;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -33,7 +37,10 @@ public class Central extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_central);
+
+        //1
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         TransactionsFragment transactionsFragment = new TransactionsFragment();
