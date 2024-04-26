@@ -73,4 +73,7 @@ dependencies {
 
     //Yalantis
     implementation("com.github.yalantis:ucrop:2.2.8-native")
+
+    //System UI Controller - Accompanist
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
 }
