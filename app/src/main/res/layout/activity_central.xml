@@ -36,12 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu"
-        app:backgroundTint="@color/bottom_navigation_background"
-        app:itemRippleColor="@color/white"
-        app:itemIconTint="@color/bottom_nav_item_color"
-        app:itemActiveIndicatorStyle="@color/bottom_nav_item_color"
-        app:labelVisibilityMode="unlabeled"
-        app:itemIconSize="28dp"
+        style="@style/BOTTOM_NAVIGATION"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

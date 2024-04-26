@@ -23,11 +23,13 @@
         <!-- Welcome title if light mode on -->
         <style name="TITLE">
             <item name="android:textColor">@color/pink</item>
+            <item name="fontFamily">@font/gabarito_bold</item>
         </style>
 
         <!-- Welcome paragraph if light mode on -->
         <style name="PARAGRAPH">
             <item name="android:textColor">@color/black</item>
+            <item name="fontFamily">@font/poppins_regular</item>
         </style>
 
         <!-- Accents in paragraph -->
@@ -79,26 +81,35 @@
 
 <!-- _____________________________________WELCOME SCREEN___________________________________ -->
 
-    <!-- ********* WELCOME ********* -->
 
         <!-- Welcome image if light mode on -->
         <style name="WELCOME_IMAGE">
             <item name="srcCompat">@drawable/women_welcome_img</item>
         </style>
 
-<!-- _________________________________LOGIN & REGISTER - FORMS_______________________________________ -->
+<!-- _________________________________FORMS - LOGIN & REGISTER_______________________________________ -->
 
     <style name="FORM_FIELDS">
         <item name="android:background">@drawable/edit_text_border</item>
         <item name="android:textColorHint">@color/hint_color</item>
         <item name="android:paddingLeft">20dp</item>
         <item name="android:textColor">@color/black</item>
-
+        <item name="fontFamily">@font/poppins_regular</item>
     </style>
 
     <style name="GOOGLE_BUTTON">
         <item name="backgroundTint">@color/ic_background_color</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!-- _________________________________BOTTOM NAVIGATION_______________________________________ -->
+    <style name="BOTTOM_NAVIGATION">
+        <item name="backgroundTint">@color/bottom_navigation_background</item>
+        <item name="itemRippleColor">@color/white</item>
+        <item name="itemIconTint">@color/bottom_nav_item_color</item>
+        <item name="itemActiveIndicatorStyle">@color/bottom_nav_item_color</item>
+        <item name="labelVisibilityMode">unlabeled</item>
+        <item name="itemIconSize">28dp</item>
     </style>
 
 
