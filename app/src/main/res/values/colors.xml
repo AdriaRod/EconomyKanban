@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="black_real">#000</color>
     <color name="black">#1A1818</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00FF0000</color>
     <color name="pink">#E6134A</color>
     <color name="pink_light">#FF9DB7</color>
+    <color name="pink_dark"></color>
+    <color name="c_shape_light">#ECECEC</color>
+    <color name="c_shape_dark">#1B1A1A</color>
+    <color name="gray">#252525</color>
 
     <!-- Register -->
     <color name="edit_text_background_color">#FFE7ED</color>

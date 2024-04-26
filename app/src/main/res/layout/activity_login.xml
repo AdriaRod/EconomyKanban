@@ -5,12 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login">
+    tools:context=".Login"
+    style="@style/WRL_SCREEN">
+
+    <!--    shapes-->
 
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/SHAPES"
         android:src="@drawable/rectangle_4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -21,7 +25,8 @@
         android:layout_height="wrap_content"
         android:src="@drawable/rectangle_3"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/SHAPES"/>
 
     <ImageView
         android:id="@+id/imageView4"
@@ -29,7 +34,8 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ellipse_2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/SHAPES"/>
 
     <ImageView
         android:id="@+id/imageView3"
@@ -37,14 +43,16 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ellipse_1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/SHAPES"/>
 
+    <!--    login data-->
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center|top"
+        android:gravity="center|center_vertical"
         android:orientation="vertical"
         android:padding="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -62,57 +70,55 @@
             android:fontFamily="@font/gabarito_bold"
             android:gravity="center"
             android:text="@string/login_title"
-            android:textColor="@color/pink"
-            android:textSize="25dp" />
+            style="@style/TITLE"
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            style="@style/PARAGRAPH"
             android:fontFamily="@font/poppins_regular"
             android:text="@string/login_paragraph"
             android:textAlignment="center"
             android:textSize="14sp" />
 
+        <!--    form-->
+
         <EditText
             android:id="@+id/email_editText"
+            style="@style/FORM_FIELDS"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="60dp"
-            android:background="@drawable/edit_text_border"
             android:fontFamily="@font/poppins_regular"
             android:gravity="center_vertical"
             android:hint="@string/Email"
             android:inputType="text"
-            android:paddingLeft="20dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/hint_color"
             android:textSize="16sp" />
 
         <EditText
             android:id="@+id/passwd_editText"
+            style="@style/FORM_FIELDS"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text_border"
             android:fontFamily="@font/poppins_regular"
             android:gravity="center_vertical"
             android:hint="@string/Passw"
             android:inputType="text"
-            android:paddingLeft="20dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/hint_color"
             android:textSize="16sp" />
 
+
         <TextView
+            style="@style/ACCENT_PARAGRAPH"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/fPassw"
             android:textAlignment="textEnd"
             android:layout_marginTop="15dp"
-            android:fontFamily="@font/poppins_semibold"
-            android:textColor="@color/pink"/>
+            />
 
 
 
@@ -121,10 +127,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:backgroundTint="@color/pink"
             android:fontFamily="@font/gabarito_bold"
+            style="@style/PRIMARY_BUTTON"
             android:text="@string/singIn"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:cornerRadius="10dp" />
 
         <Button
@@ -132,13 +138,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:backgroundTint="@color/transparent"
-            android:fontFamily="@font/poppins_regular"
+            style="@style/SECONDARY_BUTTON"
             android:text="@string/CreateAcc"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
         <TextView
+            style="@style/ACCENT_PARAGRAPH"
             android:id="@+id/textView7"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
@@ -146,20 +151,19 @@
             android:fontFamily="@font/poppins_regular"
             android:text="@string/or"
             android:textAlignment="center"
-            android:textColor="@color/pink" />
+            />
 
         <Button
             android:id="@+id/btn_google"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/ic_background_color"
+            style="@style/GOOGLE_BUTTON"
             android:drawableLeft="@drawable/icons8_logo_de_google"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="@string/google_login"
-            android:textColor="@color/black"
             android:textSize="14sp" />
 
 

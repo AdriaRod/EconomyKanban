@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WelcomeActivity">
+    tools:context=".WelcomeActivity"
+    style="@style/WRL_SCREEN">
 
     <LinearLayout
         android:layout_width="409dp"
@@ -27,7 +28,8 @@
                 android:id="@+id/imageView2"
                 android:layout_width="305dp"
                 android:layout_height="292dp"
-                app:srcCompat="@drawable/women_welcome_img" />
+                style="@style/WELCOME_IMAGE"
+              />
 
         </FrameLayout>
 
@@ -39,7 +41,7 @@
             android:fontFamily="@font/gabarito_semibold"
             android:text="@string/welcome_title"
             android:textAlignment="center"
-            android:textColor="@color/pink"
+            style="@style/TITLE"
             android:textSize="35dp" />
 
         <TextView
@@ -50,7 +52,7 @@
             android:text="@string/welcome_paragraph"
             android:textAlignment="center"
             android:fontFamily="@font/poppins_regular"
-            android:textColor="@color/black"/>
+            style="@style/PARAGRAPH"/>
 
         <LinearLayout
             android:layout_width="305dp"
@@ -63,10 +65,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/pink"
+                style="@style/PRIMARY_BUTTON"
                 android:text="@string/welcome_login_btn"
                 app:cornerRadius="10dp"
-                android:fontFamily="@font/gabarito_medium"
                 android:textSize="20sp"
                 android:layout_marginRight="15dp"/>
 "/>
@@ -76,11 +77,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/transparent"
+                style="@style/SECONDARY_BUTTON"
                 android:text="@string/welcome_register_btn"
-                android:textColor="@color/black"
                 app:cornerRadius="10dp"
-                android:fontFamily="@font/gabarito_regular"
                 android:textSize="20sp"
                 android:layout_marginLeft="15dp"/>
         </LinearLayout>

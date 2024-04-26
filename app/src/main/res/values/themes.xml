@@ -5,9 +5,57 @@
         <!-- PENDIENTE: AQUÍ TENGO QUE OPTIMIZAR LA APP PARA QUE PUEDA USAR LOS THEMES DE LIGHT Y DARK -->
         <item name="android:statusBarColor" tools:targetApi="1">@color/pink</item>
         <item name="android:navigationBarColor">@color/bottom_navigation_background</item>
+        <item name="android:colorPrimary">@color/pink</item>
     </style>
 
-    <!-- Tema del login y el register -->
+
+    <style name="Theme.EconomyKanban" parent="Base.Theme.EconomyKanban" />
+
+
+
+
+
+
+    <!-- ____________________________******** Light Mode *******____________________________ -->
+
+    <!-- _________________________________GENERAL ASSETS_______________________________________ -->
+
+        <!-- Welcome title if light mode on -->
+        <style name="TITLE">
+            <item name="android:textColor">@color/pink</item>
+        </style>
+
+        <!-- Welcome paragraph if light mode on -->
+        <style name="PARAGRAPH">
+            <item name="android:textColor">@color/black</item>
+        </style>
+
+        <!-- Accents in paragraph -->
+        <style name="ACCENT_PARAGRAPH">
+            <item name="android:textColor">@color/pink</item>
+            <item name="font">@font/poppins_semibold</item>
+        </style>
+
+        <!-- Primary button if light mode on -->
+        <style name="PRIMARY_BUTTON">
+            <item name="backgroundTint">@color/pink</item>
+            <item name="android:textColor">@color/white</item>
+            <item name="fontFamily">@font/gabarito_bold</item>
+        </style>
+
+        <!-- Secondary button if light mode on -->
+        <style name="SECONDARY_BUTTON">
+            <item name="backgroundTint">@color/transparent</item>
+            <item name="android:textColor">@color/black</item>
+            <item name="fontFamily">@font/gabarito_regular</item>
+        </style>
+
+        <!-- Welcome, Register & Login Screen Background -->
+        <style name="WRL_SCREEN">
+            <item name="android:background">@color/white</item>
+        </style>
+
+    <!-- _____________________STATUS BAR Y NAVIGATION BAR del login y el register _________ -->
     <style name="login_register_theme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:statusBarColor" tools:targetApi="1">@color/white</item>
         <item name="android:navigationBarColor">@color/bottom_navigation_background</item>
@@ -15,7 +63,44 @@
         <item name="android:windowLightNavigationBar">True</item>
     </style>
 
-    <style name="Theme.EconomyKanban" parent="Base.Theme.EconomyKanban" />
-    
+    <!-- _________________________________SHAPES_______________________________________ -->
+    <style name="SHAPES">
+        <item name="tint">@color/c_shape_light</item>
+    </style>
+
+
+
+    <!-- _________________________________SPLASH SCREEN_______________________________________ -->
+
+        <!--  Splash screen background if light mode on  -->
+        <style name="SPLASH_SCREEN">
+            <item name="android:background">@drawable/splash_background</item>
+        </style>
+
+<!-- _____________________________________WELCOME SCREEN___________________________________ -->
+
+    <!-- ********* WELCOME ********* -->
+
+        <!-- Welcome image if light mode on -->
+        <style name="WELCOME_IMAGE">
+            <item name="srcCompat">@drawable/women_welcome_img</item>
+        </style>
+
+<!-- _________________________________LOGIN & REGISTER - FORMS_______________________________________ -->
+
+    <style name="FORM_FIELDS">
+        <item name="android:background">@drawable/edit_text_border</item>
+        <item name="android:textColorHint">@color/hint_color</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:textColor">@color/black</item>
+
+    </style>
+
+    <style name="GOOGLE_BUTTON">
+        <item name="backgroundTint">@color/ic_background_color</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
 
 </resources>

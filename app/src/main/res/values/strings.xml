@@ -9,6 +9,7 @@
     <string name="cSignUp">Sign Up</string>
     <string name="Register">Register</string>
     <string name="or">Or</string>
+    <style name="shape_desc">A shape</style>
 
     <string name="AlrAcc">Already have an account</string>
     <string name="contWith">Or continue with</string>
