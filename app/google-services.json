@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "159235896101",
+    "project_id": "economy-kanbam",
+    "storage_bucket": "economy-kanbam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159235896101:android:94cc15bde03026d9ec20cc",
+        "android_client_info": {
+          "package_name": "com.econok.economykanban"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "159235896101-bjutv7r0a2bkn33arscskalv8ik0bgso.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.econok.economykanban",
+            "certificate_hash": "740663eb71e9c41c9055e679f5c217f4b7dfff42"
+          }
+        },
+        {
+          "client_id": "159235896101-tbr4e83cc1tp77pnjj7er02gtm17ldc2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbHXYw53rL4tNC2lthq1xp2HE9EWtTo_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "159235896101-tbr4e83cc1tp77pnjj7er02gtm17ldc2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
