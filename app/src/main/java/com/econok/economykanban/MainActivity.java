@@ -21,11 +21,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         cardList = new ArrayList<>();
-        cardList.add(new CardItem("Título 1", "Etiqueta 1", 100));
-        cardList.add(new CardItem("Título 2", "Etiqueta 2", 200));
-        cardList.add(new CardItem("Título 3", "Etiqueta 3", 300));
-        cardList.add(new CardItem("Título 4", "Etiqueta 4", 400));
-        cardList.add(new CardItem("Título 5", "Etiqueta 5", 500));
+        cardList.add(new CardItem("Título 1", "Income", "Comida","342"));
+        cardList.add(new CardItem("Título 2", "Expense", "Viaje","213"));
+        cardList.add(new CardItem("Título 3", "Income", "Comida","534"));
+        cardList.add(new CardItem("Título 4", "Expense", "Comida","432"));
+        cardList.add(new CardItem("Título 5", "Income", "Viaje","123"));
+        cardList.add(new CardItem("Titulo 6","Income","Comida","293"));
 
         adapter = new CardAdapter(this, cardList);
         recyclerView.setAdapter(adapter);
