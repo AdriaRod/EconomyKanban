@@ -19,7 +19,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.econok.economykanban.databinding.ActivityCentralBinding;
+//import com.econok.economykanban.databinding.ActivityCentralBinding;
 import com.econok.economykanban.fragments.SectionsPagerAdapter;
 import com.econok.economykanban.fragments.TransactionsFragment;
 import com.google.accompanist.systemuicontroller.SystemUiController;
@@ -32,7 +32,7 @@ public class Central extends AppCompatActivity {
     private SectionsPagerAdapter sectionsPagerAdapter;
     private MenuItem prevMenuItem;
 
-    ActivityCentralBinding binding;
+//    ActivityCentralBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

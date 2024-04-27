@@ -43,7 +43,17 @@
     <string name="Categories">Categories</string>
     <string name="Graphics">Graphics</string>
     <string name="Settings">Settings</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Toast Messages for the user [Register and Login]-->
+    <string name="toast_fill_all_fields">Please fill out all fields</string>
+    <string name="toast_short_password">Very short password please use 6 or more characters</string>
+    <string name="toast_fail_save_user">Error saving user</string>
+    <string name="toast_email_already_use">Email is already in use</string>
+    <string name="toast_login_error">Login error</string>
+    <string name="toast_sing_up_failed">Sign up failed</string>
+    <string name="toast_error_uploading_file">Error uploading file</string>
+    <string name="toast_welcome">Welcome!</string>
+    <string name="toast_incorrect">Incorrect username or password</string>
+
 
 </resources>

@@ -7,23 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.content.ContentResolver;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -31,7 +22,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -45,7 +35,6 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -109,10 +98,14 @@ public class Register extends AppCompatActivity {
                 String passUser=password.getText().toString().trim();
                 String rpassUser=rpassword.getText().toString().trim();
 
+                // Mensajes de los Toast se tienen que guardar de esta manera para que puedan ser mostrados en formato de String (para que se puedan traducir)
+                int messageResourse1 = R.string.toast_fill_all_fields;
+                int messageResourse2 = R.string.toast_short_password;
+
                 if(/*nameUser.isEmpty() ||*/ emailUser.isEmpty() || passUser.isEmpty()){
-                    Toast.makeText(Register.this,"Por favor rellene todos los campos",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Register.this,getString(messageResourse1),Toast.LENGTH_SHORT).show();
                 } else if (passUser.length()<6) {
-                    Toast.makeText(Register.this, "Contraseña muy corta por favor utilice 6 o mas caracteres", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Register.this, getString(messageResourse2), Toast.LENGTH_SHORT).show();
                 } else {
                     registerUser(/*nameUser,*/ emailUser, passUser);
                     /*mFirestore.collection("usuarios").whereEqualTo("usuario", nameUser).get()
@@ -181,7 +174,8 @@ public class Register extends AppCompatActivity {
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(Register.this, "Error al guardar usuario", Toast.LENGTH_SHORT).show();
+                                            int MessageResourse3 = R.string.toast_fail_save_user;
+                                            Toast.makeText(Register.this, getString(MessageResourse3), Toast.LENGTH_SHORT).show();
                                         }
                                     });
                         }
@@ -194,7 +188,8 @@ public class Register extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 if(e instanceof FirebaseAuthUserCollisionException){
-                    Toast.makeText(Register.this, "El correo electrónico ya está en uso", Toast.LENGTH_SHORT).show();
+                    int MessageResourse4 = R.string.toast_email_already_use;
+                    Toast.makeText(Register.this, getString(MessageResourse4), Toast.LENGTH_SHORT).show();
                 }
                 else {
                     //Toast.makeText(getActivity(), "Error al registrar 2", Toast.LENGTH_SHORT).show();
@@ -206,6 +201,7 @@ public class Register extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        int MessageResourse5 = R.string.toast_login_error;
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
@@ -216,7 +212,7 @@ public class Register extends AppCompatActivity {
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                Toast.makeText(Register.this, "Error de inicio de sesion", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Register.this, getString(MessageResourse5), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -227,9 +223,11 @@ public class Register extends AppCompatActivity {
                 .addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        int MessageResourse6 = R.string.toast_sing_up_failed;
                         if (task.isSuccessful()) {
                             FirebaseUser user=mAuth.getCurrentUser();
                             Uri photoUrl=user.getPhotoUrl();
+
                             uploadProfileImage(user.getUid(),photoUrl,new OnSuccessListener<Uri>(){
                                 public void onSuccess(Uri imageUrl){
                                     Map<String,Object> datosUsuario=new HashMap<>();
@@ -248,18 +246,19 @@ public class Register extends AppCompatActivity {
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(Register.this, "Registro fallido", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Register.this, getString(MessageResourse6), Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }
                             });
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(Register.this, "Sign-in failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Register.this, getString(MessageResourse6), Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     private void uploadProfileImage(String userId, Uri profileImageUri, OnSuccessListener<Uri> onSuccessListener) {
+                        int MessageResourse7 = R.string.toast_error_uploading_file;
                         // Descargar la imagen desde la URL antes de cargarla en Firebase Storage
                         Glide.with(Register.this)
                                 .asBitmap()
@@ -284,8 +283,8 @@ public class Register extends AppCompatActivity {
                                                     imageRef.getDownloadUrl().addOnSuccessListener(onSuccessListener);
                                                 })
                                                 .addOnFailureListener(e -> {
-                                                    Log.e("UploadError", "Error al subir archivo", e);
-                                                    Toast.makeText(Register.this, "Error al subir archivo: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    Log.e("UploadError", getString(MessageResourse7), e);
+                                                    Toast.makeText(Register.this, getString(MessageResourse7) + e.getMessage(), Toast.LENGTH_SHORT).show();
                                                 });
                                     }
 
@@ -295,6 +294,7 @@ public class Register extends AppCompatActivity {
     }
 
     private void uploadProfileImage(String userId, Uri profileImageUri, OnSuccessListener<Uri> onSuccessListener) {
+        int MessageResourse8 = R.string.toast_error_uploading_file;
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         StorageReference imageRef = storageRef.child("perfil/" + userId);
 
@@ -305,8 +305,8 @@ public class Register extends AppCompatActivity {
                     imageRef.getDownloadUrl().addOnSuccessListener(onSuccessListener);
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("UploadError", "Error al subir archivo", e);
-                    Toast.makeText(Register.this, "Error al subir archivo: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("UploadError", getString(MessageResourse8), e);
+                    Toast.makeText(Register.this, getString(MessageResourse8) + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -341,7 +341,7 @@ public class Register extends AppCompatActivity {
 
     //CAMBIAR CLASE
     private void irMain() {
-        Intent intent=new Intent(this, MainActivity.class);
+        Intent intent=new Intent(this, Central.class);
         startActivity(intent);
     }
 

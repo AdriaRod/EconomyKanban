@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,6 +30,11 @@ public class Login extends AppCompatActivity {
     private EditText pass,mail;
     private FirebaseAuth mAuth;
     //private Button forgetPass;
+
+    //Message Resourse for the toast
+    int MessageResourse1 = R.string.toast_fill_all_fields;
+    int MessageResourse2 = R.string.toast_welcome;
+    int MessageResourse3 = R.string.toast_incorrect;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +45,8 @@ public class Login extends AppCompatActivity {
         pass=findViewById(R.id.passwd_editText);
         mAuth=FirebaseAuth.getInstance();
         //forgetPass=findViewById(R.id.forgetPass);
+
+
 
       registerButton = findViewById(R.id.btn_register);
       registerButton.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +63,7 @@ public class Login extends AppCompatActivity {
                 String passUser=pass.getText().toString().trim();
 
                 if(emailUser.isEmpty() || passUser.isEmpty()){
-                    Toast.makeText(Login.this, "Rellene todos los campos por favor", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, getString(MessageResourse1), Toast.LENGTH_SHORT).show();
                 }else{
                     loginUser(emailUser,passUser);
                 }
@@ -70,19 +78,22 @@ public class Login extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     openMain();
-                    Toast.makeText(Login.this, "Bienvenido", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, getString(MessageResourse2), Toast.LENGTH_SHORT).show();
                 }
 
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                int FailColor = ContextCompat.getColor(Login.this,R.color.pastel_red);
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
                     pass.requestFocus();
-                    pass.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+                    pass.getBackground().setColorFilter(FailColor, PorterDuff.Mode.SRC_ATOP);
+                    pass.setHintTextColor(Color.WHITE);
                     mail.requestFocus();
-                    mail.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
-                    Toast.makeText(Login.this, "USUARIO O CONTRASEÑA INCORRECTOS", Toast.LENGTH_SHORT).show();
+                    mail.getBackground().setColorFilter(FailColor, PorterDuff.Mode.SRC_ATOP);
+                    mail.setHintTextColor(Color.WHITE);
+                    Toast.makeText(Login.this, getString(MessageResourse3), Toast.LENGTH_SHORT).show();
                 }
             }
         });
