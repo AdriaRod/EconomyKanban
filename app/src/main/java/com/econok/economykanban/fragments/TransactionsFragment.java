@@ -1,9 +1,11 @@
 package com.econok.economykanban.fragments;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +23,8 @@ public class TransactionsFragment extends Fragment {
     private RecyclerView recyclerView;
     private CardAdapter adapter;
     private List<CardItem> cardList;
+    private Button addTransaction;
+    private Dialog dialog;
 
     public TransactionsFragment() {
         // Required empty public constructor
@@ -44,11 +48,35 @@ public class TransactionsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_transactions, container, false);
 
+        addTransaction = view.findViewById(R.id.addBtn);
+
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         adapter = new CardAdapter(getContext(), cardList);
         recyclerView.setAdapter(adapter);
+
+        // Inicializar el Dialog
+        dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.dialog_add_item);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(false);
+
+        // Inicializar el botón closeDialog dentro del Dialog
+        Button closeDialog = dialog.findViewById(R.id.closeDialog);
+        closeDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        addTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+            }
+        });
 
         return view;
     }

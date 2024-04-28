@@ -56,4 +56,11 @@
     <string name="toast_incorrect">Incorrect username or password</string>
 
 
+    <!-- Dialog texts -->
+    <string name="concept">Concept</string>
+    <string name="quantity">Quantity</string>
+    <string name="income">Income</string>
+    <string name="expense">Expense</string>
+    <string name="accept">Accept</string>
+
 </resources>
