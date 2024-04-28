@@ -106,7 +106,8 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this,getString(messageResourse1),Toast.LENGTH_SHORT).show();
                 } else if (passUser.length()<6) {
                     Toast.makeText(Register.this, getString(messageResourse2), Toast.LENGTH_SHORT).show();
-                } else {
+                }
+                else {
                     registerUser(/*nameUser,*/ emailUser, passUser);
                     /*mFirestore.collection("usuarios").whereEqualTo("usuario", nameUser).get()
                             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -159,7 +160,6 @@ public class Register extends AppCompatActivity {
                             // Por ejemplo, guardar otros datos del usuario en Firestore.
                             Map<String, Object> map = new HashMap<>();
                             map.put("id", id);
-                            //map.put("usuario", nameUser);
                             map.put("correo", emailUser);
                             map.put("foto", uri.toString());
 
@@ -168,7 +168,7 @@ public class Register extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             irMain();
-                                            //Toast.makeText(Register.this, "Bienvenido " + nameUser, Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Register.this, "Bienvenido", Toast.LENGTH_SHORT).show();
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
