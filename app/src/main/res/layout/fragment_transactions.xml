@@ -16,7 +16,7 @@
         android:fontFamily="@font/poppins_regular"
         android:text="17 de Abril, 2024"
         android:textColor="@android:color/white"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +31,7 @@
         android:fontFamily="@font/poppins_regular"
         android:text="5000$"
         android:textColor="@android:color/white"
-        android:textSize="50dp"
+        android:textSize="42sp"
         app:layout_constraintBottom_toTopOf="@id/line"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
