@@ -1,12 +1,14 @@
 package com.econok.economykanban;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -32,9 +34,18 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         CardItem currentItem = cardList.get(position);
 
         holder.titleTextView.setText(currentItem.getTitle());
-        holder.tagTextView.setText(currentItem.getTag());
-        holder.transactionTextView.setText(String.valueOf(currentItem.getTransaction()));
+        holder.transactionTypeTextView.setText(currentItem.getTransactionType());
+        holder.transactionTextView.setText(String.valueOf(currentItem.getTransactionNumber()));
+
+        // Cambiar el color del texto según el tipo de transacción
+        if (currentItem.getTransactionType().equals("Income")) {
+            holder.transactionTypeTextView.setTextColor(Color.parseColor("#32DA6E"));
+        } else {
+            holder.transactionTypeTextView.setTextColor(Color.parseColor("#ED918A"));
+        }
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -43,13 +54,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {
         public TextView titleTextView;
-        public TextView tagTextView;
+        public TextView transactionTypeTextView;
         public TextView transactionTextView;
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.titleTextView);
-            tagTextView = itemView.findViewById(R.id.tagTextView);
+            transactionTypeTextView = itemView.findViewById(R.id.tagTextView);
             transactionTextView = itemView.findViewById(R.id.transactionTextView);
         }
     }
