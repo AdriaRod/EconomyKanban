@@ -112,6 +112,39 @@
         <item name="itemIconSize">28dp</item>
     </style>
 
+    <!-- desde aqui copiar y pegar al dark mode-->
+    <!-- _________________________________FRAGMENTS_______________________________________ -->
+    <style name="fragment_background">
+        <item name="android:background">@drawable/fragment_background_light</item>
+    </style>
+
+    <style name="date">
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="currency">
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="balance_number">
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">42sp</item>
+    </style>
+
+    <style name="month_buttons">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:width">80dp</item>
+    </style>
+
+    <!-- _________________________________CATEGORIES FRAGMENT_______________________________________ -->
+
 
 
 </resources>

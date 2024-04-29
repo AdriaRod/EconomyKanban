@@ -63,4 +63,8 @@
     <string name="expense">Expense</string>
     <string name="accept">Accept</string>
 
+    <!-- Fragments -->
+    <string name="date_format">MMMM d, Y</string>
+        <!-- TODO: Cuando hagamos la traducción a español debemos ponerlo así: <string name="date_format">d 'de' MMMM, Y</string>-->
+
 </resources>
