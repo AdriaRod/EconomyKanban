@@ -48,7 +48,7 @@ public class Register extends AppCompatActivity {
 
     private Button botonregistro,googleR;
     //private SignInButton googleR;
-    private EditText usuario,correo,password,rpassword;
+    private EditText correo,password,rpassword;
     private FirebaseFirestore mFirestore;
     private FirebaseAuth mAuth;
     private static final int RC_SIGN_IN = 123;
@@ -63,7 +63,6 @@ public class Register extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         mFirestore=FirebaseFirestore.getInstance();
         mAuth=FirebaseAuth.getInstance();
-        //usuario=findViewById(R.id.usernameInputR);
         correo=findViewById(R.id.email_editText);
         password=findViewById(R.id.passwd_editText);
         rpassword=findViewById(R.id.confirm_passwd_editText);
@@ -93,7 +92,6 @@ public class Register extends AppCompatActivity {
         botonregistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //String nameUser=usuario.getText().toString().trim();
                 String emailUser=correo.getText().toString().trim();
                 String passUser=password.getText().toString().trim();
                 String rpassUser=rpassword.getText().toString().trim();
@@ -102,41 +100,16 @@ public class Register extends AppCompatActivity {
                 int messageResourse1 = R.string.toast_fill_all_fields;
                 int messageResourse2 = R.string.toast_short_password;
 
-                if(/*nameUser.isEmpty() ||*/ emailUser.isEmpty() || passUser.isEmpty()){
+                if(emailUser.isEmpty() || passUser.isEmpty()){
                     Toast.makeText(Register.this,getString(messageResourse1),Toast.LENGTH_SHORT).show();
                 } else if (passUser.length()<6) {
                     Toast.makeText(Register.this, getString(messageResourse2), Toast.LENGTH_SHORT).show();
                 }
+                else if(passUser.equals(rpassUser)==false){
+                    Toast.makeText(Register.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+                }
                 else {
-                    registerUser(/*nameUser,*/ emailUser, passUser);
-                    /*mFirestore.collection("usuarios").whereEqualTo("usuario", nameUser).get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        if (!task.getResult().isEmpty()) {
-                                            // El nombre de usuario ya está en uso.
-                                            Toast.makeText(Register.this, "El nombre de usuario ya está en uso", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            // El nombre de usuario no está en uso.
-                                            // Aquí puedes continuar con el registro del usuario.
-                                            if (passUser.equals(rpassUser)) {
-                                                registerUser(nameUser, emailUser, passUser);
-                                            } else {
-                                                Toast.makeText(Register.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    } else {
-                                        Toast.makeText(Register.this, "Error al registrar", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(Register.this, "El codigo llega hasta aqui", Toast.LENGTH_SHORT).show();
-                                    Toast.makeText(Register.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });*/
+                    registerUser(emailUser, passUser);
                 }
             }
         });
@@ -232,7 +205,6 @@ public class Register extends AppCompatActivity {
                                 public void onSuccess(Uri imageUrl){
                                     Map<String,Object> datosUsuario=new HashMap<>();
                                     datosUsuario.put("id",user.getUid());
-                                    datosUsuario.put("usuario",user.getDisplayName());
                                     datosUsuario.put("correo",user.getEmail());
                                     datosUsuario.put("foto",imageUrl.toString());
 
@@ -242,6 +214,7 @@ public class Register extends AppCompatActivity {
                                             irMain();
                                             // Sign in success, update UI with the signed-in user's information
                                             updateUI(user);
+                                            Toast.makeText(Register.this, "Bienvenido", Toast.LENGTH_SHORT).show();
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override
