@@ -101,7 +101,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center_vertical"
             android:hint="@string/register_passwd"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:textSize="16sp" />
 
         <EditText
@@ -112,7 +112,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center_vertical"
             android:hint="@string/register_confirm_passwd"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:textSize="16sp" />
 
         <Button
@@ -121,7 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="@string/register_singUp"
+            android:text="@string/register_signUp"
             android:textSize="18sp"
             app:cornerRadius="10dp" />
 
@@ -153,7 +153,7 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:layout_marginTop="10dp"
-            android:text="@string/google_sing_up"
+            android:text="@string/google_sign_up"
             android:textSize="14sp" />
 
 

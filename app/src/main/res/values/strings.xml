@@ -26,9 +26,9 @@
     <string name="register_email">Email</string>
     <string name="register_passwd">Password</string>
     <string name="register_confirm_passwd">Confirm Password</string>
-    <string name="register_singUp">Sing up</string>
+    <string name="register_signUp">Sign up</string>
     <string name="register_have_an_account">Already have an account</string>
-    <string name="google_sing_up">Sing up with Google</string>
+    <string name="google_sign_up">Sign up with Google</string>
 
     <!-- Login Screen -->
     <string name="login_title">Login here</string>
