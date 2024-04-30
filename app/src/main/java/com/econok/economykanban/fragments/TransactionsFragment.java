@@ -23,7 +23,7 @@ public class TransactionsFragment extends Fragment {
     private RecyclerView recyclerView;
     private CardAdapter adapter;
     private List<CardItem> cardList;
-    private Button addTransaction;
+    private Button addTransaction, button1, button2;
     private Dialog dialog;
 
     public TransactionsFragment() {
@@ -62,6 +62,9 @@ public class TransactionsFragment extends Fragment {
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(false);
 
+        button1 = dialog.findViewById(R.id.button1);
+        button2 = dialog.findViewById(R.id.button2);
+
         // Inicializar el botón closeDialog dentro del Dialog
         Button closeDialog = dialog.findViewById(R.id.closeDialog);
         closeDialog.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +78,32 @@ public class TransactionsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 dialog.show();
+            }
+        });
+
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button1.setEnabled(false);
+                button2.setEnabled(true);
+                button1.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonIncomePressed));
+                button2.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonsExpense));
+                button1.setTextColor(getResources().getColorStateList(R.color.dialogTextIncome));
+                button2.setTextColor(getResources().getColorStateList(R.color.dialogTextNotPressed));
+
+            }
+        });
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button1.setEnabled(true);
+                button2.setEnabled(false);
+                button1.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonIncome));
+                button2.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonsExpensePressed));
+                button1.setTextColor(getResources().getColorStateList(R.color.dialogTextNotPressed));
+                button2.setTextColor(getResources().getColorStateList(R.color.dialogTextExpense));
+
             }
         });
 

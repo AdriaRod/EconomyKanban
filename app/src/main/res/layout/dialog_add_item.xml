@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:elevation="16dp"
     app:cardCornerRadius="24dp"
-    android:background="@color/pastel_red"
+    android:backgroundTint="@color/white"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +18,7 @@
 
         <Button
             android:id="@+id/closeDialog"
-            android:layout_width="wrap_content"
+            android:layout_width="48dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -50,31 +50,40 @@
             android:id="@+id/buttonsLL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/quantity"
             >
-            <com.google.android.material.button.MaterialButton
+            <Button
+                android:id="@+id/button1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/income"
-                android:layout_marginHorizontal="8dp"
-                />
+                android:layout_marginTop="16dp"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/dialogButtonIncome"
+                android:textColor="@android:color/white"
+                android:onClick="onButtonClicked"/>
 
-            <com.google.android.material.button.MaterialButton
+            <Button
+                android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/expense"
-                android:layout_marginHorizontal="8dp"
-                />
+                android:layout_below="@id/button1"
+                android:layout_marginTop="16dp"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/dialogButtonsExpense"
+                android:textColor="@android:color/white"
+                android:onClick="onButtonClicked"/>
 
         </LinearLayout>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/accept"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/buttonsLL"/>
