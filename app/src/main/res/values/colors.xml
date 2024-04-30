@@ -30,4 +30,18 @@
     <color name="bottom_navigation_background_dark">#1C1B1B</color>
     <color name="bottom_nav_icon">#BFBFC0</color>
 
+    <!--Color buttons Dialog -->
+    <color name="dialogButtonsExpense">#E3E3E3</color>
+    <color name="dialogButtonIncome">#E3E3E3</color>
+    <color name="dialogButtonsExpensePressed">#F9CDCF</color>
+    <color name="dialogButtonIncomePressed">#CCF4C7</color>
+
+    <!--Color text buttons Dialog -->
+    <color name="dialogTextNotPressed">#BFBFC0</color>
+    <color name="dialogTextIncome">#32DA6E</color>
+    <color name="dialogTextExpense">#ED918A</color>
+
+
+
+
 </resources>
