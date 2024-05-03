@@ -1,93 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:elevation="16dp"
-    app:cardCornerRadius="24dp"
-    android:backgroundTint="@color/white"
-    >
+    app:cardCornerRadius="24dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="320dp"
-        android:layout_height="300dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="0dp"
+        android:padding="16dp"
+        android:background="@android:color/transparent">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/closeDialog"
             android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            android:layout_height="48dp"
+            android:layout_gravity="end"
+            android:background="@drawable/background_transparent"
+            android:src="@drawable/cross_close"
+            android:scaleType="fitCenter"
+            android:padding="12dp"/>
+
         <EditText
             android:id="@+id/concept"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
             android:hint="@string/concept"
-            android:layout_marginTop="8dp"
-            android:layout_marginHorizontal="24dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/closeDialog"
-            />
+            android:fontFamily="@font/poppins_regular"
+            android:padding="8dp" />
 
         <EditText
             android:id="@+id/quantity"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            app:layout_constraintTop_toBottomOf="@id/concept"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:hint="@string/quantity" />
+            android:layout_marginTop="8dp"
+            android:hint="@string/quantity"
+            android:fontFamily="@font/poppins_regular"
+            android:padding="8dp" />
 
         <LinearLayout
             android:id="@+id/buttonsLL"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/quantity"
-            >
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp" >
+
             <Button
                 android:id="@+id/button1"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/income"
-                android:layout_marginTop="16dp"
-                android:layout_centerHorizontal="true"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
                 android:backgroundTint="@color/dialogButtonIncome"
+                android:padding="8dp"
+                android:text="@string/income"
                 android:textColor="@android:color/white"
-                android:onClick="onButtonClicked"/>
+                app:cornerRadius="10dp" />
 
             <Button
                 android:id="@+id/button2"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/expense"
-                android:layout_below="@id/button1"
-                android:layout_marginTop="16dp"
-                android:layout_centerHorizontal="true"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
                 android:backgroundTint="@color/dialogButtonsExpense"
+                android:padding="8dp"
+                android:text="@string/expense"
                 android:textColor="@android:color/white"
-                android:onClick="onButtonClicked"/>
+                app:cornerRadius="10dp" />
 
         </LinearLayout>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/accept"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/buttonsLL"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#1381E6"
+            android:padding="8dp"
+            android:text="@string/accept"
+            android:textColor="@android:color/white"
+            app:cornerRadius="10dp" />
+
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>
