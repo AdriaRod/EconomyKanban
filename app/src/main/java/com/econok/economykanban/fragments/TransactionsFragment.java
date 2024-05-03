@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.econok.economykanban.CardAdapter;
 import com.econok.economykanban.CardItem;
 import com.econok.economykanban.R;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class TransactionsFragment extends Fragment {
     private RecyclerView recyclerView;
     private CardAdapter adapter;
     private List<CardItem> cardList;
-    private Button addTransaction, button1, button2;
+    private MaterialButton addTransaction, button1, button2;
     private Dialog dialog;
 
     public TransactionsFragment() {
@@ -66,7 +66,7 @@ public class TransactionsFragment extends Fragment {
         button2 = dialog.findViewById(R.id.button2);
 
         // Inicializar el botón closeDialog dentro del Dialog
-        Button closeDialog = dialog.findViewById(R.id.closeDialog);
+        View closeDialog = dialog.findViewById(R.id.closeDialog);
         closeDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
