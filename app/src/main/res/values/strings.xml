@@ -62,6 +62,7 @@
     <string name="income">Income</string>
     <string name="expense">Expense</string>
     <string name="accept">Accept</string>
+    <string name="noContentToast">Please, fill all the fields</string>
 
     <!-- Fragments -->
     <string name="date_format">MMMM d, Y</string>
