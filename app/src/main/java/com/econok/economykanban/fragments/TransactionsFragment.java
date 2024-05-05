@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,6 +28,9 @@ public class TransactionsFragment extends Fragment {
     private List<CardItem> cardList;
     private MaterialButton addTransaction, button1, button2;
     private Dialog dialog;
+    private EditText conceptEditText, quantityEditText;
+    private Button acceptButton;
+    private Boolean isIncome = null;
 
     public TransactionsFragment() {
         // Required empty public constructor
@@ -35,12 +41,12 @@ public class TransactionsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         cardList = new ArrayList<>();
-        cardList.add(new CardItem("Título 1", "Income", "Comida","342"));
-        cardList.add(new CardItem("Título 2", "Expense", "Viaje","213"));
-        cardList.add(new CardItem("Título 3", "Income", "Comida","534"));
-        cardList.add(new CardItem("Título 4", "Expense", "Comida","432"));
-        cardList.add(new CardItem("Título 5", "Income", "Viaje","123"));
-        cardList.add(new CardItem("Titulo 6","Income","Comida","293"));
+        cardList.add(new CardItem("Título 1", "Income", "Comida", "342"));
+        cardList.add(new CardItem("Título 2", "Expense", "Viaje", "213"));
+        cardList.add(new CardItem("Título 3", "Income", "Comida", "534"));
+        cardList.add(new CardItem("Título 4", "Expense", "Comida", "432"));
+        cardList.add(new CardItem("Título 5", "Income", "Viaje", "123"));
+        cardList.add(new CardItem("Titulo 6", "Income", "Comida", "293"));
     }
 
     @Override
@@ -62,6 +68,10 @@ public class TransactionsFragment extends Fragment {
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(false);
 
+        conceptEditText = dialog.findViewById(R.id.concept);
+        quantityEditText = dialog.findViewById(R.id.quantity);
+        acceptButton = dialog.findViewById(R.id.accept);
+
         button1 = dialog.findViewById(R.id.button1);
         button2 = dialog.findViewById(R.id.button2);
 
@@ -71,6 +81,17 @@ public class TransactionsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                // Limpiar los campos del diálogo al cerrar
+                conceptEditText.setText("");
+                quantityEditText.setText("");
+                // Resetear el estado del botón
+                isIncome = null;
+                button1.setEnabled(true);
+                button2.setEnabled(true);
+                button1.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonIncome));
+                button2.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonsExpense));
+                button1.setTextColor(getResources().getColor(R.color.dialogTextNotPressed));
+                button2.setTextColor(getResources().getColor(R.color.dialogTextNotPressed));
             }
         });
 
@@ -84,26 +105,59 @@ public class TransactionsFragment extends Fragment {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isIncome = true;
                 button1.setEnabled(false);
                 button2.setEnabled(true);
                 button1.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonIncomePressed));
                 button2.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonsExpense));
-                button1.setTextColor(getResources().getColorStateList(R.color.dialogTextIncome));
-                button2.setTextColor(getResources().getColorStateList(R.color.dialogTextNotPressed));
-
+                button1.setTextColor(getResources().getColor(R.color.dialogTextIncome));
+                button2.setTextColor(getResources().getColor(R.color.dialogTextNotPressed));
             }
         });
 
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isIncome = false;
                 button1.setEnabled(true);
                 button2.setEnabled(false);
                 button1.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonIncome));
                 button2.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonsExpensePressed));
-                button1.setTextColor(getResources().getColorStateList(R.color.dialogTextNotPressed));
-                button2.setTextColor(getResources().getColorStateList(R.color.dialogTextExpense));
+                button1.setTextColor(getResources().getColor(R.color.dialogTextNotPressed));
+                button2.setTextColor(getResources().getColor(R.color.dialogTextExpense));
+            }
+        });
 
+        acceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String concept = conceptEditText.getText().toString().trim();
+                String quantity = quantityEditText.getText().toString().trim();
+
+                if (isIncome == null) {
+                    Toast.makeText(getContext(), getString(R.string.noContentToast), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!concept.isEmpty() && !quantity.isEmpty()) {
+                    String type = isIncome ? "Income" : "Expense";
+                    cardList.add(new CardItem(concept, type, concept, quantity));
+                    adapter.notifyDataSetChanged();
+                    dialog.dismiss();
+                    // Limpiar los campos del diálogo al guardar
+                    conceptEditText.setText("");
+                    quantityEditText.setText("");
+                    // Resetear el estado del botón
+                    isIncome = null;
+                    button1.setEnabled(true);
+                    button2.setEnabled(true);
+                    button1.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonIncome));
+                    button2.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonsExpense));
+                    button1.setTextColor(getResources().getColor(R.color.dialogTextNotPressed));
+                    button2.setTextColor(getResources().getColor(R.color.dialogTextNotPressed));
+                } else {
+                    Toast.makeText(getContext(), getString(R.string.noContentToast), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
