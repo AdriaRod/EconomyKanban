@@ -11,10 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.econok.economykanban.R;
 
+import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -37,7 +40,12 @@ public class CategoriesFragment extends Fragment {
 
     //************************+ VARIABLES ************************
     private TextView currentDateTextView;
-    private Button[] monthButtons;
+    private RadioButton previousMonthButton;
+    private RadioButton currentMonthButton;
+    private RadioButton nextMonthButton;
+    private int currentMonthIndex = 5; // Junio por defecto
+
+    private ImageView nextButton, previousButton;
 
     public CategoriesFragment() {
         // Required empty public constructor
@@ -77,23 +85,55 @@ public class CategoriesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
         currentDateTextView = view.findViewById(R.id.currentDate);
 
-        // Initialize the month buttons
-        monthButtons = new Button[]{
-                view.findViewById(R.id.january),
-                view.findViewById(R.id.february),
-                view.findViewById(R.id.march),
-                view.findViewById(R.id.april),
-                view.findViewById(R.id.may),
-                view.findViewById(R.id.june),
-                view.findViewById(R.id.july),
-                view.findViewById(R.id.augost),
-                view.findViewById(R.id.september),
-                view.findViewById(R.id.october),
-                view.findViewById(R.id.november),
-                view.findViewById(R.id.december)
+        // Inicialización de los RadioButtons
+        previousMonthButton = view.findViewById(R.id.previous_month);
+        currentMonthButton = view.findViewById(R.id.current_month);
+        nextMonthButton = view.findViewById(R.id.next_month);
 
-        };
+        //Inicializamos los ImageView (que nos sirven de botones de adelante y atras tambien)
+        previousButton = view.findViewById(R.id.previousButton);
+        nextButton = view.findViewById(R.id.nextButton);
 
+        // Configura el texto inicial de los RadioButtons
+        updateMonthsText();
+
+        // Configura los listeners de los RadioButtons
+        previousMonthButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentMonthIndex--;
+                if (currentMonthIndex < 0) currentMonthIndex = 11;
+                updateMonthsText();
+            }
+        });
+
+        nextMonthButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentMonthIndex++;
+                if (currentMonthIndex > 11) currentMonthIndex = 0;
+                updateMonthsText();
+            }
+        });
+
+        // Configura los listeners de los botones
+        previousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentMonthIndex--;
+                if (currentMonthIndex < 0) currentMonthIndex = 11;
+                updateMonthsText();
+            }
+        });
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentMonthIndex++;
+                if (currentMonthIndex > 11) currentMonthIndex = 0;
+                updateMonthsText();
+            }
+        });
 
 
         return view;
@@ -118,37 +158,31 @@ public class CategoriesFragment extends Fragment {
         // Set the formatted date to the TextView
         currentDateTextView.setText(capitalizedDate);
 
-        //****************** MONTH BUTTONS *****************************
-        // Set the initial selected button
-        monthButtons[0].setSelected(true);
 
-        // Add click listeners to the buttons
-        for (Button button : monthButtons) {
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Toggle the selected state of the button
-                    button.setSelected(!button.isSelected());
 
-                    // Clear the selected state of all other buttons
-                    for (Button b : monthButtons) {
-                        if (b != button) {
-                            b.setSelected(false);
-                        }
-                    }
+    }
 
-                    // Center the HorizontalScrollView on the selected button
-                    HorizontalScrollView scrollView = view.findViewById(R.id.horizontalScrollView);
-                    scrollView.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
-                    int buttonWidth = button.getWidth();
-                    int buttonLeft = button.getLeft();
-                    int scrollViewWidth = scrollView.getWidth();
-                    int scrollX = buttonLeft - (scrollViewWidth - buttonWidth) / 2;
-                    scrollView.smoothScrollTo(scrollX, 0);
-                }
-            });
-        }
+    private void updateMonthsText() {
+        int previousMonthIndex = currentMonthIndex - 1;
+        int nextMonthIndex = currentMonthIndex + 1;
 
+        if (previousMonthIndex < 0) previousMonthIndex = 11;
+        if (nextMonthIndex > 11) nextMonthIndex = 0;
+
+        previousMonthButton.setText(getMonthAbbreviation(previousMonthIndex));
+        currentMonthButton.setText(getMonthAbbreviation(currentMonthIndex));
+        nextMonthButton.setText(getMonthAbbreviation(nextMonthIndex));
+
+        previousMonthButton.setChecked(false);
+        currentMonthButton.setChecked(true);
+        nextMonthButton.setChecked(false);
+    }
+
+    // Método para obtener la abreviatura del nombre del mes a partir de su número
+    private String getMonthAbbreviation(int month) {
+        DateFormatSymbols dfs = new DateFormatSymbols();
+        String[] months = dfs.getShortMonths();
+        return months[month];
     }
 
 

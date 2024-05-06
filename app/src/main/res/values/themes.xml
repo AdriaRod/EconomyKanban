@@ -137,10 +137,26 @@
         <item name="android:textSize">42sp</item>
     </style>
 
-    <style name="month_buttons">
-        <item name="android:textColor">@color/white</item>
+
+    <!-- MONTH RADIO BUTTONS -->
+    <style name="radio_button_selected">
         <item name="android:textSize">14sp</item>
-        <item name="android:width">80dp</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/radio_button_background</item>
+        <item name="android:button">@null</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:colorControlHighlight">@color/white</item>
+
+    </style>
+
+    <style name="radio_button_unselected">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:button">@null</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:colorControlHighlight">@color/white</item>
     </style>
 
     <!-- _________________________________CATEGORIES FRAGMENT_______________________________________ -->

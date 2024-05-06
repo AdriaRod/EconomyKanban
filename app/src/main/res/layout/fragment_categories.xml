@@ -85,121 +85,64 @@
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_marginTop="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginHorizontal="80dp">
+            >
 
-            <HorizontalScrollView
-                android:id="@+id/horizontalScrollView"
+
+            <ImageView
+                android:id="@+id/previousButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fillViewport="true"
-                android:scrollbars="none">
+                android:layout_weight="0"
+                android:src="@drawable/arrow"
+                android:padding="10dp"/>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    >
+            <RadioGroup
+                android:id="@+id/month_radio_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                    <Button
-                        android:id="@+id/january"
-                        android:background="@drawable/month_button_selector"
-                        style="@style/month_buttons"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:text="Jan"
-                         />
 
-                    <Button
-                        android:id="@+id/february"
-                        android:background="@drawable/month_button_selector"
-                        style="@style/month_buttons"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:text="Feb" />
+                <RadioButton
+                    android:id="@+id/previous_month"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:text="Mes0"
+                    style="@style/radio_button_unselected"
 
-                    <Button
-                        android:id="@+id/march"
-                        android:background="@drawable/month_button_selector"
-                        style="@style/month_buttons"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:text="Mar" />
+                    />
 
-                    <Button
-                        android:id="@+id/april"
-                        android:background="@drawable/month_button_selector"
-                        style="@style/month_buttons"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:text="Apr" />
+                <RadioButton
+                    android:id="@+id/current_month"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:text="Mes1"
+                    style="@style/radio_button_selected"
 
-                    <Button
-                        android:id="@+id/may"
-                        android:background="@drawable/month_button_selector"
-                        style="@style/month_buttons"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:text="May" />
 
-                    <Button
-                        android:id="@+id/june"
-                        android:background="@drawable/month_button_selector"
-                        style="@style/month_buttons"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:text="Jun" />
+                    />
 
-                    <Button
-                        android:id="@+id/july"
-                        android:background="@drawable/month_button_selector"
-                        style="@style/month_buttons"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:text="Jul" />
+                <RadioButton
+                    android:id="@+id/next_month"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:text="Mes2"
+                    style="@style/radio_button_unselected"
+                    />
+            </RadioGroup>
 
-                    <Button
-                        android:id="@+id/augost"
-                        android:background="@drawable/month_button_selector"
-                        style="@style/month_buttons"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:text="Aug" />
-
-                    <Button
-                        android:id="@+id/september"
-                        android:background="@drawable/month_button_selector"
-                        style="@style/month_buttons"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:text="Sep" />
-
-                    <Button
-                        android:id="@+id/october"
-                        android:background="@drawable/month_button_selector"
-                        style="@style/month_buttons"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:text="Oct" />
-
-                    <Button
-                        android:id="@+id/november"
-                        android:background="@drawable/month_button_selector"
-                        style="@style/month_buttons"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:text="Nov" />
-
-                    <Button
-                        android:id="@+id/december"
-                        android:background="@drawable/month_button_selector"
-                        style="@style/month_buttons"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:text="Dec" />
-
-                </LinearLayout>
-            </HorizontalScrollView>
+            <ImageView
+                android:id="@+id/nextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:padding="10dp"
+                android:rotationY="180"
+                android:src="@drawable/arrow" />
 
         </LinearLayout>
 
