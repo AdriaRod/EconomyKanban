@@ -161,6 +161,12 @@
 
     <!-- _________________________________CATEGORIES FRAGMENT_______________________________________ -->
 
+    <!-- CARD VIEW  -->
+    <style name="categories_card">
+        <item name="backgroundTint">@color/white</item>
+        <item name="cardCornerRadius">40dp</item>
+        <item name="cardElevation">0dp</item>
+    </style>
 
 
 </resources>

@@ -6,14 +6,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.econok.economykanban.R;
 
@@ -39,13 +44,19 @@ public class CategoriesFragment extends Fragment {
     private String mParam2;
 
     //************************+ VARIABLES ************************
+    //fecha
     private TextView currentDateTextView;
+
+    //selector de meses
     private RadioButton previousMonthButton;
     private RadioButton currentMonthButton;
     private RadioButton nextMonthButton;
     private int currentMonthIndex = 5; // Junio por defecto
-
     private ImageView nextButton, previousButton;
+
+    //PopUp Menu para seleccionar (ADD, EDITAR, ELIMINAR)
+    ImageView btnPopUp;
+
 
     public CategoriesFragment() {
         // Required empty public constructor
@@ -85,6 +96,8 @@ public class CategoriesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
         currentDateTextView = view.findViewById(R.id.currentDate);
 
+
+        //******************************* PARA LOS  MESES *****************************
         // Inicialización de los RadioButtons
         previousMonthButton = view.findViewById(R.id.previous_month);
         currentMonthButton = view.findViewById(R.id.current_month);
@@ -93,6 +106,15 @@ public class CategoriesFragment extends Fragment {
         //Inicializamos los ImageView (que nos sirven de botones de adelante y atras tambien)
         previousButton = view.findViewById(R.id.previousButton);
         nextButton = view.findViewById(R.id.nextButton);
+
+        //Inicializamos el popUp button
+        btnPopUp = view.findViewById(R.id.btn_popUpMenu);
+        btnPopUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupMenu(v);
+            }
+        });
 
         // Configura el texto inicial de los RadioButtons
         updateMonthsText();
@@ -135,10 +157,66 @@ public class CategoriesFragment extends Fragment {
             }
         });
 
+//        //******************** PARA EL POP-UP MENU DE LAS OPCIONES *********************
+//        registerForContextMenu(btnPopUp);
+
 
         return view;
     }
 
+//    //ESTO SIGUE SIENDO PARA EL POP-UP MENU
+//    @Override
+//    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+//        super.onCreateContextMenu(menu, v, menuInfo);
+//        requireActivity().getMenuInflater().inflate(R.menu.categories_popup_menu, menu);
+//    }
+//
+//    @Override
+//    public boolean onContextItemSelected(@NonNull MenuItem item) {
+//        if (item.getItemId() == R.id.item_1) {
+//            Toast.makeText(requireContext(), "Item 1", Toast.LENGTH_SHORT).show();
+//            return true;
+//        } else if (item.getItemId() == R.id.item_2) {
+//            Toast.makeText(requireContext(), "Item 2", Toast.LENGTH_SHORT).show();
+//            return true;
+//        } else if (item.getItemId() == R.id.item_3) {
+//            Toast.makeText(requireContext(), "Item 3", Toast.LENGTH_SHORT).show();
+//            return true;
+//        }
+//        return super.onContextItemSelected(item);
+//    }
+
+    public void showPopupMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(requireContext(), view);
+        popupMenu.inflate(R.menu.categories_popup_menu);
+
+        // Maneja los clics de los elementos del menú
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == R.id.item_1) {
+                    // Código para la acción de editar
+                    return true;
+                } else if (itemId == R.id.item_2) {
+                    // Código para la acción de eliminar
+                    return true;
+                } else if (itemId == R.id.item_3) {
+                    // Código para la acción de compartir
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        // Muestra el menú emergente
+        popupMenu.show();
+    }
+
+
+
+
+    //______________________________________ ON VIEW CREATED _________________________________
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -162,6 +240,7 @@ public class CategoriesFragment extends Fragment {
 
     }
 
+    //FUNCIONES CUSTOM PARA LOS MESES
     private void updateMonthsText() {
         int previousMonthIndex = currentMonthIndex - 1;
         int nextMonthIndex = currentMonthIndex + 1;

@@ -68,4 +68,9 @@
     <string name="date_format">MMMM d, Y</string>
         <!-- TODO: Cuando hagamos la traducción a español debemos ponerlo así: <string name="date_format">d 'de' MMMM, Y</string>-->
 
+    <!-- POP UP MEMU -->
+    <string name="add">Add</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+
 </resources>
