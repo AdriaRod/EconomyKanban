@@ -20,13 +20,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.econok.economykanban.CardAdapter;
 import com.econok.economykanban.CardItem;
 import com.econok.economykanban.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,12 +62,6 @@ public class TransactionsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         cardList = new ArrayList<>();
-        cardList.add(new CardItem("Título 1", "Income", "Comida", "342"));
-        cardList.add(new CardItem("Título 2", "Expense", "Viaje", "213"));
-        cardList.add(new CardItem("Título 3", "Income", "Comida", "534"));
-        cardList.add(new CardItem("Título 4", "Expense", "Comida", "432"));
-        cardList.add(new CardItem("Título 5", "Income", "Viaje", "123"));
-        cardList.add(new CardItem("Titulo 6", "Income", "Comida", "293"));
     }
 
     @Override
@@ -72,6 +70,8 @@ public class TransactionsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_transactions, container, false);
 
         addTransaction = view.findViewById(R.id.addBtn);
+
+        visualizarTransacciones();
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -157,10 +157,18 @@ public class TransactionsFragment extends Fragment {
                 }
 
                 if (!concept.isEmpty() && !quantity.isEmpty()) {
+                    cardList.clear(); // Limpiar la lista actual de tarjetas antes de cargar nuevas transacciones
+                    adapter.notifyDataSetChanged(); // Notificar al adaptador que los datos han cambiado
                     String type = isIncome ? "Income" : "Expense";
-                    //cardList.add(new CardItem(concept, type, concept, quantity));
-                    //adapter.notifyDataSetChanged();
                     dialog.dismiss();
+                    // Obtener la fecha y hora actual
+                    Date fechaActual = Calendar.getInstance().getTime();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+                    String fechaFormateada = sdf.format(fechaActual);
+
+                    crearTransaccion(concept,quantity,type,fechaFormateada);
+
+                    visualizarTransacciones();
                     // Limpiar los campos del diálogo al guardar
                     conceptEditText.setText("");
                     quantityEditText.setText("");
@@ -172,13 +180,6 @@ public class TransactionsFragment extends Fragment {
                     button2.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonsExpense));
                     button1.setTextColor(getResources().getColor(R.color.dialogTextNotPressed));
                     button2.setTextColor(getResources().getColor(R.color.dialogTextNotPressed));
-
-                    // Obtener la fecha y hora actual
-                    Date fechaActual = Calendar.getInstance().getTime();
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
-                    String fechaFormateada = sdf.format(fechaActual);
-
-                    crearTransaccion(concept,quantity,type,fechaFormateada);
                 } else {
                     Toast.makeText(getContext(), getString(R.string.noContentToast), Toast.LENGTH_SHORT).show();
                 }
@@ -218,5 +219,36 @@ public class TransactionsFragment extends Fragment {
                         Log.w(TAG, "Error al agregar transacción", e);
                     }
                 });
+    }
+
+    private void visualizarTransacciones(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        mAuth= FirebaseAuth.getInstance();
+        DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
+        // Obtener la referencia a la subcolección "transacciones" del usuario
+        CollectionReference transaccionesRef = usuarioRef.collection("transacciones");
+
+        // Obtener todas las transacciones del usuario
+        transaccionesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        // Extraer los datos de la transacción
+                        String concepto = document.getString("concepto");
+                        String tipo = document.getString("tipo");
+                        String cantidad = document.getString("cantidad");
+
+                        // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
+                        cardList.add(new CardItem(concepto,tipo,concepto,cantidad));
+                    }
+                    // Actualizar la interfaz de usuario con la nueva lista de tarjetas
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Log.d(TAG, "Error obteniendo transacciones: ", task.getException());
+                }
+            }
+        });
+
     }
 }
