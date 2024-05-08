@@ -1,7 +1,10 @@
 package com.econok.economykanban.fragments;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,15 +20,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.econok.economykanban.CardAdapter;
 import com.econok.economykanban.CardItem;
 import com.econok.economykanban.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class TransactionsFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private CardAdapter adapter;
+    private FirebaseAuth mAuth;
     private List<CardItem> cardList;
     private MaterialButton addTransaction, button1, button2;
     private Dialog dialog;
@@ -141,8 +158,8 @@ public class TransactionsFragment extends Fragment {
 
                 if (!concept.isEmpty() && !quantity.isEmpty()) {
                     String type = isIncome ? "Income" : "Expense";
-                    cardList.add(new CardItem(concept, type, concept, quantity));
-                    adapter.notifyDataSetChanged();
+                    //cardList.add(new CardItem(concept, type, concept, quantity));
+                    //adapter.notifyDataSetChanged();
                     dialog.dismiss();
                     // Limpiar los campos del diálogo al guardar
                     conceptEditText.setText("");
@@ -155,6 +172,13 @@ public class TransactionsFragment extends Fragment {
                     button2.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonsExpense));
                     button1.setTextColor(getResources().getColor(R.color.dialogTextNotPressed));
                     button2.setTextColor(getResources().getColor(R.color.dialogTextNotPressed));
+
+                    // Obtener la fecha y hora actual
+                    Date fechaActual = Calendar.getInstance().getTime();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+                    String fechaFormateada = sdf.format(fechaActual);
+
+                    crearTransaccion(concept,quantity,type,fechaFormateada);
                 } else {
                     Toast.makeText(getContext(), getString(R.string.noContentToast), Toast.LENGTH_SHORT).show();
                 }
@@ -162,5 +186,37 @@ public class TransactionsFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void crearTransaccion(String concept,String quantity,String type,String fecha){
+        //Instanciar firebase,buscar el usuario actual y crear la coleccion de transacciones dentro del usuario
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        mAuth= FirebaseAuth.getInstance();
+        DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
+        CollectionReference transaccionesRef = usuarioRef.collection("transacciones");
+
+        // Crear el mapa de datos para la transacción
+        Map<String, Object> transaccion = new HashMap<>();
+        transaccion.put("fecha", fecha);
+        transaccion.put("concepto", concept);
+        transaccion.put("cantidad", quantity);
+        transaccion.put("tipo", type);
+
+        // Añadir la transacción a la subcolección "transacciones"
+        transaccionesRef.add(transaccion)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(getActivity(), "Transaction added succesfully", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "Transacción agregada correctamente");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity(), "Error adding transaction", Toast.LENGTH_SHORT).show();
+                        Log.w(TAG, "Error al agregar transacción", e);
+                    }
+                });
     }
 }
