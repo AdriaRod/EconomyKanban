@@ -78,4 +78,20 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
 
+    <!-- categories -->
+    <string name="Global_cat">Global</string>
+    <string name="na_cat">n/a</string>
+    <string name="food_cat">Food</string>
+    <string name="home_cat">Home</string>
+    <string name="health_cat">Health</string>
+    <string name="entertainment_cat">Entertainment</string>
+    <string name="saves_cat">Saves</string>
+    <string name="others_cat">Others</string>
+    <string name="gym_cat">Gym</string>
+    <string name="transport_cat">Transport</string>
+    <string name="education_cat">Education</string>
+    <string name="clothes_cat">Clothes</string>
+    <string name="debts_cat">Debts</string>
+
+
 </resources>
