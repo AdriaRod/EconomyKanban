@@ -1,24 +1,21 @@
 package com.econok.economykanban.fragments;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.econok.economykanban.R;
 
@@ -55,7 +52,12 @@ public class CategoriesFragment extends Fragment {
     private ImageView nextButton, previousButton;
 
     //PopUp Menu para seleccionar (ADD, EDITAR, ELIMINAR)
-    ImageView btnPopUp;
+    ImageView three_dots_btn;
+    TextView btnAdd, btnEdit, btnDelete;
+    private Boolean isClicked;
+
+    //SPINNER DE FILTROS
+    TextView btnFilters;
 
 
     public CategoriesFragment() {
@@ -107,12 +109,50 @@ public class CategoriesFragment extends Fragment {
         previousButton = view.findViewById(R.id.previousButton);
         nextButton = view.findViewById(R.id.nextButton);
 
-        //Inicializamos el popUp button
-        btnPopUp = view.findViewById(R.id.btn_popUpMenu);
-        btnPopUp.setOnClickListener(new View.OnClickListener() {
+        //Inicializamos el button de los 3 puntos
+        three_dots_btn = view.findViewById(R.id.btn_popUpMenu);
+        btnAdd = view.findViewById(R.id.addBtn);
+        btnEdit= view.findViewById(R.id.editBtn);
+        btnDelete = view.findViewById(R.id.removeBtn);
+        isClicked = false;
+
+        //Inicializamos el spinner (que no es spinner es un textView que queda mejor)
+        btnFilters = view.findViewById(R.id.filtersbtn);
+
+        //Lanzamos el onclick al pop-up
+        btnFilters.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showPopupMenu(v);
+            }
+        });
+
+
+        three_dots_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isClicked) {
+                    // Cambiar el color del SVG del botón a un azul más claro
+                    int color = ContextCompat.getColor(getContext(), R.color.light_blue);
+                    three_dots_btn.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+
+                    // Mostrar los botones
+                    btnAdd.setVisibility(View.VISIBLE);
+                    btnEdit.setVisibility(View.VISIBLE);
+                    btnDelete.setVisibility(View.VISIBLE);
+
+                    isClicked = true;
+                } else {
+                    // Cambiar el color del SVG del botón a su color original
+                    three_dots_btn.setColorFilter(null);
+
+                    // Ocultar los botones
+                    btnAdd.setVisibility(View.INVISIBLE);
+                    btnEdit.setVisibility(View.INVISIBLE);
+                    btnDelete.setVisibility(View.INVISIBLE);
+
+                    isClicked = false;
+                }
             }
         });
 
@@ -157,38 +197,19 @@ public class CategoriesFragment extends Fragment {
             }
         });
 
-//        //******************** PARA EL POP-UP MENU DE LAS OPCIONES *********************
-//        registerForContextMenu(btnPopUp);
 
 
         return view;
     }
 
-//    //ESTO SIGUE SIENDO PARA EL POP-UP MENU
-//    @Override
-//    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//        requireActivity().getMenuInflater().inflate(R.menu.categories_popup_menu, menu);
-//    }
-//
-//    @Override
-//    public boolean onContextItemSelected(@NonNull MenuItem item) {
-//        if (item.getItemId() == R.id.item_1) {
-//            Toast.makeText(requireContext(), "Item 1", Toast.LENGTH_SHORT).show();
-//            return true;
-//        } else if (item.getItemId() == R.id.item_2) {
-//            Toast.makeText(requireContext(), "Item 2", Toast.LENGTH_SHORT).show();
-//            return true;
-//        } else if (item.getItemId() == R.id.item_3) {
-//            Toast.makeText(requireContext(), "Item 3", Toast.LENGTH_SHORT).show();
-//            return true;
-//        }
-//        return super.onContextItemSelected(item);
-//    }
-
+    //****************************** PARA MOSTRAR LOS POP UP MENU ************************
     public void showPopupMenu(View view) {
         PopupMenu popupMenu = new PopupMenu(requireContext(), view);
         popupMenu.inflate(R.menu.categories_popup_menu);
+        // variables de Strings
+        int str_all = R.string.all;
+        int str_income = R.string.income;
+        int str_expense = R.string.expense;
 
         // Maneja los clics de los elementos del menú
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -196,13 +217,16 @@ public class CategoriesFragment extends Fragment {
             public boolean onMenuItemClick(MenuItem item) {
                 int itemId = item.getItemId();
                 if (itemId == R.id.item_1) {
-                    // Código para la acción de editar
+                    // Código para la acción de All
+                    btnFilters.setText(getString(str_all));
                     return true;
                 } else if (itemId == R.id.item_2) {
-                    // Código para la acción de eliminar
+                    // Código para la acción de Income
+                    btnFilters.setText(getString(str_income));
                     return true;
                 } else if (itemId == R.id.item_3) {
-                    // Código para la acción de compartir
+                    // Código para la acción de Expense
+                    btnFilters.setText(getString(str_expense));
                     return true;
                 }
                 return false;

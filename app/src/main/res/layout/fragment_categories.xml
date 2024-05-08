@@ -175,23 +175,51 @@
                     >
 
 
-
                     <TextView
-                        android:id="@+id/filters"
+                        android:id="@+id/filtersbtn"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:gravity="center"
                         android:text="All"
-                        android:gravity="center_vertical"
-                        android:drawableEnd="@drawable/arrow_down"
-                        android:drawableTint="@color/black"
-                        android:drawablePadding="5dp"
-                        />
+                        android:drawableRight="@drawable/arrow_down"
+                        android:drawablePadding="10dp"/>
 
                     <!-- Espacio para separar los elementos -->
                     <View
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1" />
+                        android:layout_weight="1" >
+                    </View>
+
+                    <TextView
+                        android:id="@+id/addBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/add"
+                        android:drawableLeft="@drawable/plus"
+                        style="@style/option_field"
+                        android:visibility="invisible"
+                        />
+
+                    <TextView
+                        android:id="@+id/editBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/edit"
+                        android:drawableLeft="@drawable/pencil"
+                        style="@style/option_field"
+                        android:visibility="invisible"
+                        />
+
+                    <TextView
+                        android:id="@+id/removeBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/delete"
+                        android:drawableLeft="@drawable/trash"
+                        style="@style/option_field_remove"
+                        android:visibility="invisible"
+                       />
 
                     <ImageView
                         android:id="@+id/btn_popUpMenu"
