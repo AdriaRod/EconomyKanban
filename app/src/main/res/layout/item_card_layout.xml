@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_regular"
         android:text="Venta Frelance"
-        android:textColor="@color/black"
+        android:textColor="@color/bottom_nav_icon"
         android:textSize="16sp"
         android:gravity="start"
         android:maxLines="2"
@@ -100,7 +100,7 @@
     <View
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:background="@color/black"
+        android:background="@color/bottom_nav_icon"
         app:layout_constraintTop_toBottomOf="@id/currentDateTransactions"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
