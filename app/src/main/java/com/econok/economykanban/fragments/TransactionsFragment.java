@@ -42,9 +42,12 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DateFormatSymbols;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -505,12 +508,29 @@ public class TransactionsFragment extends Fragment {
                                 // Extraer los datos de la transacción
                                 String concepto = document.getString("concepto");
                                 String cantidad = document.getString("cantidad");
+                                String fecha=document.getString("fecha");
 
                                 // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
-                                cardList.add(new CardItem(concepto,tipo,concepto,cantidad));
+                                cardList.add(new CardItem(concepto,tipo,fecha,cantidad));
                             }
+                            // Definir un comparador personalizado para ordenar por fecha de cada tarjeta
+                            Comparator<CardItem> comparator = new Comparator<CardItem>() {
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+
+                                @Override
+                                public int compare(CardItem card1, CardItem card2) {
+                                    // Convertir las fechas de los CardItem a objetos Date para compararlas
+                                    String fecha1 = card1.getTag();
+                                    String fecha2 = card2.getTag();
+                                    // Comparar las fechas y devolver el resultado
+                                    return fecha2.compareTo(fecha1); // Orden descendente, cambia a fecha1.compareTo(fecha2) para orden ascendente
+                                }
+                            };
+                            // Ordenar cardList usando el comparador personalizado
+                            Collections.sort(cardList, comparator);
                             // Actualizar la interfaz de usuario con la nueva lista de tarjetas
                             adapter.notifyDataSetChanged();
+
                         } else {
                             Log.d(TAG, "Error obteniendo transacciones: ", task.getException());
                         }
@@ -541,6 +561,21 @@ public class TransactionsFragment extends Fragment {
                                 // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
                                 cardList.add(new CardItem(concepto,tipo,concepto,cantidad));
                             }
+                            // Definir un comparador personalizado para ordenar por fecha de cada tarjeta
+                            Comparator<CardItem> comparator = new Comparator<CardItem>() {
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+
+                                @Override
+                                public int compare(CardItem card1, CardItem card2) {
+                                    // Convertir las fechas de los CardItem a objetos Date para compararlas
+                                    String fecha1 = card1.getTag();
+                                    String fecha2 = card2.getTag();
+                                    // Comparar las fechas y devolver el resultado
+                                    return fecha2.compareTo(fecha1); // Orden descendente, cambia a fecha1.compareTo(fecha2) para orden ascendente
+                                }
+                            };
+                            // Ordenar cardList usando el comparador personalizado
+                            Collections.sort(cardList, comparator);
                             // Actualizar la interfaz de usuario con la nueva lista de tarjetas
                             adapter.notifyDataSetChanged();
                         } else {
