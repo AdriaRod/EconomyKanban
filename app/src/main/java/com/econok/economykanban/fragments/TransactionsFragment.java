@@ -396,7 +396,7 @@ public class TransactionsFragment extends Fragment {
         for (CardItem item : cardList) {
             String transactionNumber = item.getTransactionNumber();
             if (transactionNumber.matches("[0-9.]+")) {
-                double amount = Double.parseDouble(transactionNumber);
+                double amount = Integer.parseInt(transactionNumber);
                 if (item.getTransactionType().equals("Income")) {
                     balance += amount;
                 } else {
@@ -406,14 +406,13 @@ public class TransactionsFragment extends Fragment {
                 Log.e("TransactionsFragment", "Invalid transaction number: " + transactionNumber);
             }
         }
-        String sign = balance >= 0 ? "" : "-";
-        balanceTextView.setText(String.format(Locale.getDefault(), "%s%.2f$", sign, Math.abs(balance)));
     }
 
 
 
+
     private void actualizarBalanceTextView() {
-        balanceTextView.setText(String.format(Locale.getDefault(), "%.2f$", balance));
+        balanceTextView.setText(String.format(Locale.getDefault(), "%.0f", balance));
     }
 
 
