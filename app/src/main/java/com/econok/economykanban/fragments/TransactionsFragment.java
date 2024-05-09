@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -55,6 +56,8 @@ public class TransactionsFragment extends Fragment {
     private Dialog dialog;
     private EditText conceptEditText, quantityEditText;
     private Button acceptButton;
+    private TextView balanceTextView;
+    private double balance = 0.0;
     private Boolean isIncome = null;
 
     public TransactionsFragment() {
@@ -74,6 +77,7 @@ public class TransactionsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_transactions, container, false);
 
         addTransaction = view.findViewById(R.id.addBtn);
+        balanceTextView = view.findViewById(R.id.balanceTextView);
 
         visualizarTransacciones();
 
@@ -242,6 +246,7 @@ public class TransactionsFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+                    cardList.clear();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         // Extraer los datos de la transacción
                         String concepto = document.getString("concepto");
@@ -253,11 +258,35 @@ public class TransactionsFragment extends Fragment {
                     }
                     // Actualizar la interfaz de usuario con la nueva lista de tarjetas
                     adapter.notifyDataSetChanged();
+                    calcularBalance(); // Calcular el nuevo saldo
+                    actualizarBalanceTextView(); // Actualizar el texto del balanceTextView
                 } else {
                     Log.d(TAG, "Error obteniendo transacciones: ", task.getException());
                 }
             }
         });
 
+    }
+
+    private void calcularBalance() {
+        balance = 0.0;
+        for (CardItem item : cardList) {
+            String transactionNumber = item.getTransactionNumber();
+            if (transactionNumber.matches("[0-9.]+")) {
+                double amount = Double.parseDouble(transactionNumber);
+                if (item.getTransactionType().equals("Income")) {
+                    balance += amount;
+                } else {
+                    balance -= amount;
+                }
+            } else {
+                Log.e("TransactionsFragment", "Invalid transaction number: " + transactionNumber);
+            }
+        }
+    }
+
+
+    private void actualizarBalanceTextView() {
+        balanceTextView.setText(String.format(Locale.getDefault(), "%.2f$", balance));
     }
 }

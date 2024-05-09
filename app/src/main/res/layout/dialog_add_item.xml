@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:hint="@string/quantity"
+            android:inputType="numberDecimal"
             android:fontFamily="@font/poppins_regular"
             android:padding="8dp" />
 
