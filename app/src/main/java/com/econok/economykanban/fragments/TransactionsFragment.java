@@ -179,7 +179,13 @@ public class TransactionsFragment extends Fragment {
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
                     String fechaFormateada = sdf.format(fechaActual);
 
-                    crearTransaccion(concept,quantity,type,fechaFormateada);
+                    if (isIncome) {
+                        quantity = "+" + quantity;
+                    } else {
+                        quantity = "-" + quantity;
+                    }
+
+                    crearTransaccion(concept, quantity, type, fechaFormateada);
 
                     visualizarTransacciones();
                     // Limpiar los campos del diálogo al guardar
@@ -198,6 +204,7 @@ public class TransactionsFragment extends Fragment {
                 }
             }
         });
+
 
         return view;
     }
@@ -283,7 +290,10 @@ public class TransactionsFragment extends Fragment {
                 Log.e("TransactionsFragment", "Invalid transaction number: " + transactionNumber);
             }
         }
+        String sign = balance >= 0 ? "" : "-";
+        balanceTextView.setText(String.format(Locale.getDefault(), "%s%.2f$", sign, Math.abs(balance)));
     }
+
 
 
     private void actualizarBalanceTextView() {
