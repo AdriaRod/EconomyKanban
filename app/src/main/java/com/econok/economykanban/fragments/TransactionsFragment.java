@@ -392,27 +392,29 @@ public class TransactionsFragment extends Fragment {
     }
 
     private void calcularBalance() {
-        balance = 0.0;
+        double totalIncome = 0.0;
+        double totalExpense = 0.0;
+
         for (CardItem item : cardList) {
-            String transactionNumber = item.getTransactionNumber();
-            if (transactionNumber.matches("[0-9.]+")) {
-                double amount = Integer.parseInt(transactionNumber);
+            String transactionAmount = item.getTransactionNumber();
+            if (transactionAmount.matches("[-+]?[0-9]*\\.?[0-9]+")) {
+                double amount = Double.parseDouble(transactionAmount);
                 if (item.getTransactionType().equals("Income")) {
-                    balance += amount;
+                    totalIncome += amount;
                 } else {
-                    balance -= amount;
+                    totalExpense += amount;
                 }
             } else {
-                Log.e("TransactionsFragment", "Invalid transaction number: " + transactionNumber);
+                Log.e("TransactionsFragment", "Invalid transaction amount: " + transactionAmount);
             }
         }
+        balance = totalIncome - totalExpense;
+        actualizarBalanceTextView();
     }
 
-
-
-
     private void actualizarBalanceTextView() {
-        balanceTextView.setText(String.format(Locale.getDefault(), "%.0f", balance));
+        String formattedBalance = String.format(Locale.getDefault(), "%d", (int) balance);
+        balanceTextView.setText(formattedBalance);
     }
 
 
