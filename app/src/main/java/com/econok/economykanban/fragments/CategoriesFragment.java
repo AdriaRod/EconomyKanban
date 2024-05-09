@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -22,8 +24,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.econok.economykanban.CardAdapter;
+import com.econok.economykanban.CardItem;
 import com.econok.economykanban.R;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -32,19 +37,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CategoriesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CategoriesFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
     private String mParam2;
 
@@ -71,6 +70,11 @@ public class CategoriesFragment extends Fragment {
     private RadioGroup radioGroupCategories;
     private RadioButton btnGlobal, btnFood, btnHome, btnHealth, btnEntertainment, btnSaves, btnOthers, btnGym, btnTransport, btnEducation, btnClothes, btnDebts, btnNa;
     private RadioButton lastSelectedButton;
+
+    // RECYCLER VIEW
+    private RecyclerView recyclerView;
+    private CardAdapter adapter;
+    private List<CardItem> cardList;
 
     public CategoriesFragment() {
         // Required empty public constructor
@@ -103,6 +107,10 @@ public class CategoriesFragment extends Fragment {
 
 
         //__________________________ INICIALIZACIÓN DE VARIABLES______________________________
+
+        //********** PARA EL RECYCLER VIEW ************
+        
+
 
         //******************************* PARA LOS  MESES *****************************
         // Inicialización de los RadioButtons

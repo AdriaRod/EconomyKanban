@@ -86,7 +86,7 @@
         android:text="€"
         android:fontFamily="@font/poppins_semibold"
         android:textSize="20dp"
-       app:layout_constraintStart_toEndOf="@id/transactionTextView"
+        app:layout_constraintStart_toEndOf="@id/transactionTextView"
         app:layout_constraintEnd_toEndOf="parent"
         android:textColor="@color/black"/>
 

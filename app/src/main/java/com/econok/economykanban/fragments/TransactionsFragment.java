@@ -3,11 +3,14 @@ package com.econok.economykanban.fragments;
 import static android.content.ContentValues.TAG;
 
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -85,6 +88,11 @@ public class TransactionsFragment extends Fragment {
         dialog.setContentView(R.layout.dialog_add_item);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(false);
+        //esto es para que el fondo sea transparente
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
 
         conceptEditText = dialog.findViewById(R.id.concept);
         quantityEditText = dialog.findViewById(R.id.quantity);
