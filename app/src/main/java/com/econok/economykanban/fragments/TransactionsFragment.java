@@ -342,6 +342,7 @@ public class TransactionsFragment extends Fragment {
         transaccion.put("concepto", concept);
         transaccion.put("cantidad", quantity);
         transaccion.put("tipo", type);
+        transaccion.put("etiqueta","n/a");
 
         // Añadir la transacción a la subcolección "transacciones"
         transaccionesRef.add(transaccion)
