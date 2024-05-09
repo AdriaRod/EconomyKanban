@@ -8,17 +8,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -27,25 +23,15 @@ import android.widget.TextView;
 import com.econok.economykanban.CardAdapter;
 import com.econok.economykanban.CardItem;
 import com.econok.economykanban.R;
-import com.google.android.material.button.MaterialButton;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class CategoriesFragment extends Fragment {
 
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-
-    private String mParam1;
-    private String mParam2;
 
     //************************+ VARIABLES ************************
     //fecha
@@ -83,8 +69,6 @@ public class CategoriesFragment extends Fragment {
     public static CategoriesFragment newInstance(String param1, String param2) {
         CategoriesFragment fragment = new CategoriesFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -93,8 +77,7 @@ public class CategoriesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -103,10 +86,10 @@ public class CategoriesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
+
+        //______________________________ FECHA _______________________
         currentDateTextView = view.findViewById(R.id.currentDate);
 
-
-        //__________________________ INICIALIZACIÓN DE VARIABLES______________________________
 
         //********** PARA EL RECYCLER VIEW ************
         
@@ -121,55 +104,6 @@ public class CategoriesFragment extends Fragment {
         //Inicializamos los ImageView (que nos sirven de botones de adelante y atras tambien)
         previousButton = view.findViewById(R.id.previousButton);
         nextButton = view.findViewById(R.id.nextButton);
-
-        //Inicializamos el button de los 3 puntos
-        three_dots_btn = view.findViewById(R.id.btn_popUpMenu);
-        btnAdd = view.findViewById(R.id.addBtn);
-        btnEdit= view.findViewById(R.id.editBtn);
-        btnDelete = view.findViewById(R.id.removeBtn);
-        isClicked = false;
-
-        //Inicializamos el spinner (que no es spinner es un textView que queda mejor)
-        btnFilters = view.findViewById(R.id.filtersbtn);
-
-
-
-        //Lanzamos el onclick al pop-up
-        btnFilters.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopupMenu(v);
-            }
-        });
-
-
-        three_dots_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isClicked) {
-                    // Cambiar el color del SVG del botón a un azul más claro
-                    int color = ContextCompat.getColor(getContext(), R.color.light_blue);
-                    three_dots_btn.setColorFilter(color, PorterDuff.Mode.SRC_IN);
-
-                    // Mostrar los botones
-                    btnAdd.setVisibility(View.VISIBLE);
-                    btnEdit.setVisibility(View.VISIBLE);
-                    btnDelete.setVisibility(View.VISIBLE);
-
-                    isClicked = true;
-                } else {
-                    // Cambiar el color del SVG del botón a su color original
-                    three_dots_btn.setColorFilter(null);
-
-                    // Ocultar los botones
-                    btnAdd.setVisibility(View.INVISIBLE);
-                    btnEdit.setVisibility(View.INVISIBLE);
-                    btnDelete.setVisibility(View.INVISIBLE);
-
-                    isClicked = false;
-                }
-            }
-        });
 
         // Configura el texto inicial de los RadioButtons
         updateMonthsText();
@@ -211,6 +145,57 @@ public class CategoriesFragment extends Fragment {
                 updateMonthsText();
             }
         });
+
+        //***********************************+++ POP UP PARA EL TYPE ****************************
+        //Inicializamos el button de los 3 puntos
+        three_dots_btn = view.findViewById(R.id.btn_popUpMenu);
+        btnAdd = view.findViewById(R.id.addBtn);
+        btnEdit= view.findViewById(R.id.editBtn);
+        btnDelete = view.findViewById(R.id.removeBtn);
+        isClicked = false;
+
+        //Inicializamos el spinner (que no es spinner es un textView que queda mejor)
+        btnFilters = view.findViewById(R.id.btnTypes);
+
+
+        //Lanzamos el onclick al pop-up
+        btnFilters.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupMenu(v);
+            }
+        });
+
+
+        three_dots_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isClicked) {
+                    // Cambiar el color del SVG del botón a un azul más claro
+                    int color = ContextCompat.getColor(getContext(), R.color.light_blue);
+                    three_dots_btn.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+
+                    // Mostrar los botones
+                    btnAdd.setVisibility(View.VISIBLE);
+                    btnEdit.setVisibility(View.VISIBLE);
+                    btnDelete.setVisibility(View.VISIBLE);
+
+                    isClicked = true;
+                } else {
+                    // Cambiar el color del SVG del botón a su color original
+                    three_dots_btn.setColorFilter(null);
+
+                    // Ocultar los botones
+                    btnAdd.setVisibility(View.INVISIBLE);
+                    btnEdit.setVisibility(View.INVISIBLE);
+                    btnDelete.setVisibility(View.INVISIBLE);
+
+                    isClicked = false;
+                }
+            }
+        });
+
+
 
         //*********************** RADIO GROUP DE CATEGORIAS *************************
         btnGlobal = view.findViewById(R.id.radioButtonGlobal);

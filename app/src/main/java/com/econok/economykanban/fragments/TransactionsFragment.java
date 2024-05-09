@@ -8,11 +8,15 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +41,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,8 +53,28 @@ import java.util.Map;
 
 public class TransactionsFragment extends Fragment {
 
+    //******************* VARIABLES *********************
+    //fecha
+    private TextView currentDateTextView;
+
+    //selector de meses
+    private RadioButton previousMonthButton;
+    private RadioButton currentMonthButton;
+    private RadioButton nextMonthButton;
+    private int currentMonthIndex = 5; // Junio por defecto
+    private ImageView nextButton, previousButton;
+
+    //PopUp Menu para seleccionar (ADD, EDITAR, ELIMINAR)
+    ImageView three_dots_btn;
+    TextView btnAdd, btnEdit, btnDelete, btnFilters;
+    private Boolean isClicked;
+
+
+
+    //_____________________estas de abajo estaban de antes xd________________________
     private RecyclerView recyclerView;
     private CardAdapter adapter;
+
     private FirebaseAuth mAuth;
     private List<CardItem> cardList;
     private MaterialButton addTransaction, button1, button2;
@@ -75,6 +100,97 @@ public class TransactionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_transactions, container, false);
+
+        //______________________________ FECHA (current date) _______________________
+        currentDateTextView = view.findViewById(R.id.currentDateTransactions);
+        //*********************** CURRENT DATE *******************
+        // Get the current date
+        Date currentDate = new Date();
+        int v_date = R.string.date_format;
+
+        // Format the date to "MM/dd/yyyy"
+        SimpleDateFormat dateFormat = new SimpleDateFormat(getString(v_date), Locale.getDefault());
+        String formattedDate = dateFormat.format(currentDate);
+
+        // Capitalize the first letter of the Month
+        String capitalizedDate = formattedDate.substring(0, 1).toUpperCase() + formattedDate.substring(1);
+
+        // Set the formatted date to the TextView
+        currentDateTextView.setText(capitalizedDate);
+
+        //******************************* PARA LOS  MESES *****************************
+        // Inicialización de los RadioButtons
+        previousMonthButton = view.findViewById(R.id.previous_month);
+        currentMonthButton = view.findViewById(R.id.current_month);
+        nextMonthButton = view.findViewById(R.id.next_month);
+
+        //Inicializamos los ImageView (que nos sirven de botones de adelante y atras tambien)
+        previousButton = view.findViewById(R.id.previousButton);
+        nextButton = view.findViewById(R.id.nextButton);
+
+        // Configura el texto inicial de los RadioButtons
+        updateMonthsText();
+
+        // Configura los listeners de los RadioButtons
+        previousMonthButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentMonthIndex--;
+                if (currentMonthIndex < 0) currentMonthIndex = 11;
+                updateMonthsText();
+            }
+        });
+
+        nextMonthButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentMonthIndex++;
+                if (currentMonthIndex > 11) currentMonthIndex = 0;
+                updateMonthsText();
+            }
+        });
+
+        // Configura los listeners de los botones
+        previousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentMonthIndex--;
+                if (currentMonthIndex < 0) currentMonthIndex = 11;
+                updateMonthsText();
+            }
+        });
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentMonthIndex++;
+                if (currentMonthIndex > 11) currentMonthIndex = 0;
+                updateMonthsText();
+            }
+        });
+
+        //*************************** PARA EL POP UP DEL TYPE ****************
+        //***********************************+++ POP UP PARA EL TYPE ****************************
+        //Inicializamos el button de los 3 puntos
+        btnFilters = view.findViewById(R.id.btnTypes);
+        btnAdd = view.findViewById(R.id.addBtn);
+        btnEdit= view.findViewById(R.id.editBtn);
+        btnDelete = view.findViewById(R.id.removeBtn);
+        isClicked = false;
+
+        //Inicializamos el spinner (que no es spinner es un textView que queda mejor)
+        btnFilters = view.findViewById(R.id.btnTypes);
+
+
+        //Lanzamos el onclick al pop-up
+        btnFilters.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupMenu(v);
+            }
+        });
+
+        //___________________________ TRANSACCIONES ___________________________
 
         addTransaction = view.findViewById(R.id.addBtn);
         balanceTextView = view.findViewById(R.id.balanceTextView);
@@ -289,4 +405,65 @@ public class TransactionsFragment extends Fragment {
     private void actualizarBalanceTextView() {
         balanceTextView.setText(String.format(Locale.getDefault(), "%.2f$", balance));
     }
+
+
+    //FUNCIONES CUSTOM PARA LOS MESES
+    private void updateMonthsText() {
+        int previousMonthIndex = currentMonthIndex - 1;
+        int nextMonthIndex = currentMonthIndex + 1;
+
+        if (previousMonthIndex < 0) previousMonthIndex = 11;
+        if (nextMonthIndex > 11) nextMonthIndex = 0;
+
+        previousMonthButton.setText(getMonthAbbreviation(previousMonthIndex));
+        currentMonthButton.setText(getMonthAbbreviation(currentMonthIndex));
+        nextMonthButton.setText(getMonthAbbreviation(nextMonthIndex));
+
+        previousMonthButton.setChecked(false);
+        currentMonthButton.setChecked(true);
+        nextMonthButton.setChecked(false);
+    }
+
+    // Método para obtener la abreviatura del nombre del mes a partir de su número
+    private String getMonthAbbreviation(int month) {
+        DateFormatSymbols dfs = new DateFormatSymbols();
+        String[] months = dfs.getShortMonths();
+        return months[month];
+    }
+
+    //****************************** PARA MOSTRAR LOS POP UP MENU ************************
+    public void showPopupMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(requireContext(), view);
+        popupMenu.inflate(R.menu.categories_popup_menu);
+        // variables de Strings
+        int str_all = R.string.all;
+        int str_income = R.string.income;
+        int str_expense = R.string.expense;
+
+        // Maneja los clics de los elementos del menú
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == R.id.item_1) {
+                    // Código para la acción de All
+                    btnFilters.setText(getString(str_all));
+                    return true;
+                } else if (itemId == R.id.item_2) {
+                    // Código para la acción de Income
+                    btnFilters.setText(getString(str_income));
+                    return true;
+                } else if (itemId == R.id.item_3) {
+                    // Código para la acción de Expense
+                    btnFilters.setText(getString(str_expense));
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        // Muestra el menú emergente
+        popupMenu.show();
+    }
+
 }

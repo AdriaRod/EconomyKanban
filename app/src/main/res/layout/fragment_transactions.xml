@@ -5,100 +5,213 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
+    style="@style/fragment_background"
     >
 
-    <TextView
-        android:id="@+id/titleTextView"
+    <!-- ********************* GUIDE LINES ***************************** -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLineStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/poppins_regular"
-        android:text="17 de Abril, 2024"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".3"/>
 
-    <!-- Saldo -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".7"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLineBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".4" />
+
+    <!-- _____________________ DISEÑO _____________________________-->
+    <!-- Fecha actual -->
+    <TextView
+        android:id="@+id/currentDateTransactions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="current date"
+        style="@style/date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias=".1"
+        app:layout_constraintVertical_bias=".05"/>
+
+    <!-- saldo -->
     <TextView
         android:id="@+id/balanceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:fontFamily="@font/poppins_regular"
-        android:text="5000$"
-        android:textColor="@android:color/white"
-        android:textSize="42sp"
-        app:layout_constraintBottom_toTopOf="@id/line"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleTextView" />
+        android:text="5000"
+        style="@style/balance_number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideLineEnd"
+        app:layout_constraintStart_toStartOf="@id/guideLineStart"
+        app:layout_constraintTop_toBottomOf="@id/currentDateTransactions"
+        app:layout_constraintVertical_bias=".05"/>
 
+    <!-- Divisa -->
+
+    <TextView
+        style="@style/currency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="€"
+        app:layout_constraintBottom_toTopOf="@id/balanceTextView"
+        app:layout_constraintStart_toEndOf="@id/balanceTextView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="2.3" />
+
+    <!-- Linea abajo saldo -->
     <View
         android:id="@+id/line"
-        android:layout_width="180dp"
+        android:layout_width="0dp"
         android:layout_height="3dp"
         android:background="@color/white"
         android:layout_centerVertical="true"
+        android:layout_marginTop="-10dp"
         app:layout_constraintTop_toBottomOf="@id/balanceTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideLineStart"
+        app:layout_constraintEnd_toEndOf="@id/guideLineEnd"
         />
 
+    <!-- ____________________________ Selector de meses ______________________________-->
+
+    <!-- RADIO GROUP -->
+    <RadioGroup
+        android:id="@+id/month_radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/line"
+        app:layout_constraintBottom_toBottomOf="@id/guideLineBottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <RadioButton
+            android:id="@+id/previous_month"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:text="Mes0"
+            style="@style/month_radio_button_unselected"
+
+            />
+
+        <RadioButton
+            android:id="@+id/current_month"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:text="Mes1"
+            style="@style/month_radio_button_selected"
+
+
+            />
+
+        <RadioButton
+            android:id="@+id/next_month"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:text="Mes2"
+            style="@style/month_radio_button_unselected"
+            />
+
+    </RadioGroup>
+
+    <!-- Botones izq y derecha -->
+    <ImageView
+        android:id="@+id/previousButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:src="@drawable/arrow"
+        android:padding="10dp"
+        app:layout_constraintEnd_toStartOf="@id/month_radio_group"
+        app:layout_constraintTop_toTopOf="@id/month_radio_group"
+        app:layout_constraintBottom_toBottomOf="@id/month_radio_group"/>
+
+    <ImageView
+        android:id="@+id/nextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:padding="10dp"
+        android:rotationY="180"
+        android:src="@drawable/arrow"
+        app:layout_constraintStart_toEndOf="@id/month_radio_group"
+        app:layout_constraintTop_toTopOf="@id/month_radio_group"
+        app:layout_constraintBottom_toBottomOf="@id/month_radio_group"/>
+
+    <!-- ________________ CARD VIEW ___________________ -->
     <androidx.cardview.widget.CardView
         android:id="@+id/bottomSheet"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="#ffffff"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        style="@style/categories_card"
+        app:layout_constraintTop_toTopOf="@id/guideLineBottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHeight_max="450dp">
+        >
 
+        <!-- LAYOUT DEL CARD VIEW -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginVertical="16dp"
-            >
+            android:layout_height="match_parent">
 
+            <!-- TODO: NO SE SI DEJAR ESTE BOTON DE SETTINGS, EN ESTE LAYOUT (TRANSACTIONS) -->
+            <!-- BUTTON DE SETTINGS -->
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/dots3"
-                android:layout_marginRight="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/BtnSettings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/blue_three_dots"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias=".95"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias=".03" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:layout_marginBottom="8dp">
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginBottom="60dp"
+            <!-- SELECT TYPE -->
+            <TextView
+                android:id="@+id/btnTypes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="All"
+                android:padding="5dp"
+                android:drawableRight="@drawable/arrow_down"
+                android:drawablePadding="5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-            </androidx.recyclerview.widget.RecyclerView>
+                app:layout_constraintTop_toTopOf="@id/BtnSettings"
+                app:layout_constraintBottom_toBottomOf="@id/BtnSettings"
+                app:layout_constraintHorizontal_bias=".06"/>
 
+
+
+            <!-- ______________________________ RECYCLER VIEW ___________________________ -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintBottom_toTopOf="@id/addBtn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/BtnSettings"></androidx.recyclerview.widget.RecyclerView>
+
+            <!-- _________________________________ BUTTON ADD ___________________________ -->
             <Button
                 android:id="@+id/addBtn"
                 android:layout_width="0dp"
@@ -107,11 +220,11 @@
                 android:backgroundTint="#1381E6"
                 android:elevation="16dp"
                 android:fontFamily="@font/poppins_semibold"
-                android:text="Add"
+                android:text="@string/add"
                 app:cornerRadius="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recyclerView" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

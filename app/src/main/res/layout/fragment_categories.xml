@@ -101,10 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                >
 
 
                 <RadioButton
@@ -176,7 +173,7 @@
 
 
                     <TextView
-                        android:id="@+id/filtersbtn"
+                        android:id="@+id/btnTypes"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"

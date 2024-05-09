@@ -9,7 +9,7 @@
 
     <!-- Título -->
     <TextView
-        android:id="@+id/titleTextView"
+        android:id="@+id/currentDateTransactions"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_regular"
@@ -36,8 +36,8 @@
         android:textSize="12sp"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="@id/guideline"
-        app:layout_constraintTop_toTopOf="@id/titleTextView"
-        app:layout_constraintBottom_toBottomOf="@id/titleTextView"
+        app:layout_constraintTop_toTopOf="@id/currentDateTransactions"
+        app:layout_constraintBottom_toBottomOf="@id/currentDateTransactions"
         android:layout_marginEnd="8dp" />
 
     <!-- Guideline para fijar la posición del tagTextView -->
@@ -62,8 +62,8 @@
         app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@id/transactionTextView"
-        app:layout_constraintTop_toTopOf="@id/titleTextView"
-        app:layout_constraintBottom_toBottomOf="@id/titleTextView"
+        app:layout_constraintTop_toTopOf="@id/currentDateTransactions"
+        app:layout_constraintBottom_toBottomOf="@id/currentDateTransactions"
         app:layout_constraintHorizontal_chainStyle="packed"
         />
 
@@ -78,8 +78,8 @@
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@id/signTextView"
         app:layout_constraintEnd_toStartOf="@id/divisaTextView"
-        app:layout_constraintTop_toTopOf="@id/titleTextView"
-        app:layout_constraintBottom_toBottomOf="@id/titleTextView"
+        app:layout_constraintTop_toTopOf="@id/currentDateTransactions"
+        app:layout_constraintBottom_toBottomOf="@id/currentDateTransactions"
         />
 
     <!-- Divisa -->
@@ -93,15 +93,15 @@
         android:textSize="20dp"
        app:layout_constraintStart_toEndOf="@id/transactionTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/titleTextView"
-        app:layout_constraintBottom_toBottomOf="@id/titleTextView"
+        app:layout_constraintTop_toTopOf="@id/currentDateTransactions"
+        app:layout_constraintBottom_toBottomOf="@id/currentDateTransactions"
         android:textColor="@color/black"/>
 
     <View
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/titleTextView"
+        app:layout_constraintTop_toBottomOf="@id/currentDateTransactions"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="0dp"/>

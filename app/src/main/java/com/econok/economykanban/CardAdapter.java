@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -59,7 +58,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
-            titleTextView = itemView.findViewById(R.id.titleTextView);
+            titleTextView = itemView.findViewById(R.id.currentDateTransactions);
             transactionTypeTextView = itemView.findViewById(R.id.tagTextView);
             transactionTextView = itemView.findViewById(R.id.transactionTextView);
         }
