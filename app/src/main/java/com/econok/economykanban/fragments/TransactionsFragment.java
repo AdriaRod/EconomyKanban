@@ -94,6 +94,7 @@ public class TransactionsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         cardList = new ArrayList<>();
+        visualizarTransacciones();
     }
 
     @Override
@@ -195,7 +196,7 @@ public class TransactionsFragment extends Fragment {
         addTransaction = view.findViewById(R.id.addBtn);
         balanceTextView = view.findViewById(R.id.balanceTextView);
 
-        visualizarTransacciones();
+
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -444,6 +445,8 @@ public class TransactionsFragment extends Fragment {
 
     //****************************** PARA MOSTRAR LOS POP UP MENU ************************
     public void showPopupMenu(View view) {
+
+        //-----------------------------------------------------------------------------------------------------------------------------
         PopupMenu popupMenu = new PopupMenu(requireContext(), view);
         popupMenu.inflate(R.menu.categories_popup_menu);
         // variables de Strings
@@ -459,14 +462,20 @@ public class TransactionsFragment extends Fragment {
                 if (itemId == R.id.item_1) {
                     // Código para la acción de All
                     btnFilters.setText(getString(str_all));
+                    //Mostrar todas
+                    visualizarTransacciones();
                     return true;
                 } else if (itemId == R.id.item_2) {
                     // Código para la acción de Income
                     btnFilters.setText(getString(str_income));
+                    //Mostrar income
+                    mostrarIncome("Income");
                     return true;
                 } else if (itemId == R.id.item_3) {
                     // Código para la acción de Expense
                     btnFilters.setText(getString(str_expense));
+                    //Mostrar expense
+                    mostrarExpense("Expense");
                     return true;
                 }
                 return false;
@@ -475,6 +484,70 @@ public class TransactionsFragment extends Fragment {
 
         // Muestra el menú emergente
         popupMenu.show();
+    }
+
+    private void mostrarIncome(String tipo){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        mAuth= FirebaseAuth.getInstance();
+        DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
+        // Obtener la referencia a la subcolección "transacciones" del usuario
+        CollectionReference transaccionesRef = usuarioRef.collection("transacciones");
+        // Obtener todas las transacciones del usuario con el tipo especificado, ordenadas por fecha de creación
+        transaccionesRef.whereEqualTo("tipo", tipo)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            // Limpiar la lista actual de tarjetas antes de cargar nuevas transacciones
+                            cardList.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                // Extraer los datos de la transacción
+                                String concepto = document.getString("concepto");
+                                String cantidad = document.getString("cantidad");
+
+                                // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
+                                cardList.add(new CardItem(concepto,tipo,concepto,cantidad));
+                            }
+                            // Actualizar la interfaz de usuario con la nueva lista de tarjetas
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            Log.d(TAG, "Error obteniendo transacciones: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    private void mostrarExpense(String tipo){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        mAuth= FirebaseAuth.getInstance();
+        DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
+        // Obtener la referencia a la subcolección "transacciones" del usuario
+        CollectionReference transaccionesRef = usuarioRef.collection("transacciones");
+        // Obtener todas las transacciones del usuario con el tipo especificado, ordenadas por fecha de creación
+        transaccionesRef.whereEqualTo("tipo", tipo)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            // Limpiar la lista actual de tarjetas antes de cargar nuevas transacciones
+                            cardList.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                // Extraer los datos de la transacción
+                                String concepto = document.getString("concepto");
+                                String cantidad = document.getString("cantidad");
+
+                                // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
+                                cardList.add(new CardItem(concepto,tipo,concepto,cantidad));
+                            }
+                            // Actualizar la interfaz de usuario con la nueva lista de tarjetas
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            Log.d(TAG, "Error obteniendo transacciones: ", task.getException());
+                        }
+                    }
+                });
     }
 
 }
