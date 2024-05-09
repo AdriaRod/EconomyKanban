@@ -62,6 +62,8 @@
         app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@id/transactionTextView"
+        app:layout_constraintTop_toTopOf="@id/titleTextView"
+        app:layout_constraintBottom_toBottomOf="@id/titleTextView"
         app:layout_constraintHorizontal_chainStyle="packed"
         />
 
@@ -76,6 +78,8 @@
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@id/signTextView"
         app:layout_constraintEnd_toStartOf="@id/divisaTextView"
+        app:layout_constraintTop_toTopOf="@id/titleTextView"
+        app:layout_constraintBottom_toBottomOf="@id/titleTextView"
         />
 
     <!-- Divisa -->
@@ -84,10 +88,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="€"
+        android:gravity="center"
         android:fontFamily="@font/poppins_semibold"
         android:textSize="20dp"
        app:layout_constraintStart_toEndOf="@id/transactionTextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/titleTextView"
+        app:layout_constraintBottom_toBottomOf="@id/titleTextView"
         android:textColor="@color/black"/>
 
     <View
