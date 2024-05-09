@@ -1,5 +1,7 @@
 package com.econok.economykanban.fragments;
 
+import static android.content.ContentValues.TAG;
+
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -8,8 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,9 +27,19 @@ import android.widget.TextView;
 import com.econok.economykanban.CardAdapter;
 import com.econok.economykanban.CardItem;
 import com.econok.economykanban.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -36,6 +50,10 @@ public class CategoriesFragment extends Fragment {
     //************************+ VARIABLES ************************
     //fecha
     private TextView currentDateTextView;
+
+    private double balance = 0.0;
+    private FirebaseAuth mAuth;
+    private TextView balanceTextView;
 
     //selector de meses
     private RadioButton previousMonthButton;
@@ -76,6 +94,7 @@ public class CategoriesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        cardList = new ArrayList<>();
         if (getArguments() != null) {
 
         }
@@ -92,8 +111,13 @@ public class CategoriesFragment extends Fragment {
 
 
         //********** PARA EL RECYCLER VIEW ************
-        
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        adapter = new CardAdapter(getContext(), cardList);
+        recyclerView.setAdapter(adapter);
+
+        balanceTextView = view.findViewById(R.id.textView12);
 
         //******************************* PARA LOS  MESES *****************************
         // Inicialización de los RadioButtons
@@ -258,17 +282,70 @@ public class CategoriesFragment extends Fragment {
     private final View.OnClickListener radioButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            mAuth= FirebaseAuth.getInstance();
+            DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
+            // Obtener la referencia a la subcolección "transacciones" del usuario
+            CollectionReference transaccionesRef = usuarioRef.collection("transacciones");
             RadioButton selectedButton = (RadioButton) v;
-
             setButtonStyle(selectedButton, true);
-
             if (lastSelectedButton != null && lastSelectedButton != selectedButton) {
                 setButtonStyle(lastSelectedButton, false);
             }
-
             lastSelectedButton = selectedButton;
+            if(v.getId()==R.id.radioButtonNa){
+                transaccionesRef.whereEqualTo("etiqueta","n/a").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            cardList.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                // Extraer los datos de la transacción
+                                String concepto = document.getString("concepto");
+                                String tipo = document.getString("tipo");
+                                String cantidad = document.getString("cantidad");
+
+                                // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
+                                cardList.add(new CardItem(concepto,tipo,concepto,cantidad));
+                            }
+                            // Actualizar la interfaz de usuario con la nueva lista de tarjetas
+                            adapter.notifyDataSetChanged();
+                            calcularBalance(); // Calcular el nuevo saldo
+                            actualizarBalanceTextView(); // Actualizar el texto del balanceTextView
+                        } else {
+                            Log.d(TAG, "Error obteniendo transacciones: ", task.getException());
+                        }
+                    }
+                });
+            }
         }
     };
+
+    private void calcularBalance() {
+        double totalIncome = 0.0;
+        double totalExpense = 0.0;
+
+        for (CardItem item : cardList) {
+            String transactionAmount = item.getTransactionNumber();
+            if (transactionAmount.matches("[-+]?[0-9]*\\.?[0-9]+")) {
+                double amount = Double.parseDouble(transactionAmount);
+                if (item.getTransactionType().equals("Income")) {
+                    totalIncome += amount;
+                } else {
+                    totalExpense += amount;
+                }
+            } else {
+                Log.e("TransactionsFragment", "Invalid transaction amount: " + transactionAmount);
+            }
+        }
+        balance = totalIncome - totalExpense;
+        actualizarBalanceTextView();
+    }
+
+    private void actualizarBalanceTextView() {
+        String formattedBalance = String.format(Locale.getDefault(), "%d", (int) balance);
+        balanceTextView.setText(formattedBalance);
+    }
 
 
     //****************************** PARA MOSTRAR LOS POP UP MENU ************************
