@@ -1,15 +1,287 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4CAF50"
-    tools:context=".fragments.SettingsFragment">
+    tools:context=".fragments.SettingsFragment"
+    style="@style/fragment_background">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- ********************* GUIDE LINES ***************************** -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLineStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".3" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".7" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLineBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".4" />
+
+    <!-- ********************** DISEÑO ***************************** -->
+    <!-- Title -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="settings" />
+        android:id="@+id/title_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Settings"
+        style="@style/date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideLineBottom"
+        app:layout_constraintVertical_bias=".05" />
 
-</FrameLayout>
+    <!-- Foto de perfil -->
+    <ImageView
+        android:id="@+id/ProfilePicture"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:src="@drawable/profile_picture_settings"
+        android:scaleType="centerCrop"
+        android:background="@drawable/circular_border_white"
+        android:padding="5dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@id/guideLineEnd"
+        app:layout_constraintStart_toStartOf="@id/guideLineStart"
+        app:layout_constraintTop_toBottomOf="@id/title_settings" />
+
+    <!-- Edit Profile Button -->
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:text="@string/edit_profile"
+        app:layout_constraintTop_toBottomOf="@id/ProfilePicture"
+        app:layout_constraintStart_toStartOf="@id/guideLineStart"
+        app:layout_constraintEnd_toEndOf="@id/guideLineEnd"
+        app:layout_constraintBottom_toBottomOf="@id/guideLineBottom"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_semibold"
+        android:textSize="12sp"
+        android:padding="2dp"
+        android:gravity="center" />
+
+    <!-- CardView -->
+    <androidx.cardview.widget.CardView
+        style="@style/categories_card"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideLineBottom"
+        app:layout_constraintVertical_bias="0.0">
+
+        <!-- Constraint layout del card view -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- ______________ CARD GUIDE LINES __________ -->
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/card_guideline_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent=".1" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/card_guideline_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent=".9" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/card_guideline_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent=".1" />
+
+            <!-- ___________________ DISEÑO _______________ -->
+
+            <!-- __________________ LANGUAGE ___________ -->
+            <RelativeLayout
+                android:id="@+id/language"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/card_guideline_top"
+                app:layout_constraintStart_toStartOf="@id/card_guideline_start"
+                app:layout_constraintEnd_toEndOf="@id/card_guideline_end"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintVertical_bias="0"
+                android:gravity="start|center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/language"
+                    android:drawableStart="@drawable/icon_language"
+                    style="@style/setting_text_view" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/setting_arrow"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/arrow"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </RelativeLayout>
+
+            <!-- CURRENCY -->
+            <RelativeLayout
+                android:id="@+id/currency"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@id/language"
+                app:layout_constraintStart_toStartOf="@id/card_guideline_start"
+                app:layout_constraintEnd_toEndOf="@id/card_guideline_end"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintVertical_bias="0"
+                android:gravity="start|center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/currency"
+                    android:drawableStart="@drawable/icon_currency"
+                    style="@style/setting_text_view" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/setting_arrow"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/arrow"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </RelativeLayout>
+
+            <!-- DARK MODE -->
+            <RelativeLayout
+                android:id="@+id/dark_mode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@id/currency"
+                app:layout_constraintStart_toStartOf="@id/card_guideline_start"
+                app:layout_constraintEnd_toEndOf="@id/card_guideline_end"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintVertical_bias="0"
+                android:gravity="start|center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/darkmode"
+                    android:drawableStart="@drawable/icon_dark_mode"
+                    style="@style/setting_text_view" />
+
+                <Switch
+                    android:id="@+id/dark_mode_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/setting_toogle"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+
+            </RelativeLayout>
+
+            <!-- NOTIFICATIONS -->
+            <RelativeLayout
+                android:id="@+id/notifications"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@id/dark_mode"
+                app:layout_constraintStart_toStartOf="@id/card_guideline_start"
+                app:layout_constraintEnd_toEndOf="@id/card_guideline_end"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintVertical_bias="0"
+                android:gravity="start|center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/notifications"
+                    android:drawableStart="@drawable/icon_notifications"
+                    style="@style/setting_text_view" />
+
+                <Switch
+                    android:id="@+id/notifications_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/setting_toogle"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+
+            </RelativeLayout>
+
+            <!-- MANAGE ACCOUNT -->
+            <RelativeLayout
+                android:id="@+id/manage_account"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@id/notifications"
+                app:layout_constraintStart_toStartOf="@id/card_guideline_start"
+                app:layout_constraintEnd_toEndOf="@id/card_guideline_end"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintVertical_bias="0"
+                android:gravity="start|center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/manage_account"
+                    android:drawableStart="@drawable/icon_manage_account"
+                    style="@style/setting_text_view" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/setting_arrow"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/arrow"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </RelativeLayout>
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

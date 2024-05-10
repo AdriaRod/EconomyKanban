@@ -287,6 +287,35 @@
         <item name="android:textColor">@color/white</item>
         <item name="cornerRadius">10dp</item>
     </style>
+    
+    <!-- ____________________________ SETTINGS FRAGMENT _________________________ -->
+    <!-- TEXTO E ICONO -->
+    <style name="setting_text_view">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:fontFamily">@font/poppins_light</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <!-- PARA LA FLECHA -->
+    <style name="setting_arrow">
+        <item name="android:padding">10dp</item>
+        <item name="android:rotationY">180</item>
+        <item name="android:src">@drawable/arrow</item>
+        <item name="android:tint">@color/black</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <!-- TOOGLE BUTTON -->
+    <style name="setting_toogle">
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="track">@drawable/toogle_selector</item>
+        <item name="thumbTint">@color/white</item>
+    </style>
 
 
 </resources>

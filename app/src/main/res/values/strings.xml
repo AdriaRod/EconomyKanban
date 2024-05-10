@@ -93,5 +93,16 @@
     <string name="clothes_cat">Clothes</string>
     <string name="debts_cat">Debts</string>
 
+    <!-- Settings Fragments -->
+    <string name="settings">Settings</string>
+    <string name="edit_profile">Edit Profile</string>
+
+        <!-- settings -->
+        <string name="language">Language</string>
+        <string name="currency">Currency</string>
+        <string name="darkmode">Dark Mode</string>
+        <string name="notifications">Notifications</string>
+        <string name="manage_account">Manage Account</string>
+
 
 </resources>
