@@ -171,7 +171,7 @@
             <!-- TODO: NO SE SI DEJAR ESTE BOTON DE SETTINGS, EN ESTE LAYOUT (TRANSACTIONS) -->
             <!-- BUTTON DE SETTINGS -->
             <ImageView
-                android:id="@+id/BtnSettings"
+                android:id="@+id/btn_popUpMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/blue_three_dots"
@@ -194,8 +194,8 @@
                 android:drawablePadding="5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/BtnSettings"
-                app:layout_constraintBottom_toBottomOf="@id/BtnSettings"
+                app:layout_constraintTop_toTopOf="@id/btn_popUpMenu"
+                app:layout_constraintBottom_toBottomOf="@id/btn_popUpMenu"
                 app:layout_constraintHorizontal_bias=".06"/>
 
 
@@ -209,7 +209,7 @@
                 app:layout_constraintBottom_toTopOf="@id/addBtn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/BtnSettings"></androidx.recyclerview.widget.RecyclerView>
+                app:layout_constraintTop_toBottomOf="@+id/btn_popUpMenu"></androidx.recyclerview.widget.RecyclerView>
 
             <!-- _________________________________ BUTTON ADD ___________________________ -->
             <Button

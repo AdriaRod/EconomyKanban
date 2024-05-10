@@ -33,7 +33,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -117,7 +116,7 @@ public class CategoriesFragment extends Fragment {
         adapter = new CardAdapter(getContext(), cardList);
         recyclerView.setAdapter(adapter);
 
-        balanceTextView = view.findViewById(R.id.textView12);
+        balanceTextView = view.findViewById(R.id.balance);
 
         //******************************* PARA LOS  MESES *****************************
         // Inicialización de los RadioButtons
