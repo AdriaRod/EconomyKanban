@@ -2,6 +2,7 @@ package com.econok.economykanban.fragments;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.res.Configuration;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -271,11 +272,30 @@ public class CategoriesFragment extends Fragment {
     }
 
     private void setButtonStyle(RadioButton button, boolean isSelected) {
-        button.setBackgroundResource(isSelected ? R.drawable.button_category_selected : R.drawable.button_category_normal);
-        button.setChecked(isSelected);
-        int textColor = isSelected ? R.color.black : R.color.black;
-        button.setTextColor(getResources().getColor(textColor));
-        button.setTypeface(null, isSelected ? Typeface.BOLD : Typeface.NORMAL);
+        if (isSelected) {
+            if (isDarkMode()) {
+                button.setBackgroundResource(R.drawable.button_category_selected_dark);
+                button.setTextColor(getResources().getColor(R.color.white));
+            } else {
+                button.setBackgroundResource(R.drawable.button_category_selected);
+                button.setTextColor(getResources().getColor(R.color.black));
+            }
+            button.setTypeface(null, Typeface.BOLD);
+        } else {
+            if (isDarkMode()) {
+                button.setBackgroundResource(R.drawable.category_radio_button_background_dark);
+                button.setTextColor(getResources().getColor(R.color.white));
+            } else {
+                button.setBackgroundResource(R.drawable.button_category_normal);
+                button.setTextColor(getResources().getColor(R.color.black));
+            }
+            button.setTypeface(null, Typeface.NORMAL);
+        }
+    }
+
+    private boolean isDarkMode() {
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        return currentNightMode == Configuration.UI_MODE_NIGHT_YES;
     }
 
     private final View.OnClickListener radioButtonClickListener = new View.OnClickListener() {

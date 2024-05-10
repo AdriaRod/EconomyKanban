@@ -194,6 +194,7 @@
                 android:gravity="center"
                 android:text="All"
                 android:padding="5dp"
+                style="@style/spinner"
                 android:drawableRight="@drawable/arrow_down"
                 android:drawablePadding="5dp"
                 app:layout_constraintStart_toStartOf="parent"

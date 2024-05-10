@@ -42,7 +42,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DateFormatSymbols;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -238,8 +237,8 @@ public class TransactionsFragment extends Fragment {
                 isIncome = null;
                 button1.setEnabled(true);
                 button2.setEnabled(true);
-                button1.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonIncome));
-                button2.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonsExpense));
+                button1.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtons_Expense_Income));
+                button2.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtons_Expense_Income));
                 button1.setTextColor(getResources().getColor(R.color.dialogTextNotPressed));
                 button2.setTextColor(getResources().getColor(R.color.dialogTextNotPressed));
             }
@@ -259,7 +258,7 @@ public class TransactionsFragment extends Fragment {
                 button1.setEnabled(false);
                 button2.setEnabled(true);
                 button1.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonIncomePressed));
-                button2.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonsExpense));
+                button2.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtons_Expense_Income));
                 button1.setTextColor(getResources().getColor(R.color.dialogTextIncome));
                 button2.setTextColor(getResources().getColor(R.color.dialogTextNotPressed));
             }
@@ -271,7 +270,7 @@ public class TransactionsFragment extends Fragment {
                 isIncome = false;
                 button1.setEnabled(true);
                 button2.setEnabled(false);
-                button1.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonIncome));
+                button1.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtons_Expense_Income));
                 button2.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonsExpensePressed));
                 button1.setTextColor(getResources().getColor(R.color.dialogTextNotPressed));
                 button2.setTextColor(getResources().getColor(R.color.dialogTextExpense));
@@ -315,8 +314,8 @@ public class TransactionsFragment extends Fragment {
                     isIncome = null;
                     button1.setEnabled(true);
                     button2.setEnabled(true);
-                    button1.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonIncome));
-                    button2.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtonsExpense));
+                    button1.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtons_Expense_Income));
+                    button2.setBackgroundTintList(getResources().getColorStateList(R.color.dialogButtons_Expense_Income));
                     button1.setTextColor(getResources().getColor(R.color.dialogTextNotPressed));
                     button2.setTextColor(getResources().getColor(R.color.dialogTextNotPressed));
                 } else {
