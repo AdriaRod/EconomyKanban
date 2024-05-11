@@ -406,7 +406,7 @@ public class TransactionsFragment extends Fragment {
                 if (item.getTransactionType().equals("Income")) {
                     totalIncome += amount;
                 } else {
-                    totalExpense += amount;
+                    totalExpense -= amount;
                 }
             } else {
                 Log.e("TransactionsFragment", "Invalid transaction amount: " + transactionAmount);
