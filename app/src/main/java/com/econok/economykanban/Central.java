@@ -23,6 +23,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -31,6 +33,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.econok.economykanban.fragments.CustomViewPager;
 import com.econok.economykanban.fragments.SectionsPagerAdapter;
 import com.econok.economykanban.fragments.TransactionsFragment;
 import com.google.accompanist.systemuicontroller.SystemUiController;
@@ -139,8 +142,16 @@ public class Central extends AppCompatActivity {
         sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
 
         //3
-        ViewPager viewPager1 = findViewById(R.id.view_pager);
+        CustomViewPager viewPager1 = findViewById(R.id.view_pager);
+
+        // Para deshabilitar el desplazamiento
+        viewPager1.setSwipeEnabled(false);
+
+//        // Para habilitar el desplazamiento
+//        viewPager1.setSwipeEnabled(true);
+
         viewPager1.setAdapter(sectionsPagerAdapter);
+
 
         //4
         BottomNavigationView mybottomNavView = findViewById(R.id.bottomNavigationView);

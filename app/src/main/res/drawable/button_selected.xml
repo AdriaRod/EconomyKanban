@@ -1,4 +1,4 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/dialogButtonIncome" android:state_enabled="true"/>
+    <item android:drawable="@color/dialogButtons_Expense_Income" android:state_enabled="true"/>
     <item android:drawable="@color/dialogButtonIncomePressed" android:state_enabled="false"/>
 </selector>

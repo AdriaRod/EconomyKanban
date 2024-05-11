@@ -54,6 +54,14 @@
         <item name="android:windowLightNavigationBar">False</item>
     </style>
 
+    <!--_____________________ STATUS Y NAVIGATION de TRANSACCTIONS Y CATEGORIES ______________ -->
+    <style name="fragments_theme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:statusBarColor" tools:targetApi="1">@color/screen_dark</item>
+        <item name="android:navigationBarColor">@color/bottom_navigation_background_dark</item>
+        <item name="android:windowLightStatusBar">False</item>
+        <item name="android:windowLightNavigationBar">False</item>
+    </style>
+
     <!-- _________________________________SHAPES_______________________________________ -->
     <style name="SHAPES">
         <item name="tint">@color/c_shape_dark</item>
@@ -99,6 +107,134 @@
         <item name="itemActiveIndicatorStyle">@color/bottom_nav_item_color</item>
         <item name="labelVisibilityMode">unlabeled</item>
         <item name="itemIconSize">28dp</item>
+    </style>
+
+    <!-- cosas nuevas -->
+    <!-- _________________________________FRAGMENTS_______________________________________ -->
+    <style name="fragment_background">
+        <item name="android:background">@drawable/fragment_background_dark</item>
+    </style>
+
+    <!-- _________________________________CATEGORIES FRAGMENT_______________________________________ -->
+
+    <!-- CARD VIEW  -->
+    <style name="categories_card">
+        <item name="cardBackgroundColor">@color/card_dark</item>
+        <item name="backgroundTint">@color/transparent</item>
+        <item name="cardCornerRadius">40dp</item>
+        <item name="cardElevation">0dp</item>
+    </style>
+
+    <!-- ITEM DEL SELECTOR DE 3 BOTONES -->
+    <style name="option_field">
+        <item name="android:textColor">@color/blue</item>
+        <item name="drawableTint">@color/blue</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingHorizontal">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
+    <style name="option_field_remove">
+        <item name="android:textColor">@color/white</item>
+        <item name="drawableTint">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingHorizontal">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
+    <!-- SPINNER DE TYPES -->
+    <style name="spinner">
+        <item name="android:textColor">@color/white</item>
+        <item name="drawableTint">@color/white</item>
+    </style>
+
+    <!-- CATEGORIES RADIO BUTTONS -->
+    <style name="categories_radio_button">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/poppins_light</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/category_radio_button_background_dark</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:colorControlHighlight">@color/black</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:button">@drawable/button_category_selector_dark</item>
+        <item name="android:paddingHorizontal">10dp</item>
+    </style>
+
+    <!-- ADD TRANSACTIONS BUTTON -->
+    <style name="add_transaction_button">
+        <item name="backgroundTint">@color/blue</item>
+        <item name="elevation">16dp</item>
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="cornerRadius">10dp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- _________________________________ ITEM CARD LAYOUT ___________________________ -->
+    <style name="item_card_background">
+        <item name="backgroundColor">@color/screen_dark</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="title_item_card">
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">start</item>
+        <item name="maxLines">2</item>
+        <item name="android:breakStrategy">balanced</item>
+    </style>
+
+    <style name="tag_item_card">
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:textColor">@color/bottom_nav_icon</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="number_currency_item_card">
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="line_item_card">
+        <item name="android:background">@color/bottom_nav_icon</item>
+    </style>
+
+    <!-- ________________________ DIALOG PARA AÑADIR TRANSACTION ________________________ -->
+    <style name="dialog_add_transaction_background">
+        <item name="cardBackgroundColor">@color/black</item>
+        <item name="cardCornerRadius">24dp</item>
+    </style>
+
+    <style name="close_dialog">
+        <item name="android:tint">@color/bottom_nav_icon</item>
+        <item name="background">@color/transparent</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="dialog_edit_text">
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textColorHint">@color/bottom_nav_icon</item>
+    </style>
+
+    <style name="dialog_radio_buttons">
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="backgroundTint">@color/screen_dark</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/bottom_nav_icon</item>
+        <item name="cornerRadius">10dp</item>
     </style>
 
 

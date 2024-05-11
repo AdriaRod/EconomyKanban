@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,144 +7,346 @@
     tools:context=".fragments.CategoriesFragment"
     style="@style/fragment_background">
 
-    <LinearLayout
+    <!-- ********************* GUIDE LINES ***************************** -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLineStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".3"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".7"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLineBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".4" />
+
+    <!-- _____________________ DISEÑO _____________________________-->
+    <!-- Fecha actual -->
+    <TextView
+        android:id="@+id/currentDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current date"
+        style="@style/date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias=".1"
+        app:layout_constraintVertical_bias=".05"
+        />
+
+
+    <!-- Saldo -->
+    <TextView
+        android:id="@+id/balance"
+        style="@style/balance_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="---"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideLineEnd"
+        app:layout_constraintStart_toStartOf="@id/guideLineStart"
+        app:layout_constraintTop_toBottomOf="@id/currentDate"
+        app:layout_constraintVertical_bias=".05"/>
+
+    <!-- Divisa -->
+
+    <TextView
+        android:id="@+id/textView11"
+        style="@style/currency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="€"
+        android:textAlignment="center"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toTopOf="@id/balance"
+        app:layout_constraintStart_toEndOf="@id/balance"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="2.3"/>
+
+    <!-- Linea abajo de saldo -->
+    <View
+        android:id="@+id/line"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:background="@color/white"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="-10dp"
+        app:layout_constraintTop_toBottomOf="@id/balance"
+        app:layout_constraintStart_toStartOf="@id/guideLineStart"
+        app:layout_constraintEnd_toEndOf="@id/guideLineEnd"
+        />
+
+
+    <!-- ____________________________ Selector de meses ______________________________-->
+
+    <!-- RADIO GROUP -->
+    <RadioGroup
+        android:id="@+id/month_radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/line"
+        app:layout_constraintBottom_toBottomOf="@id/guideLineBottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <RadioButton
+            android:id="@+id/previous_month"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:text="Mes0"
+            style="@style/month_radio_button_unselected"
+
+            />
+
+        <RadioButton
+            android:id="@+id/current_month"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:text="Mes1"
+            style="@style/month_radio_button_selected"
+
+
+            />
+
+        <RadioButton
+            android:id="@+id/next_month"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:text="Mes2"
+            style="@style/month_radio_button_unselected"
+            />
+
+    </RadioGroup>
+
+    <!-- Botones izq y derecha -->
+    <ImageView
+        android:id="@+id/previousButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:src="@drawable/arrow"
+        android:padding="10dp"
+        app:layout_constraintEnd_toStartOf="@id/month_radio_group"
+        app:layout_constraintTop_toTopOf="@id/month_radio_group"
+        app:layout_constraintBottom_toBottomOf="@id/month_radio_group"/>
+
+    <ImageView
+        android:id="@+id/nextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:padding="10dp"
+        android:rotationY="180"
+        android:src="@drawable/arrow"
+        app:layout_constraintStart_toEndOf="@id/month_radio_group"
+        app:layout_constraintTop_toTopOf="@id/month_radio_group"
+        app:layout_constraintBottom_toBottomOf="@id/month_radio_group"/>
+
+    <!-- ________________ CARD VIEW ___________________ -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bottomSheet"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        style="@style/categories_card"
+        app:layout_constraintTop_toTopOf="@id/guideLineBottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
 
-        <!-- Fecha -->
+        <!-- LAYOUT DEL CARD VIEW -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="40dp"
-            android:layout_marginLeft="32dp">
-
-            <TextView
-                android:id="@+id/currentDate"
+            <!-- BUTTON DE SETTINGS -->
+            <ImageView
+                android:id="@+id/btn_popUpMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Current date"
-                style="@style/date"
-                />
-        </LinearLayout>
+                android:src="@drawable/blue_three_dots"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias=".95"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias=".03" />
 
-        <!-- Balance -->
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="clip_horizontal|center"
-            android:orientation="vertical"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp">
-
-            <LinearLayout
+            <!-- SELECT TYPE -->
+            <TextView
+                android:id="@+id/btnTypes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:text="All"
+                android:padding="5dp"
+                style="@style/spinner"
+                android:drawableRight="@drawable/arrow_down"
+                android:drawablePadding="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/btn_popUpMenu"
+                app:layout_constraintBottom_toBottomOf="@id/btn_popUpMenu"
+                app:layout_constraintHorizontal_bias=".06"/>
 
-                <TextView
-                    android:id="@+id/textView12"
-                    style="@style/balance_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="5000"
-                    android:textAlignment="center"
-                    android:paddingLeft="20dp"/>
-
-                <TextView
-                    android:id="@+id/textView11"
-                    style="@style/currency"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="-20dp"
-                    android:text="€"
-                    android:textAlignment="center" />
+            <!-- HIDE SETTINGS BUTTONS -->
 
 
-            </LinearLayout>
-
-            <View
-                android:layout_marginTop="-10dp"
-                android:layout_width="150dp"
-                android:layout_height="3dp"
-                android:background="@color/white"
+            <TextView
+                android:id="@+id/addBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add"
+                android:drawableLeft="@drawable/plus"
+                style="@style/option_field"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toStartOf="@id/editBtn"
+                app:layout_constraintTop_toTopOf="@id/btn_popUpMenu"
+                app:layout_constraintBottom_toBottomOf="@id/btn_popUpMenu"
                 />
 
-        </LinearLayout>
-
-        <!-- Horizontal scroll: meses -->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="40dp"
-            >
-
-
-            <ImageView
-                android:id="@+id/previousButton"
+            <TextView
+                android:id="@+id/editBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:src="@drawable/arrow"
-                android:padding="10dp"/>
+                android:text="@string/edit"
+                android:drawableLeft="@drawable/pencil"
+                style="@style/option_field"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toStartOf="@id/removeBtn"
+                app:layout_constraintTop_toTopOf="@id/btn_popUpMenu"
+                app:layout_constraintBottom_toBottomOf="@id/btn_popUpMenu"
+                />
 
-            <RadioGroup
-                android:id="@+id/month_radio_group"
+            <TextView
+                android:id="@+id/removeBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:text="@string/delete"
+                android:drawableLeft="@drawable/trash"
+                style="@style/option_field_remove"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toStartOf="@id/btn_popUpMenu"
+                app:layout_constraintTop_toTopOf="@id/btn_popUpMenu"
+                app:layout_constraintBottom_toBottomOf="@id/btn_popUpMenu"
+                />
+
+            <!-- HORIZONTAL SCROLL DE CATEGORIES  -->
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_popUpMenu"
+                android:paddingStart="5dp">
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioButtonGlobal"
+                        style="@style/categories_radio_button"
+                        android:text="@string/Global_cat"
+                        android:checked="true"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonFood"
+                        style="@style/categories_radio_button"
+                        android:text="@string/food_cat"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonHome"
+                        style="@style/categories_radio_button"
+                        android:text="@string/home_cat" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonHealth"
+                        style="@style/categories_radio_button"
+                        android:text="@string/health_cat" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonEntertainment"
+                        style="@style/categories_radio_button"
+                        android:text="@string/entertainment_cat" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonSaves"
+                        style="@style/categories_radio_button"
+                        android:text="@string/saves_cat" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonOthers"
+                        style="@style/categories_radio_button"
+                        android:text="@string/others_cat" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonGym"
+                        style="@style/categories_radio_button"
+                        android:text="@string/gym_cat" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonTransport"
+                        style="@style/categories_radio_button"
+                        android:text="@string/transport_cat" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonEducation"
+                        style="@style/categories_radio_button"
+                        android:text="@string/education_cat" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonClothes"
+                        style="@style/categories_radio_button"
+                        android:text="@string/clothes_cat" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonDebts"
+                        style="@style/categories_radio_button"
+                        android:text="@string/debts_cat" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonNa"
+                        style="@style/categories_radio_button"
+                        android:text="@string/na_cat" />
+
+                </RadioGroup>
+            </HorizontalScrollView>
+
+
+            <!-- RECYCLER VIEW -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintStart_toStartOf="parent"/>
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <RadioButton
-                    android:id="@+id/previous_month"
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
-                    android:text="Mes0"
-                    style="@style/radio_button_unselected"
-
-                    />
-
-                <RadioButton
-                    android:id="@+id/current_month"
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
-                    android:text="Mes1"
-                    style="@style/radio_button_selected"
-
-
-                    />
-
-                <RadioButton
-                    android:id="@+id/next_month"
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
-                    android:text="Mes2"
-                    style="@style/radio_button_unselected"
-                    />
-            </RadioGroup>
-
-            <ImageView
-                android:id="@+id/nextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:padding="10dp"
-                android:rotationY="180"
-                android:src="@drawable/arrow" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-</FrameLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

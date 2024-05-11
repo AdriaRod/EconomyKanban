@@ -11,6 +11,9 @@
     <color name="pink_light">#FF9DB7</color>
     <color name="pink_dark">#4F0216</color>
     <color name="gray">#252525</color>
+    <color name="light_gray">#ECECEC</color>
+    <color name="blue">#1381E6</color>
+    <color name="light_blue">#B8D9F7</color>
 
     <!-- Categories Pastel Colors -->
     <color name="pastel_red">#ED918A</color>
@@ -20,6 +23,7 @@
     <color name="c_shape_light">#ECECEC</color>
     <color name="c_shape_dark">#1B1A1A</color>
     <color name="screen_dark">#141218</color>
+    <color name="card_dark">#1A1818</color>
 
         <!-- Register -->
     <color name="edit_text_background_color">#FFE7ED</color>
@@ -31,8 +35,7 @@
     <color name="bottom_nav_icon">#BFBFC0</color>
 
     <!--Color buttons Dialog -->
-    <color name="dialogButtonsExpense">#E3E3E3</color>
-    <color name="dialogButtonIncome">#E3E3E3</color>
+    <color name="dialogButtons_Expense_Income">#E3E3E3</color>
     <color name="dialogButtonsExpensePressed">#F9CDCF</color>
     <color name="dialogButtonIncomePressed">#CCF4C7</color>
 
