@@ -78,7 +78,7 @@
                 android:layout_width="80dp"
                 android:layout_height="30dp"
                 android:text="Mes0"
-                style="@style/radio_button_unselected"
+                style="@style/month_radio_button_unselected"
 
                 />
 
@@ -87,7 +87,7 @@
                 android:layout_width="80dp"
                 android:layout_height="30dp"
                 android:text="Mes1"
-                style="@style/radio_button_selected"
+                style="@style/month_radio_button_selected"
 
 
                 />
@@ -97,8 +97,9 @@
                 android:layout_width="80dp"
                 android:layout_height="30dp"
                 android:text="Mes2"
-                style="@style/radio_button_unselected"
+                style="@style/month_radio_button_unselected"
                 />
+
         </RadioGroup>
 
         <ImageView

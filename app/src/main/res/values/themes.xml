@@ -20,42 +20,42 @@
 
     <!-- _________________________________GENERAL ASSETS_______________________________________ -->
 
-        <!-- Welcome title if light mode on -->
-        <style name="TITLE">
-            <item name="android:textColor">@color/pink</item>
-            <item name="fontFamily">@font/gabarito_bold</item>
-        </style>
+    <!-- Welcome title if light mode on -->
+    <style name="TITLE">
+        <item name="android:textColor">@color/pink</item>
+        <item name="fontFamily">@font/gabarito_bold</item>
+    </style>
 
-        <!-- Welcome paragraph if light mode on -->
-        <style name="PARAGRAPH">
-            <item name="android:textColor">@color/black</item>
-            <item name="fontFamily">@font/poppins_regular</item>
-        </style>
+    <!-- Welcome paragraph if light mode on -->
+    <style name="PARAGRAPH">
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">@font/poppins_regular</item>
+    </style>
 
-        <!-- Accents in paragraph -->
-        <style name="ACCENT_PARAGRAPH">
-            <item name="android:textColor">@color/pink</item>
-            <item name="font">@font/poppins_semibold</item>
-        </style>
+    <!-- Accents in paragraph -->
+    <style name="ACCENT_PARAGRAPH">
+        <item name="android:textColor">@color/pink</item>
+        <item name="font">@font/poppins_semibold</item>
+    </style>
 
-        <!-- Primary button if light mode on -->
-        <style name="PRIMARY_BUTTON">
-            <item name="backgroundTint">@color/pink</item>
-            <item name="android:textColor">@color/white</item>
-            <item name="fontFamily">@font/gabarito_bold</item>
-        </style>
+    <!-- Primary button if light mode on -->
+    <style name="PRIMARY_BUTTON">
+        <item name="backgroundTint">@color/pink</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="fontFamily">@font/gabarito_bold</item>
+    </style>
 
-        <!-- Secondary button if light mode on -->
-        <style name="SECONDARY_BUTTON">
-            <item name="backgroundTint">@color/transparent</item>
-            <item name="android:textColor">@color/black</item>
-            <item name="fontFamily">@font/gabarito_regular</item>
-        </style>
+    <!-- Secondary button if light mode on -->
+    <style name="SECONDARY_BUTTON">
+        <item name="backgroundTint">@color/transparent</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">@font/gabarito_regular</item>
+    </style>
 
-        <!-- Welcome, Register & Login Screen Background -->
-        <style name="WRL_SCREEN">
-            <item name="android:background">@color/white</item>
-        </style>
+    <!-- Welcome, Register & Login Screen Background -->
+    <style name="WRL_SCREEN">
+        <item name="android:background">@color/white</item>
+    </style>
 
     <!-- _____________________STATUS BAR Y NAVIGATION BAR del login y el register _________ -->
     <style name="login_register_theme" parent="Theme.Material3.DayNight.NoActionBar">
@@ -82,20 +82,20 @@
 
     <!-- _________________________________SPLASH SCREEN_______________________________________ -->
 
-        <!--  Splash screen background if light mode on  -->
-        <style name="SPLASH_SCREEN">
-            <item name="android:background">@drawable/splash_background</item>
-        </style>
+    <!--  Splash screen background if light mode on  -->
+    <style name="SPLASH_SCREEN">
+        <item name="android:background">@drawable/splash_background</item>
+    </style>
 
-<!-- _____________________________________WELCOME SCREEN___________________________________ -->
+    <!-- _____________________________________WELCOME SCREEN___________________________________ -->
 
 
-        <!-- Welcome image if light mode on -->
-        <style name="WELCOME_IMAGE">
-            <item name="srcCompat">@drawable/women_welcome_img</item>
-        </style>
+    <!-- Welcome image if light mode on -->
+    <style name="WELCOME_IMAGE">
+        <item name="srcCompat">@drawable/women_welcome_img</item>
+    </style>
 
-<!-- _________________________________FORMS - LOGIN & REGISTER_______________________________________ -->
+    <!-- _________________________________FORMS - LOGIN & REGISTER_______________________________________ -->
 
     <style name="FORM_FIELDS">
         <item name="android:background">@drawable/edit_text_border</item>
@@ -132,7 +132,7 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
     </style>
-    
+
     <style name="currency">
         <item name="fontFamily">@font/poppins_semibold</item>
         <item name="android:textColor">@color/white</item>
@@ -287,7 +287,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="cornerRadius">10dp</item>
     </style>
-    
+
     <!-- ____________________________ SETTINGS FRAGMENT _________________________ -->
     <!-- TEXTO E ICONO -->
     <style name="setting_text_view">
