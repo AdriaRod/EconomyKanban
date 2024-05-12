@@ -346,7 +346,10 @@ public class CategoriesFragment extends Fragment {
                 } else {
                     // Cambiar el color del SVG del botón a su color original
                     three_dots_btn.setColorFilter(null);
-
+                    editSelec=false;
+                    adapter.resetSelectedItems();
+                    adapter.setEditModeEnabled(editSelec);
+                    btnEdit.setBackgroundColor(Color.TRANSPARENT);
                     // Ocultar los botones
                     btnAdd.setVisibility(View.INVISIBLE);
                     btnEdit.setVisibility(View.INVISIBLE);
