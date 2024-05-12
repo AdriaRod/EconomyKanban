@@ -76,4 +76,8 @@ dependencies {
 
     //System UI Controller - Accompanist
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
+
+    //Graphics
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
 }
