@@ -48,30 +48,32 @@
         android:id="@+id/ProfilePicture"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        android:src="@drawable/profile_picture_settings"
-        android:scaleType="centerCrop"
-        android:background="@drawable/circular_border_white"
-        android:padding="5dp"
         android:layout_marginTop="5dp"
+        android:background="@drawable/circular_border_white"
+        android:clickable="true"
+        android:padding="5dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile_picture_settings"
         app:layout_constraintEnd_toEndOf="@id/guideLineEnd"
         app:layout_constraintStart_toStartOf="@id/guideLineStart"
         app:layout_constraintTop_toBottomOf="@id/title_settings" />
 
     <!-- Edit Profile Button -->
     <Button
+        android:id="@+id/editar"
         android:layout_width="0dp"
         android:layout_height="30dp"
-        android:text="@string/edit_profile"
-        app:layout_constraintTop_toBottomOf="@id/ProfilePicture"
-        app:layout_constraintStart_toStartOf="@id/guideLineStart"
-        app:layout_constraintEnd_toEndOf="@id/guideLineEnd"
-        app:layout_constraintBottom_toBottomOf="@id/guideLineBottom"
         android:backgroundTint="@color/white"
-        android:textColor="@color/black"
         android:fontFamily="@font/poppins_semibold"
-        android:textSize="12sp"
+        android:gravity="center"
         android:padding="2dp"
-        android:gravity="center" />
+        android:text="@string/edit_profile"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/guideLineBottom"
+        app:layout_constraintEnd_toEndOf="@id/guideLineEnd"
+        app:layout_constraintStart_toStartOf="@id/guideLineStart"
+        app:layout_constraintTop_toBottomOf="@id/ProfilePicture" />
 
     <!-- CardView -->
     <androidx.cardview.widget.CardView

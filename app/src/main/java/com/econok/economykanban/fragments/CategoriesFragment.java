@@ -2,6 +2,7 @@ package com.econok.economykanban.fragments;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
@@ -9,6 +10,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,21 +22,27 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.econok.economykanban.CardAdapter;
 import com.econok.economykanban.CardItem;
 import com.econok.economykanban.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -41,8 +50,10 @@ import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class CategoriesFragment extends Fragment {
 
@@ -95,6 +106,7 @@ public class CategoriesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         cardList = new ArrayList<>();
+        visualizarCategorias();
         if (getArguments() != null) {
 
         }
@@ -205,6 +217,112 @@ public class CategoriesFragment extends Fragment {
                     btnDelete.setVisibility(View.VISIBLE);
 
                     isClicked = true;
+
+                    btnDelete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            new AlertDialog.Builder(getActivity())
+                                    .setTitle("Borrar categoria")
+                                    .setMessage("¿Esta seguro que desea borrar esta categoria?")
+                                    .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Toast.makeText(getActivity(), "Categoria borrada", Toast.LENGTH_SHORT).show();;
+                                        }
+                                    })
+                                    .setNegativeButton("No", null)
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .show();
+                        }
+                    });
+
+                    btnAdd.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //Instanciar firebase,buscar el usuario actual y crear la coleccion de categorias dentro del usuario
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            mAuth= FirebaseAuth.getInstance();
+                            DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
+                            CollectionReference categoriasRef = usuarioRef.collection("categorias");
+
+                            // Crear un cuadro de diálogo de entrada
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setTitle("Nuevo RadioButton");
+
+                            // Establecer el diseño del cuadro de diálogo
+                            final EditText input = new EditText(getContext());
+                            builder.setView(input);
+
+                            // Configurar los botones del cuadro de diálogo
+                            builder.setPositiveButton("Agregar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String radioButtonName = input.getText().toString();
+
+                                    // Crear el mapa de datos para la transacción
+                                    Map<String, Object> categoria = new HashMap<>();
+                                    categoria.put("Nombre", radioButtonName);
+
+                                    // Añadir la transacción a la subcolección "categorias"
+                                    categoriasRef.add(categoria)
+                                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                @Override
+                                                public void onSuccess(DocumentReference documentReference) {
+                                                    Toast.makeText(getActivity(), "Category added succesfully", Toast.LENGTH_SHORT).show();
+                                                    Log.d(TAG, "Categoria agregada correctamente");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(getActivity(), "Error adding category", Toast.LENGTH_SHORT).show();
+                                                    Log.w(TAG, "Error al agregar categoria  ", e);
+                                                }
+                                            });
+
+                                    // Crear un nuevo RadioButton con el nombre proporcionado
+                                    final RadioButton newRadioButton = new RadioButton(getContext());
+
+                                    // Establecer el texto del nuevo RadioButton
+                                    newRadioButton.setText(radioButtonName);
+
+                                    // Desseleccionar todos los demás RadioButtons antes de seleccionar este
+                                    radioGroupCategories.clearCheck();
+
+                                    // Agregar el nuevo RadioButton al RadioGroup
+                                    radioGroupCategories.addView(newRadioButton);
+
+                                    // Opcional: seleccionar el nuevo RadioButton
+                                    newRadioButton.setChecked(false);
+
+                                    lastSelectedButton=newRadioButton;
+
+                                    // Aplicar el estilo al nuevo RadioButton
+                                    setButtonStyle(newRadioButton, false); // Establecer como seleccionado inicialmente
+
+                                    // Escuchar el cambio de estado de selección del botón
+                                    newRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                        @Override
+                                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                            // Aplicar el estilo cuando cambie el estado de selección
+                                            setButtonStyle(newRadioButton, isChecked);
+                                        }
+                                    });
+                                }
+                            });
+                            builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                            // Mostrar el cuadro de diálogo
+                            builder.show();
+                        }
+                    });
+                    //PARA SOLUCIONAR EL PROBLEMA DE QUE LOS OTROS NO SE DESELECCIONAN SOLO HAY Q VOLVER A LLAMAR A SETBITTON STYLE PARA EL ULTIMO SELECCIONADO
+
+
                 } else {
                     // Cambiar el color del SVG del botón a su color original
                     three_dots_btn.setColorFilter(null);
@@ -222,6 +340,7 @@ public class CategoriesFragment extends Fragment {
 
 
         //*********************** RADIO GROUP DE CATEGORIAS *************************
+        radioGroupCategories=view.findViewById(R.id.radioGroup);
         btnGlobal = view.findViewById(R.id.radioButtonGlobal);
         btnFood = view.findViewById(R.id.radioButtonFood);
         btnHome = view.findViewById(R.id.radioButtonHome);
@@ -266,7 +385,7 @@ public class CategoriesFragment extends Fragment {
         btnNa.setOnClickListener(radioButtonClickListener);
 
         // Establecer lastSelectedButton como el botón de comida por defecto
-        lastSelectedButton = btnGlobal;
+        //lastSelectedButton = btnGlobal;
 
         return view;
     }
@@ -304,8 +423,8 @@ public class CategoriesFragment extends Fragment {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             mAuth= FirebaseAuth.getInstance();
             DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
-            // Obtener la referencia a la subcolección "transacciones" del usuario
-            CollectionReference transaccionesRef = usuarioRef.collection("transacciones");
+            // Obtener la referencia a la subcolección "categorias" del usuario
+            CollectionReference categoriasRef = usuarioRef.collection("categorias");
             RadioButton selectedButton = (RadioButton) v;
             setButtonStyle(selectedButton, true);
             if (lastSelectedButton != null && lastSelectedButton != selectedButton) {
@@ -313,7 +432,7 @@ public class CategoriesFragment extends Fragment {
             }
             lastSelectedButton = selectedButton;
             if(v.getId()==R.id.radioButtonNa){
-                transaccionesRef.whereEqualTo("etiqueta","n/a").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                categoriasRef.whereEqualTo("etiqueta","n/a").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
@@ -332,7 +451,7 @@ public class CategoriesFragment extends Fragment {
                             calcularBalance(); // Calcular el nuevo saldo
                             actualizarBalanceTextView(); // Actualizar el texto del balanceTextView
                         } else {
-                            Log.d(TAG, "Error obteniendo transacciones: ", task.getException());
+                            Log.d(TAG, "Error obteniendo categorias: ", task.getException());
                         }
                     }
                 });
@@ -451,6 +570,62 @@ public class CategoriesFragment extends Fragment {
         DateFormatSymbols dfs = new DateFormatSymbols();
         String[] months = dfs.getShortMonths();
         return months[month];
+    }
+
+    private void visualizarCategorias(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        mAuth= FirebaseAuth.getInstance();
+        DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
+        // Obtener la referencia a la subcolección "categorias" del usuario
+        CollectionReference categoriasRef = usuarioRef.collection("categorias");
+
+        // Obtener todas las categorias del usuario
+        categoriasRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                // Itera sobre cada documento en la colección
+                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                    // Accede al valor del atributo "Nombre" de cada documento
+                    String nombreCategoria = document.getString("Nombre");
+                    final RadioButton newRadioButton = new RadioButton(getContext());
+
+                    // Establecer el texto del nuevo RadioButton
+                    newRadioButton.setText(nombreCategoria);
+
+                    // Desseleccionar todos los demás RadioButtons antes de seleccionar este
+                    radioGroupCategories.clearCheck();
+
+                    // Agregar el nuevo RadioButton al RadioGroup
+                    radioGroupCategories.addView(newRadioButton);
+
+                    // Opcional: seleccionar el nuevo RadioButton
+                    newRadioButton.setChecked(false);
+
+                    lastSelectedButton=newRadioButton;
+
+                    // Aplicar el estilo al nuevo RadioButton
+                    setButtonStyle(newRadioButton, false); // Establecer como seleccionado inicialmente
+
+                    // Escuchar el cambio de estado de selección del botón
+                    newRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            // Aplicar el estilo cuando cambie el estado de selección
+                            setButtonStyle(newRadioButton, isChecked);
+                        }
+                    });
+
+                    // Haz lo que necesites con el nombre de la categoría
+                    Log.d("Nombre de la categoría", nombreCategoria);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // Maneja los errores si la consulta falla
+                Log.e("Error", "Error al obtener las categorías", e);
+            }
+        });
     }
 
 
