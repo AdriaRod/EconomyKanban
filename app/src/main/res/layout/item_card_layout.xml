@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraint_layout"
+    style="@style/item_card_background"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    style="@style/item_card_background">
+    android:layout_height="wrap_content">
 
     <!-- Título -->
     <TextView
         android:id="@+id/currentDateTransactions"
+        style="@style/title_item_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Venta Frelance"
-        style="@style/title_item_card"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/guideline"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="20dp"
+        android:text="Venta Freelance"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginEnd="20dp" />
+        app:layout_constraintEnd_toStartOf="@id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Etiqueta -->
     <TextView
         android:id="@+id/tagTextView"
+        style="@style/tag_item_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:text="n/a"
-        style="@style/tag_item_card"
-        app:layout_constraintStart_toStartOf="@id/guideline"
-        app:layout_constraintTop_toTopOf="@id/currentDateTransactions"
         app:layout_constraintBottom_toBottomOf="@id/currentDateTransactions"
-        android:layout_marginEnd="8dp" />
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toTopOf="@id/currentDateTransactions" />
 
     <!-- Guideline para fijar la posición del tagTextView -->
     <androidx.constraintlayout.widget.Guideline
@@ -42,52 +42,50 @@
     <!-- Signo -->
     <TextView
         android:id="@+id/signTextView"
+        style="@style/number_currency_item_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text=""
-        android:paddingStart="1dp"
-        style="@style/number_currency_item_card"
         android:gravity="end"
-        app:layout_constraintStart_toEndOf="@+id/guideline"
+        android:paddingStart="1dp"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="@id/currentDateTransactions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@id/transactionTextView"
-        app:layout_constraintTop_toTopOf="@id/currentDateTransactions"
-        app:layout_constraintBottom_toBottomOf="@id/currentDateTransactions"
         app:layout_constraintHorizontal_chainStyle="packed"
-        />
+        app:layout_constraintStart_toEndOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@id/currentDateTransactions" />
 
     <!-- Monto -->
     <TextView
         android:id="@+id/transactionTextView"
+        style="@style/number_currency_item_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/number_currency_item_card"
         android:text="120"
-        app:layout_constraintStart_toEndOf="@id/signTextView"
-        app:layout_constraintEnd_toStartOf="@id/divisaTextView"
-        app:layout_constraintTop_toTopOf="@id/currentDateTransactions"
         app:layout_constraintBottom_toBottomOf="@id/currentDateTransactions"
-        />
+        app:layout_constraintEnd_toStartOf="@id/divisaTextView"
+        app:layout_constraintStart_toEndOf="@id/signTextView"
+        app:layout_constraintTop_toTopOf="@id/currentDateTransactions" />
 
     <!-- Divisa -->
     <TextView
         android:id="@+id/divisaTextView"
+        style="@style/number_currency_item_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/number_currency_item_card"
         android:text="€"
-       app:layout_constraintStart_toEndOf="@id/transactionTextView"
+        app:layout_constraintBottom_toBottomOf="@id/currentDateTransactions"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/currentDateTransactions"
-        app:layout_constraintBottom_toBottomOf="@id/currentDateTransactions" />
+        app:layout_constraintStart_toEndOf="@id/transactionTextView"
+        app:layout_constraintTop_toTopOf="@id/currentDateTransactions" />
 
     <View
+        style="@style/line_item_card"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        style="@style/line_item_card"
-        app:layout_constraintTop_toBottomOf="@id/currentDateTransactions"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="0dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/currentDateTransactions" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

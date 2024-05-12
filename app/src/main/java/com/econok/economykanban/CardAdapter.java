@@ -10,15 +10,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
     private List<CardItem> cardList;
     private Context context;
+    private List<CardItem> selectedItems = new ArrayList<>();
+    private boolean isEditModeEnabled = false;
 
     public CardAdapter(Context context, List<CardItem> cardList) {
         this.context = context;
         this.cardList = cardList;
+    }
+
+    public void setEditModeEnabled(boolean enabled) {
+        isEditModeEnabled = enabled;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -42,14 +50,56 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         } else {
             holder.transactionTypeTextView.setTextColor(Color.parseColor("#ED918A"));
         }
+
+        // Configurar la selección del elemento si está en modo de edición
+        if (isEditModeEnabled) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    toggleSelection(currentItem, holder);
+                }
+            });
+
+            // Cambiar el color de fondo si el elemento está seleccionado
+            if (selectedItems.contains(currentItem)) {
+                holder.itemView.setBackgroundColor(Color.parseColor("#FF4081"));
+            } else {
+                holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+            }
+        } else {
+            // Cuando no está en modo de edición, eliminar el listener y restablecer el color de fondo
+            holder.itemView.setOnClickListener(null);
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+        }
     }
 
+    private void toggleSelection(CardItem item, CardViewHolder holder) {
+        if (selectedItems.contains(item)) {
+            // Si el elemento ya está seleccionado, quítalo de la lista de elementos seleccionados y cambia el color de fondo
+            selectedItems.remove(item);
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+        } else {
+            // Si el elemento no está seleccionado, agrégalo a la lista de elementos seleccionados y cambia el color de fondo
+            selectedItems.add(item);
+            holder.itemView.setBackgroundColor(Color.parseColor("#FF4081"));
+        }
+    }
 
+    // Restablecer la lista de elementos seleccionados cuando salgas del modo de edición
+    public void resetSelectedItems() {
+        selectedItems.clear();
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemCount() {
         return cardList.size();
     }
+
+    public List<CardItem> getSelectedItems() {
+        return selectedItems;
+    }
+
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {
         public TextView titleTextView;

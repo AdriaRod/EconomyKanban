@@ -221,16 +221,16 @@
 
             <TextView
                 android:id="@+id/editBtn"
+                style="@style/option_field"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/edit"
+                android:clickable="true"
                 android:drawableLeft="@drawable/pencil"
-                style="@style/option_field"
+                android:text="@string/edit"
                 android:visibility="invisible"
-                app:layout_constraintEnd_toStartOf="@id/removeBtn"
-                app:layout_constraintTop_toTopOf="@id/btn_popUpMenu"
                 app:layout_constraintBottom_toBottomOf="@id/btn_popUpMenu"
-                />
+                app:layout_constraintEnd_toStartOf="@id/removeBtn"
+                app:layout_constraintTop_toTopOf="@id/btn_popUpMenu" />
 
             <TextView
                 android:id="@+id/removeBtn"

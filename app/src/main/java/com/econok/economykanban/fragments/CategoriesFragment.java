@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.content.DialogInterface;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.ContextThemeWrapper;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -90,6 +92,7 @@ public class CategoriesFragment extends Fragment {
     private RecyclerView recyclerView;
     private CardAdapter adapter;
     private List<CardItem> cardList;
+    private Boolean editSelec;
 
     public CategoriesFragment() {
         // Required empty public constructor
@@ -118,6 +121,7 @@ public class CategoriesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
 
+        editSelec=true;
         //______________________________ FECHA _______________________
         currentDateTextView = view.findViewById(R.id.currentDate);
 
@@ -323,6 +327,22 @@ public class CategoriesFragment extends Fragment {
                     //PARA SOLUCIONAR EL PROBLEMA DE QUE LOS OTROS NO SE DESELECCIONAN SOLO HAY Q VOLVER A LLAMAR A SETBITTON STYLE PARA EL ULTIMO SELECCIONADO
 
 
+                    btnEdit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            editSelec=!editSelec;
+                            if(editSelec) {
+                                btnEdit.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                                adapter.setEditModeEnabled(editSelec);
+                            }else{
+                                btnEdit.setBackgroundColor(Color.TRANSPARENT);
+                                adapter.resetSelectedItems();
+                                adapter.setEditModeEnabled(editSelec);
+                            }
+                        }
+                    });
+
+
                 } else {
                     // Cambiar el color del SVG del botón a su color original
                     three_dots_btn.setColorFilter(null);
@@ -423,8 +443,8 @@ public class CategoriesFragment extends Fragment {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             mAuth= FirebaseAuth.getInstance();
             DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
-            // Obtener la referencia a la subcolección "categorias" del usuario
-            CollectionReference categoriasRef = usuarioRef.collection("categorias");
+            // Obtener la referencia a la subcolección "transacciones" del usuario
+            CollectionReference transaccionesRef = usuarioRef.collection("transacciones");
             RadioButton selectedButton = (RadioButton) v;
             setButtonStyle(selectedButton, true);
             if (lastSelectedButton != null && lastSelectedButton != selectedButton) {
@@ -432,7 +452,7 @@ public class CategoriesFragment extends Fragment {
             }
             lastSelectedButton = selectedButton;
             if(v.getId()==R.id.radioButtonNa){
-                categoriasRef.whereEqualTo("etiqueta","n/a").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                transaccionesRef.whereEqualTo("etiqueta","n/a").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
@@ -571,6 +591,7 @@ public class CategoriesFragment extends Fragment {
         String[] months = dfs.getShortMonths();
         return months[month];
     }
+
 
     private void visualizarCategorias(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
