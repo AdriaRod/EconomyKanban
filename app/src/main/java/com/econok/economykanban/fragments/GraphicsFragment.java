@@ -1,5 +1,6 @@
 package com.econok.economykanban.fragments;
 
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.Image;
@@ -48,6 +49,7 @@ public class GraphicsFragment extends Fragment {
     private int currentMonthIndex = Calendar.getInstance().get(Calendar.MONTH);
     private List<CardItem> cardList;
     private BarChart barChart;
+    private TextView balanceTextView;
 
     public GraphicsFragment() {
         // Required empty public constructor
@@ -56,9 +58,12 @@ public class GraphicsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_graphics, container, false);
         currentDateTextView = view.findViewById(R.id.titleTextView);
         barChart = view.findViewById(R.id.barChart);
+        balanceTextView = view.findViewById(R.id.balanceTextView);
+
 
         previousMonthButton = view.findViewById(R.id.previous_month);
         currentMonthButton = view.findViewById(R.id.current_month);
@@ -132,21 +137,30 @@ public class GraphicsFragment extends Fragment {
         // Update the bar chart
         updateBarChart();
     }
+    // En tu método updateBarChart()
+
     private void updateBarChart() {
         // Get current month
         Calendar calendar = Calendar.getInstance();
         int currentMonthIndex = calendar.get(Calendar.MONTH);
 
+        // Verificar si el tema actual es oscuro o claro
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        boolean isNightMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES;
+
+        // Establecer el color del texto según el modo de noche
+        int textColor = isNightMode ? Color.WHITE : Color.BLACK;
+
         //Fonts tests
         Typeface typeface = ResourcesCompat.getFont(requireContext(), R.font.poppins_regular);
         MyValueFormatter formatter = new MyValueFormatter(typeface);
 
-
         // Get the Legend from the chart
         Legend legend = barChart.getLegend();
 
-        // Set the typeface for the legend
+        // Set the typeface and text color for the legend
         legend.setTypeface(typeface);
+        legend.setTextColor(textColor);
 
         // Prepare data for the bar chart
         ArrayList<BarEntry> entriesIncome = new ArrayList<>();
@@ -163,11 +177,13 @@ public class GraphicsFragment extends Fragment {
         dataSetIncome.setValueTypeface(typeface); // Set the typeface for the data labels
         dataSetIncome.setColor(Color.parseColor("#32DA6E"));
         dataSetIncome.setValueTextSize(11f);
+        dataSetIncome.setValueTextColor(textColor); // Establecer color del texto
 
         BarDataSet dataSetExpense = new BarDataSet(entriesExpense, "Expense");
         dataSetExpense.setValueTypeface(typeface);
         dataSetExpense.setColor(Color.parseColor("#ED918A"));
         dataSetExpense.setValueTextSize(11f);
+        dataSetExpense.setValueTextColor(textColor); // Establecer color del texto
 
         // Group the data sets
         BarData barData = new BarData(dataSetIncome, dataSetExpense);
@@ -193,6 +209,7 @@ public class GraphicsFragment extends Fragment {
         yAxis.setDrawGridLines(false); // remove grid lines
         yAxis.setDrawLabels(true);
         yAxis.setTextSize(12f);
+        yAxis.setTextColor(textColor); // Establecer color del texto
         YAxis yAxisRight = barChart.getAxisRight();
         yAxisRight.setDrawLabels(false);
         yAxisRight.setDrawGridLines(false);
@@ -203,6 +220,7 @@ public class GraphicsFragment extends Fragment {
         barChart.setFitBars(true); // make the x-axis fit exactly all bars
         barChart.invalidate(); // refresh
     }
+
 
 
 

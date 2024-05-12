@@ -44,6 +44,12 @@
     <color name="dialogTextIncome">#32DA6E</color>
     <color name="dialogTextExpense">#ED918A</color>
 
+    <!--Color for bars on charts -->
+    <color name="barIncomeDark">#32DA6E</color>
+    <color name="barIncomeLight">#32DA6E</color>
+    <color name="barExpenseDark">#ED918A</color>
+    <color name="barExpenseLight">#ED918A</color>
+
 
 
 

@@ -384,7 +384,10 @@ public class TransactionsFragment extends Fragment {
                         cardList.add(new CardItem(concepto,tipo,concepto,cantidad));
                     }
                     // Actualizar la interfaz de usuario con la nueva lista de tarjetas
-                    adapter.notifyDataSetChanged();
+                    if (adapter != null) {
+                        adapter.notifyDataSetChanged();
+                    }
+
                     calcularBalance(); // Calcular el nuevo saldo
                     actualizarBalanceTextView(); // Actualizar el texto del balanceTextView
                 } else {
