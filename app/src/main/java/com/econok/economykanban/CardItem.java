@@ -26,4 +26,5 @@ public class CardItem {
     public String getTransactionNumber() {
         return transactionNumber;
     }
+
 }
