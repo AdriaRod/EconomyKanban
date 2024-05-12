@@ -1,6 +1,7 @@
 package com.econok.economykanban.fragments;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,12 +13,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.econok.economykanban.CardItem;
+import com.econok.economykanban.MyValueFormatter;
 import com.econok.economykanban.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -133,44 +137,65 @@ public class GraphicsFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         int currentMonthIndex = calendar.get(Calendar.MONTH);
 
+        //Fonts tests
+        Typeface typeface = ResourcesCompat.getFont(requireContext(), R.font.poppins_regular);
+        MyValueFormatter formatter = new MyValueFormatter(typeface);
+
+
+        // Get the Legend from the chart
+        Legend legend = barChart.getLegend();
+
+        // Set the typeface for the legend
+        legend.setTypeface(typeface);
+
         // Prepare data for the bar chart
         ArrayList<BarEntry> entriesIncome = new ArrayList<>();
         ArrayList<BarEntry> entriesExpense = new ArrayList<>();
 
         // Datos de prueba para ingresos (Income)
-        entriesIncome.add(new BarEntry(0, 1000));
-        entriesIncome.add(new BarEntry(1, 1500));
-        entriesIncome.add(new BarEntry(2, 2000));
-        entriesIncome.add(new BarEntry(3, 2500));
+        entriesIncome.add(new BarEntry(0, 2000));
 
         // Datos de prueba para gastos (Expense)
-        entriesExpense.add(new BarEntry(0, 500));
-        entriesExpense.add(new BarEntry(1, 750));
-        entriesExpense.add(new BarEntry(2, 1000));
-        entriesExpense.add(new BarEntry(3, 1250));
+        entriesExpense.add(new BarEntry(1, 1500));
 
         // Create bar data sets
         BarDataSet dataSetIncome = new BarDataSet(entriesIncome, "Income");
-        dataSetIncome.setColor(Color.GREEN);
+        dataSetIncome.setValueTypeface(typeface); // Set the typeface for the data labels
+        dataSetIncome.setColor(Color.parseColor("#32DA6E"));
+        dataSetIncome.setValueTextSize(11f);
 
         BarDataSet dataSetExpense = new BarDataSet(entriesExpense, "Expense");
-        dataSetExpense.setColor(Color.RED);
+        dataSetExpense.setValueTypeface(typeface);
+        dataSetExpense.setColor(Color.parseColor("#ED918A"));
+        dataSetExpense.setValueTextSize(11f);
 
         // Group the data sets
         BarData barData = new BarData(dataSetIncome, dataSetExpense);
-        barData.setBarWidth(0.4f); // set custom bar width
+        barData.setBarWidth(0.3f); // set custom bar width
+        barData.setHighlightEnabled(false);
+        barData.setDrawValues(true);
 
         // Setup X axis
-        String[] months = new DateFormatSymbols().getShortMonths();
         XAxis xAxis = barChart.getXAxis();
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{months[currentMonthIndex]}));
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{String.valueOf(currentMonthIndex)}));
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1);
         xAxis.setCenterAxisLabels(true);
+        xAxis.setTypeface(typeface); // Set the typeface for the X axis
+        xAxis.setDrawGridLines(false); // remove grid lines
+        xAxis.setDrawLabels(false); // show labels
 
         // Setup Y axis
         YAxis yAxis = barChart.getAxisLeft();
+        yAxis.setValueFormatter(formatter);
+        yAxis.setTypeface(typeface); // Set the typeface for the Y axis
         yAxis.setAxisMinimum(0);
+        yAxis.setDrawGridLines(false); // remove grid lines
+        yAxis.setDrawLabels(true);
+        yAxis.setTextSize(12f);
+        YAxis yAxisRight = barChart.getAxisRight();
+        yAxisRight.setDrawLabels(false);
+        yAxisRight.setDrawGridLines(false);
 
         // Apply data to the chart
         barChart.setData(barData);
@@ -178,6 +203,8 @@ public class GraphicsFragment extends Fragment {
         barChart.setFitBars(true); // make the x-axis fit exactly all bars
         barChart.invalidate(); // refresh
     }
+
+
 
 
 
