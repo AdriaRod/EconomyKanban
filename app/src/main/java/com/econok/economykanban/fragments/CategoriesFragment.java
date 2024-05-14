@@ -493,7 +493,7 @@ public class CategoriesFragment extends Fragment {
                 if (item.getTransactionType().equals("Income")) {
                     totalIncome += amount;
                 } else {
-                    totalExpense += amount;
+                    totalExpense -= amount;
                 }
             } else {
                 Log.e("TransactionsFragment", "Invalid transaction amount: " + transactionAmount);
@@ -567,7 +567,7 @@ public class CategoriesFragment extends Fragment {
         // Set the formatted date to the TextView
         currentDateTextView.setText(capitalizedDate);
 
-
+        calcularBalance();
 
     }
 

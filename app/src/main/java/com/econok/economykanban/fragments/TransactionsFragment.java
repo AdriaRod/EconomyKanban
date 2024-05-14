@@ -79,7 +79,7 @@ public class TransactionsFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     private List<CardItem> cardList;
-    private MaterialButton addTransaction, button1, button2;
+    private Button addTransaction, button1, button2;
     private Dialog dialog;
     private EditText conceptEditText, quantityEditText;
     private Button acceptButton;
@@ -560,9 +560,10 @@ public class TransactionsFragment extends Fragment {
                                 // Extraer los datos de la transacción
                                 String concepto = document.getString("concepto");
                                 String cantidad = document.getString("cantidad");
+                                String fecha=document.getString("fecha");
 
                                 // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
-                                cardList.add(new CardItem(concepto,tipo,concepto,cantidad));
+                                cardList.add(new CardItem(concepto,tipo,fecha,cantidad));
                             }
                             // Definir un comparador personalizado para ordenar por fecha de cada tarjeta
                             Comparator<CardItem> comparator = new Comparator<CardItem>() {
