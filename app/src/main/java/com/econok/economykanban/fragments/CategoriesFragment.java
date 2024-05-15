@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,6 +36,7 @@ import android.widget.Toast;
 
 import com.econok.economykanban.CardAdapter;
 import com.econok.economykanban.CardItem;
+import com.econok.economykanban.CategoryAdapter;
 import com.econok.economykanban.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -94,6 +96,10 @@ public class CategoriesFragment extends Fragment {
     private List<CardItem> cardList;
     private Boolean editSelec;
 
+    // PARA EL DIALOG DE SELECCIONAR CATEOGORIA
+    private Button showCategoriesButton;
+    private CategoryAdapter categoryAdapter;
+
     public CategoriesFragment() {
         // Required empty public constructor
     }
@@ -120,6 +126,13 @@ public class CategoriesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
+
+        //___________________________ OPEN DIALOG SELECT CATEGORIES _______________________
+        showCategoriesButton = view.findViewById(R.id.showCategoriesButton);
+        showCategoriesButton.setOnClickListener(v -> showCategoriesDialog());
+
+
+
 
         editSelec=true;
         //______________________________ FECHA _______________________
@@ -411,6 +424,46 @@ public class CategoriesFragment extends Fragment {
         //lastSelectedButton = btnGlobal;
 
         return view;
+    }
+
+    //EL DIALOG SE MUESTRA PERO LOS ITEMS NO
+    private void showCategoriesDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_select_category, null);
+        builder.setView(dialogView);
+
+        RecyclerView recyclerView = dialogView.findViewById(R.id.recyclerViewCategories);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // Temporarily use a static list of categories
+        List<String> categories = new ArrayList<>();
+        categories.add("Food");
+        categories.add("Health");
+        categories.add("Entertainment");
+        categories.add("Transport");
+        // Add more categories as needed
+
+        if (categories.isEmpty()) {
+            Log.e("RecyclerView", "La lista de categorías está vacía");
+        } else {
+            Log.d("RecyclerView", "Número de categorías: " + categories.size());
+        }
+
+        CategoryAdapter categoryAdapter = new CategoryAdapter(categories);
+        recyclerView.setAdapter(categoryAdapter);
+
+        builder.setPositiveButton("Add Category", (dialog, which) -> {
+            // Simulate adding a new category
+            categoryAdapter.addCategory("New Category");
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> {
+            // Handle Cancel button click
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void setButtonStyle(RadioButton button, boolean isSelected) {

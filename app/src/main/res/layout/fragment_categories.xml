@@ -7,6 +7,15 @@
     tools:context=".fragments.CategoriesFragment"
     style="@style/fragment_background">
 
+    <!-- provisional -->
+    <Button
+        android:id="@+id/showCategoriesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="provisional"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <!-- ********************* GUIDE LINES ***************************** -->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideLineStart"
