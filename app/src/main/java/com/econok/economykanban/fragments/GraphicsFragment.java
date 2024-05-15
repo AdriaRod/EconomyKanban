@@ -1,10 +1,13 @@
 package com.econok.economykanban.fragments;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +32,16 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -49,6 +61,7 @@ public class GraphicsFragment extends Fragment {
     private int currentMonthIndex = Calendar.getInstance().get(Calendar.MONTH);
     private List<CardItem> cardList;
     private BarChart barChart;
+    private FirebaseAuth mAuth;
     private TextView balanceTextView;
 
     public GraphicsFragment() {
@@ -80,7 +93,7 @@ public class GraphicsFragment extends Fragment {
                 currentMonthIndex--;
                 if (currentMonthIndex < 0) currentMonthIndex = 11;
                 updateMonthsText();
-                updateBarChart();
+                updateChart();
             }
         });
 
@@ -90,7 +103,7 @@ public class GraphicsFragment extends Fragment {
                 currentMonthIndex++;
                 if (currentMonthIndex > 11) currentMonthIndex = 0;
                 updateMonthsText();
-                updateBarChart();
+                updateChart();
             }
         });
 
@@ -100,7 +113,7 @@ public class GraphicsFragment extends Fragment {
                 currentMonthIndex--;
                 if (currentMonthIndex < 0) currentMonthIndex = 11;
                 updateMonthsText();
-                updateBarChart();
+                updateChart();
             }
         });
 
@@ -110,7 +123,7 @@ public class GraphicsFragment extends Fragment {
                 currentMonthIndex++;
                 if (currentMonthIndex > 11) currentMonthIndex = 0;
                 updateMonthsText();
-                updateBarChart();
+                updateChart();
             }
         });
 
@@ -135,14 +148,16 @@ public class GraphicsFragment extends Fragment {
         cardList = new ArrayList<>();
 
         // Update the bar chart
-        updateBarChart();
+        updateChart();
     }
     // En tu método updateBarChart()
-
-    private void updateBarChart() {
+    private void updateBarChart(float totalIncome, float totalExpense) {
         // Get current month
         Calendar calendar = Calendar.getInstance();
         int currentMonthIndex = calendar.get(Calendar.MONTH);
+
+        Log.d(TAG, "Total INC: " + totalIncome);
+        Log.d(TAG, "Total EXP: " + totalExpense);
 
         // Verificar si el tema actual es oscuro o claro
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
@@ -155,22 +170,15 @@ public class GraphicsFragment extends Fragment {
         Typeface typeface = ResourcesCompat.getFont(requireContext(), R.font.poppins_regular);
         MyValueFormatter formatter = new MyValueFormatter(typeface);
 
-        // Get the Legend from the chart
-        Legend legend = barChart.getLegend();
-
-        // Set the typeface and text color for the legend
-        legend.setTypeface(typeface);
-        legend.setTextColor(textColor);
-
         // Prepare data for the bar chart
         ArrayList<BarEntry> entriesIncome = new ArrayList<>();
         ArrayList<BarEntry> entriesExpense = new ArrayList<>();
 
         // Datos de prueba para ingresos (Income)
-        entriesIncome.add(new BarEntry(0, 2000));
+        entriesIncome.add(new BarEntry(0, totalIncome));
 
         // Datos de prueba para gastos (Expense)
-        entriesExpense.add(new BarEntry(1, 1500));
+        entriesExpense.add(new BarEntry(1, totalExpense));
 
         // Create bar data sets
         BarDataSet dataSetIncome = new BarDataSet(entriesIncome, "Income");
@@ -221,10 +229,46 @@ public class GraphicsFragment extends Fragment {
         barChart.invalidate(); // refresh
     }
 
+    private void updateChart() {
+        FirebaseFirestore db;
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
+        CollectionReference transaccionesRef = usuarioRef.collection("transacciones");
 
+        // Obtener todas las transacciones del usuario
+        transaccionesRef.orderBy("fecha", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    float totalIncome = 0;
+                    float totalExpense = 0;
 
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String type = document.getString("tipo");
+                        String quantity = document.getString("cantidad");
 
+                        if (type != null && quantity != null) {
+                            double amount = Double.parseDouble(quantity);
+                            if (type.equals("Income")) {
+                                totalIncome += amount;
+                            } else if (type.equals("Expense")) {
+                                totalExpense += amount;
+                            }
+                        }
+                    }
+                    totalExpense = Math.abs(totalExpense);
 
+                    Log.d(TAG, "Total Income: " + totalIncome);
+                    Log.d(TAG, "Total Expense: " + totalExpense);
+                    updateBarChart(totalIncome, totalExpense);
+
+                } else {
+                    Log.d(TAG, "Error obteniendo transacciones: ", task.getException());
+                }
+            }
+        });
+    }
 
 
 
@@ -249,4 +293,5 @@ public class GraphicsFragment extends Fragment {
         String[] months = dfs.getShortMonths();
         return months[month];
     }
+
 }
