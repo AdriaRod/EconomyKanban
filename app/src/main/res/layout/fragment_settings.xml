@@ -7,6 +7,25 @@
     tools:context=".fragments.SettingsFragment"
     style="@style/fragment_background">
 
+    <!-- SHAPES -->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ellipse_1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/fragment_shapes"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ellipse_2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/fragment_shapes"
+        />
+
     <!-- ********************* GUIDE LINES ***************************** -->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideLineStart"

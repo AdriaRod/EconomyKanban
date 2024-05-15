@@ -76,7 +76,12 @@
     <!-- _________________________________SHAPES_______________________________________ -->
     <style name="SHAPES">
         <item name="tint">@color/c_shape_light</item>
+
+    </style><style name="fragment_shapes">
+        <item name="tint">@color/pink</item>
     </style>
+
+
 
 
 

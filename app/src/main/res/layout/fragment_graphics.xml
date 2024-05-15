@@ -8,6 +8,25 @@
     tools:context=".fragments.GraphicsFragment">
     <!-- Color de fondo provisional para ver el contenido-->
 
+    <!-- SHAPES -->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ellipse_1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/SHAPES"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ellipse_2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/SHAPES"
+        />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideLineBottom"
         android:layout_width="wrap_content"

@@ -67,6 +67,10 @@
         <item name="tint">@color/c_shape_dark</item>
     </style>
 
+    <style name="fragment_shapes">
+    <item name="tint">@color/black</item>
+    </style>
+
 
     <!-- _________________________________SPLASH SCREEN_______________________________________ -->
 
