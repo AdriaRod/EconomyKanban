@@ -117,6 +117,9 @@
     <string name="delete_account">Delete account</string>
     <string name="manage_acc_action3">If you log out your data will be in the Cloud, but if you want to delete all your data you should Delete Account.</string>
 
+    <!-- _____________________ LANGUAGE ACTIVITY _______________________ -->
+    <string name="english">English</string>
+    <string name="espanish">Spanish</string>
 
 
 </resources>
