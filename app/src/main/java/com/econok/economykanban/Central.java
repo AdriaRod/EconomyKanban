@@ -2,6 +2,7 @@ package com.econok.economykanban;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -20,6 +21,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.MenuItem;
@@ -242,5 +245,9 @@ public class Central extends AppCompatActivity {
             itemView.removeViewAt(3);
         }
     }
+
+
+
+
 
 }

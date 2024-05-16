@@ -9,6 +9,7 @@
     <string name="cSignUp">Sign Up</string>
     <string name="Register">Register</string>
     <string name="or">Or</string>
+
     <style name="shape_desc">A shape</style>
 
     <string name="AlrAcc">Already have an account</string>
@@ -66,7 +67,7 @@
 
     <!-- Fragments -->
     <string name="date_format">MMMM d, Y</string>
-        <!-- TODO: Cuando hagamos la traducción a español debemos ponerlo así: <string name="date_format">d 'de' MMMM, Y</string>-->
+    <!-- TODO: Cuando hagamos la traducción a español debemos ponerlo así: <string name="date_format">d 'de' MMMM, Y</string>-->
 
     <!-- POP UP MEMU -->
     <string name="all">All</string>
@@ -97,12 +98,25 @@
     <string name="settings">Settings</string>
     <string name="edit_profile">Edit Profile</string>
 
-        <!-- settings -->
-        <string name="language">Language</string>
-        <string name="currency">Currency</string>
-        <string name="darkmode">Dark Mode</string>
-        <string name="notifications">Notifications</string>
-        <string name="manage_account">Manage Account</string>
+    <!-- settings -->
+    <string name="language">Language</string>
+    <string name="currency">Currency</string>
+    <string name="darkmode">Dark Mode</string>
+    <string name="notifications">Notifications</string>
+    <string name="manage_account">Manage Account</string>
+
+    <!-- Manage Account -->
+    <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
+    <string name="place_new_picture">Place new picture</string>
+    <string name="name">Name</string>
+    <string name="lastname">Lastname</string>
+    <string name="manage_acc_action1">Enter your name and add your optional profile photo.</string>
+    <string name="manage_acc_action2">You can change your password quickly and securely.</string>
+    <string name="logout">Logout</string>
+    <string name="delete_account">Delete account</string>
+    <string name="manage_acc_action3">If you log out your data will be in the Cloud, but if you want to delete all your data you should Delete Account.</string>
+
 
 
 </resources>

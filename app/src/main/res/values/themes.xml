@@ -81,10 +81,6 @@
         <item name="tint">@color/pink</item>
     </style>
 
-
-
-
-
     <!-- _________________________________SPLASH SCREEN_______________________________________ -->
 
     <!--  Splash screen background if light mode on  -->
@@ -355,6 +351,47 @@
         <item name="backgroundTint">@color/transparent</item>
         <item name="cardCornerRadius">50dp</item>
         <item name="cardElevation">0dp</item>
+    </style>
+
+    <!-- MANAGE ACCOUNT ACTIVITY -->
+    <style name="action_button">
+        <item name="android:backgroundTint">@color/transparent</item>
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:fontFamily">@font/poppins_light</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    
+    <style name="manage_account_edit_text">
+        <item name="android:background">@drawable/edittext_manage_account_background</item>
+        <item name="android:padding">10dp</item>
+        <item name="paddingStart">20dp</item>
+        <item name="android:textColorHint">#B1B1B1</item>
+        <item name="fontFamily">@font/poppins_light</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="action_text">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="android:textColor">#626262</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="manage_account_text_view">
+        <item name="android:background">@drawable/edittext_manage_account_background</item>
+        <item name="android:padding">10dp</item>
+        <item name="paddingStart">20dp</item>
+        <item name="fontFamily">@font/poppins_light</item>
+        <item name="android:textColor">#B1B1B1</item>
+        <item name="drawableTint">#B1B1B1</item>
+    </style>
+    
+    <style name="logout_delete_button">
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/poppins_light</item>
+        <item name="android:drawableTint">@color/black</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
 

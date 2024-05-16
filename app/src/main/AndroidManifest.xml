@@ -18,23 +18,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EconomyKanban"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ManageAccount"
+            android:exported="false" />
         <activity
             android:name=".Central"
             android:exported="true"
-            android:theme="@style/fragments_theme"
-            />
-
+            android:theme="@style/fragments_theme" />
         <activity
             android:name=".WelcomeActivity"
-            android:exported="false"
-            />
-
+            android:exported="false" />
         <activity
             android:name=".Login"
             android:exported="false"
-            android:theme="@style/login_register_theme"/>
-
+            android:theme="@style/login_register_theme" />
         <activity
             android:name=".Splash"
             android:exported="true">
@@ -44,17 +41,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Register"
             android:exported="true"
-            android:theme="@style/login_register_theme"/>
-
+            android:theme="@style/login_register_theme" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            />
-
+            android:exported="true" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
