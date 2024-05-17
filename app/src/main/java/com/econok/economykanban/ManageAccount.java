@@ -3,6 +3,7 @@ package com.econok.economykanban;
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -122,7 +124,98 @@ public class ManageAccount extends AppCompatActivity {
             }
         });
 
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(ManageAccount.this)
+                        .setTitle("Cerrar sesion")
+                        .setMessage("¿Esta seguro que desea cerrar la sesion actual?")
+                        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                logout();
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        });
+
+        borrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(ManageAccount.this)
+                        .setTitle("Borrar cuenta")
+                        .setMessage("¿Esta seguro que desea borrar la cuenta? Esta acción es irreversible")
+                        .setPositiveButton("Borrar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                borrarUsuario();
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        });
+
     }//fin del onCreate
+
+    private void logout() {
+        mAuth.signOut();
+        mGoogleSignInClient.signOut();
+        Intent i = this.getPackageManager().getLaunchIntentForPackage(this.getPackageName());
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+        irLogin();
+    }
+
+    private void borrarUsuario(){
+        FirebaseUser user=mAuth.getCurrentUser();
+        String idUser=user.getUid();
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference imageRef = storageRef.child("perfil/" + idUser);
+
+        imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "User image deleted.");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d(TAG, "Error deleting user image: ", exception);
+            }
+        });
+
+
+        user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "User account deleted.");
+                }
+            }
+        });
+
+        mFirestore.collection("usuarios").document(idUser)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(ManageAccount.this,"Usuario eliminado con exito", Toast.LENGTH_SHORT).show();
+                        logout();
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(ManageAccount.this,"Error al eliminar usuario", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 
     private void irLogin(){
         Intent intent=new Intent(ManageAccount.this, Login.class);
