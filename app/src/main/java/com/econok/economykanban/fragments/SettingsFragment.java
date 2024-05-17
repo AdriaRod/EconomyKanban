@@ -109,22 +109,13 @@ public class SettingsFragment extends Fragment {
         options.setCircleDimmedLayer(true);
         options.setCompressionFormat(Bitmap.CompressFormat.PNG);
 
-        int idImagenPredeterminada = getResources().getIdentifier("person", "drawable", getActivity().getPackageName());
+        int idImagenPredeterminada = getResources().getIdentifier("profile_picture_settings", "drawable", getActivity().getPackageName());
 
         if (idImagenPredeterminada != 0) {
             persona = getResources().getDrawable(idImagenPredeterminada);
         } else {
             Toast.makeText(getActivity(), "Imagen no disponible", Toast.LENGTH_SHORT).show();
         }
-
-        user2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickPhoto, REQUEST_GALLERY_PERMISSION);
-            }
-        });
 
         mFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();

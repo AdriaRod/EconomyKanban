@@ -149,7 +149,6 @@
               android:id="@+id/mail_locked"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
-              android:text="pepitogrillo@gmail.com"
               android:drawableEnd="@drawable/icon_lock"
               style="@style/manage_account_text_view"
 

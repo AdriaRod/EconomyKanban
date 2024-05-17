@@ -41,7 +41,10 @@ import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderF
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -56,7 +59,7 @@ import java.util.Map;
 public class ManageAccount extends AppCompatActivity {
 
     private Button btn_cancel;
-    private TextView logout,borrar;
+    private TextView logout,borrar,mail;
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
     private GoogleSignInClient mGoogleSignInClient;
@@ -72,13 +75,14 @@ public class ManageAccount extends AppCompatActivity {
 
         logout = findViewById(R.id.logout);
         borrar=findViewById(R.id.delete);
+        mail=findViewById(R.id.mail_locked);
         user2 = findViewById(R.id.picture);
         options = new UCrop.Options();
         user2.setScaleType(ImageView.ScaleType.FIT_XY);
         options.setCircleDimmedLayer(true);
         options.setCompressionFormat(Bitmap.CompressFormat.PNG);
 
-        int idImagenPredeterminada = getResources().getIdentifier("person", "drawable", getPackageName());
+        int idImagenPredeterminada = getResources().getIdentifier("profile_picture_settings", "drawable", getPackageName());
 
         if (idImagenPredeterminada != 0) {
             persona = getResources().getDrawable(idImagenPredeterminada);
@@ -228,6 +232,7 @@ public class ManageAccount extends AppCompatActivity {
         if (Fuser == null) {
             irLogin();
         } else {
+            cargarCorreo();
             if(Fuser.getPhotoUrl()!=null){
                 loadFirebaseImage(Fuser.getPhotoUrl());
             }else {
@@ -442,5 +447,32 @@ public class ManageAccount extends AppCompatActivity {
         Intent intent = new Intent(this, Central.class);
         intent.putExtra("openSettings", true);
         startActivity(intent);
+    }
+
+    private void cargarCorreo(){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+
+        String userEmail = currentUser.getEmail(); // Obtener el correo del usuario autenticado
+        mFirestore.collection("usuarios")
+                .whereEqualTo("correo", userEmail)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot document : task.getResult()) {
+                                String correo = document.getString("correo");
+                                mail.setText(correo);
+                                Log.d(TAG, "Correo del usuario: " + correo);
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
     }
 }
