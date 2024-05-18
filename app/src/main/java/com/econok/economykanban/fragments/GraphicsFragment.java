@@ -5,7 +5,6 @@ import static android.content.ContentValues.TAG;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,8 +23,6 @@ import com.econok.economykanban.CardItem;
 import com.econok.economykanban.MyValueFormatter;
 import com.econok.economykanban.R;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -34,7 +31,6 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -47,8 +43,6 @@ import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -76,7 +70,6 @@ public class GraphicsFragment extends Fragment {
         currentDateTextView = view.findViewById(R.id.titleTextView);
         barChart = view.findViewById(R.id.barChart);
         balanceTextView = view.findViewById(R.id.balanceTextView);
-
 
         previousMonthButton = view.findViewById(R.id.previous_month);
         currentMonthButton = view.findViewById(R.id.current_month);
@@ -148,9 +141,9 @@ public class GraphicsFragment extends Fragment {
         cardList = new ArrayList<>();
 
         // Update the bar chart
-        updateChart();
+        updateChart();  // Call updateChart here to refresh data when the fragment is created
     }
-    // En tu método updateBarChart()
+
     private void updateBarChart(float totalIncome, float totalExpense) {
         // Get current month
         Calendar calendar = Calendar.getInstance();
@@ -270,8 +263,6 @@ public class GraphicsFragment extends Fragment {
         });
     }
 
-
-
     private void updateMonthsText() {
         int previousMonthIndex = currentMonthIndex - 1;
         int nextMonthIndex = currentMonthIndex + 1;
@@ -293,5 +284,4 @@ public class GraphicsFragment extends Fragment {
         String[] months = dfs.getShortMonths();
         return months[month];
     }
-
 }
