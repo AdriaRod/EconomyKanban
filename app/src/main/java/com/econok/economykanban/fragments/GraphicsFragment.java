@@ -23,6 +23,8 @@ import com.econok.economykanban.CardItem;
 import com.econok.economykanban.MyValueFormatter;
 import com.econok.economykanban.R;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -63,9 +65,7 @@ public class GraphicsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_graphics, container, false);
         currentDateTextView = view.findViewById(R.id.titleTextView);
         barChart = view.findViewById(R.id.barChart);
@@ -80,44 +80,32 @@ public class GraphicsFragment extends Fragment {
 
         updateMonthsText();
 
-        previousMonthButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentMonthIndex--;
-                if (currentMonthIndex < 0) currentMonthIndex = 11;
-                updateMonthsText();
-                updateChart();
-            }
+        previousMonthButton.setOnClickListener(v -> {
+            currentMonthIndex--;
+            if (currentMonthIndex < 0) currentMonthIndex = 11;
+            updateMonthsText();
+            updateChart();
         });
 
-        nextMonthButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentMonthIndex++;
-                if (currentMonthIndex > 11) currentMonthIndex = 0;
-                updateMonthsText();
-                updateChart();
-            }
+        nextMonthButton.setOnClickListener(v -> {
+            currentMonthIndex++;
+            if (currentMonthIndex > 11) currentMonthIndex = 0;
+            updateMonthsText();
+            updateChart();
         });
 
-        previousButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentMonthIndex--;
-                if (currentMonthIndex < 0) currentMonthIndex = 11;
-                updateMonthsText();
-                updateChart();
-            }
+        previousButton.setOnClickListener(v -> {
+            currentMonthIndex--;
+            if (currentMonthIndex < 0) currentMonthIndex = 11;
+            updateMonthsText();
+            updateChart();
         });
 
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentMonthIndex++;
-                if (currentMonthIndex > 11) currentMonthIndex = 0;
-                updateMonthsText();
-                updateChart();
-            }
+        nextButton.setOnClickListener(v -> {
+            currentMonthIndex++;
+            if (currentMonthIndex > 11) currentMonthIndex = 0;
+            updateMonthsText();
+            updateChart();
         });
 
         return view;
@@ -219,6 +207,14 @@ public class GraphicsFragment extends Fragment {
         barChart.setData(barData);
         barChart.getDescription().setEnabled(false);
         barChart.setFitBars(true); // make the x-axis fit exactly all bars
+
+        // Configure legend
+        Legend legend = barChart.getLegend();
+        legend.setTextColor(textColor);
+        legend.setTypeface(typeface);
+        legend.setTextSize(10f);
+        legend.setXEntrySpace(15f); //Margen entre textos de leyenda
+
         barChart.invalidate(); // refresh
     }
 
