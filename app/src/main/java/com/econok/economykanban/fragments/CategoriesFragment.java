@@ -284,7 +284,8 @@ public class CategoriesFragment extends Fragment {
                                             });
 
                                     // Crear un nuevo RadioButton con el nombre proporcionado
-                                    final RadioButton newRadioButton = new RadioButton(getContext());
+                                    ContextThemeWrapper newRadioButtonContext = new ContextThemeWrapper(getContext(), R.style.categories_radio_button);
+                                    final RadioButton newRadioButton = new RadioButton(newRadioButtonContext);
 
                                     // Establecer el texto del nuevo RadioButton
                                     newRadioButton.setText(radioButtonName);
@@ -302,6 +303,8 @@ public class CategoriesFragment extends Fragment {
 
                                     // Aplicar el estilo al nuevo RadioButton
                                     setButtonStyle(newRadioButton, false); // Establecer como seleccionado inicialmente
+
+                                    newRadioButton.setButtonDrawable(null);
 
                                     // Escuchar el cambio de estado de selección del botón
                                     newRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -611,7 +614,9 @@ public class CategoriesFragment extends Fragment {
                 for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                     // Accede al valor del atributo "Nombre" de cada documento
                     String nombreCategoria = document.getString("Nombre");
-                    final RadioButton newRadioButton = new RadioButton(getContext());
+
+                    ContextThemeWrapper newRadioButtonContext = new ContextThemeWrapper(getContext(), R.style.categories_radio_button);
+                    final RadioButton newRadioButton = new RadioButton(newRadioButtonContext);
 
                     // Establecer el texto del nuevo RadioButton
                     newRadioButton.setText(nombreCategoria);
@@ -629,6 +634,9 @@ public class CategoriesFragment extends Fragment {
 
                     // Aplicar el estilo al nuevo RadioButton
                     setButtonStyle(newRadioButton, false); // Establecer como seleccionado inicialmente
+
+                    newRadioButton.setButtonDrawable(null);
+
 
                     // Escuchar el cambio de estado de selección del botón
                     newRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
