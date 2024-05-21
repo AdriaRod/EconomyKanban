@@ -42,6 +42,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DateFormatSymbols;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -440,6 +441,45 @@ public class TransactionsFragment extends Fragment {
         previousMonthButton.setChecked(false);
         currentMonthButton.setChecked(true);
         nextMonthButton.setChecked(false);
+
+        switch (currentMonthButton.getText().toString()){
+            case "ene":
+                obtenerTransaccionesPorMes("01");
+                break;
+            case "feb":
+                obtenerTransaccionesPorMes("02");
+                break;
+            case "mar":
+                obtenerTransaccionesPorMes("03");
+                break;
+            case "abr":
+                obtenerTransaccionesPorMes("04");
+                break;
+            case "may":
+                obtenerTransaccionesPorMes("05");
+                break;
+            case "jun":
+                obtenerTransaccionesPorMes("06");
+                break;
+            case "jul":
+                obtenerTransaccionesPorMes("07");
+                break;
+            case "ago":
+                obtenerTransaccionesPorMes("08");
+                break;
+            case "sept":
+                obtenerTransaccionesPorMes("09");
+                break;
+            case "oct":
+                obtenerTransaccionesPorMes("10");
+                break;
+            case "nov":
+                obtenerTransaccionesPorMes("11");
+                break;
+            case "dic":
+                obtenerTransaccionesPorMes("12");
+                break;
+        }
     }
 
     // Método para obtener la abreviatura del nombre del mes a partir de su número
@@ -588,6 +628,52 @@ public class TransactionsFragment extends Fragment {
                     }
                 });
     }
+
+    private void obtenerTransaccionesPorMes(final String mesFiltrado) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
+        CollectionReference transaccionesRef = usuarioRef.collection("transacciones");
+
+        // Obtener todas las transacciones del usuario
+        transaccionesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    cardList.clear();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String fecha = document.getString("fecha");
+                        if (fecha != null && obtenerMesDeFecha(fecha).equals(mesFiltrado)) {
+                            String concepto = document.getString("concepto");
+                            String tipo = document.getString("tipo");
+                            String cantidad = document.getString("cantidad");
+
+                            cardList.add(new CardItem(concepto, tipo, fecha, cantidad));
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Log.d(TAG, "Error obteniendo transacciones: ", task.getException());
+                }
+            }
+        });
+    }
+
+    // Método para extraer el mes de una fecha en formato "dd/MM/yyyy HH:mm:ss"
+    private String obtenerMesDeFecha(String fecha) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+        try {
+            Date date = sdf.parse(fecha);
+            SimpleDateFormat sdfMes = new SimpleDateFormat("MM", Locale.getDefault());
+            return sdfMes.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+
+
 
     @Override
     public void onStart() {
