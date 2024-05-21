@@ -13,10 +13,10 @@
 
     <!-- Cancel -->
     <Button
-        android:id="@+id/btn_cancel"
+        android:id="@+id/btn_done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cancel"
+        android:text="@string/done"
         style="@style/action_button"
 
         app:layout_constraintTop_toTopOf="parent"
@@ -25,23 +25,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintHorizontal_bias="0"
-        />
-
-    <!-- Done -->
-    <Button
-        android:id="@+id/btn_done"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/done"
-        style="@style/action_button"
-        android:fontFamily="@font/poppins_semibold"
-
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintHorizontal_bias="1"
         />
 
     <!-- VERTICAL SCROLL -->
@@ -82,8 +65,8 @@
           <!-- Picture -->
           <ImageView
               android:id="@+id/picture"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              android:layout_width="137dp"
+              android:layout_height="139dp"
               android:src="@drawable/add_picture"
 
               app:layout_constraintTop_toTopOf="parent"

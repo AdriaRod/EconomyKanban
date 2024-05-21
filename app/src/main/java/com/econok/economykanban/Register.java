@@ -51,7 +51,7 @@ public class Register extends AppCompatActivity {
     private EditText correo,password,rpassword;
     private FirebaseFirestore mFirestore;
     private FirebaseAuth mAuth;
-    private static final int RC_SIGN_IN = 123;
+    private static final int RC_SIGN_IN = 444;
     private GoogleSignInClient mGoogleSignInClient;
 
     private Button btn_register, btn_login;
@@ -70,7 +70,7 @@ public class Register extends AppCompatActivity {
         googleR=findViewById(R.id.buttonWithIcon);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("159235896101-tbr4e83cc1tp77pnjj7er02gtm17ldc2.apps.googleusercontent.com159235896101-tbr4e83cc1tp77pnjj7er02gtm17ldc2.apps.googleusercontent.com")
+                .requestIdToken("159235896101-tbr4e83cc1tp77pnjj7er02gtm17ldc2.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
 
@@ -169,6 +169,11 @@ public class Register extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     @Override
@@ -298,11 +303,6 @@ public class Register extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
-    }
-
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     private void updateUI(FirebaseUser user) {

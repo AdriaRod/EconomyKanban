@@ -58,7 +58,7 @@ import java.util.Map;
 
 public class ManageAccount extends AppCompatActivity {
 
-    private Button btn_cancel;
+    private Button btn_done;
     private TextView logout,borrar,mail;
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
@@ -120,8 +120,8 @@ public class ManageAccount extends AppCompatActivity {
             return insets;
         });
 
-        btn_cancel = findViewById(R.id.btn_cancel);
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
+        btn_done = findViewById(R.id.btn_done);
+        btn_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 irASettingsFragment();
