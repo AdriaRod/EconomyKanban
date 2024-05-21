@@ -67,7 +67,7 @@
               android:id="@+id/picture"
               android:layout_width="137dp"
               android:layout_height="139dp"
-              android:src="@drawable/add_picture"
+              android:src="@drawable/blank"
 
               app:layout_constraintTop_toTopOf="parent"
               app:layout_constraintEnd_toEndOf="parent"

@@ -32,6 +32,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -101,7 +102,7 @@ public class CategoriesFragment extends Fragment {
     private CardAdapter adapter;
     private List<CardItem> cardList;
     private Boolean editSelec;
-
+    private LinearLayout layout_cat;
     public CategoriesFragment() {
         // Required empty public constructor
     }
@@ -128,6 +129,8 @@ public class CategoriesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
+
+        visualizarCategorias();
 
         editSelec=true;
         //______________________________ FECHA _______________________
@@ -159,6 +162,7 @@ public class CategoriesFragment extends Fragment {
         // Inicializar el Dialog
         dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.dialog_categories);
+        layout_cat=dialog.findViewById(R.id.layout_cat);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(false);
         //esto es para que el fondo sea transparente
@@ -372,6 +376,7 @@ public class CategoriesFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
                             dialog.show();
+                            cargarCategorias();
                         }
                     });
 
@@ -712,6 +717,45 @@ public class CategoriesFragment extends Fragment {
         });
     }
 
+    private void cargarCategorias() {
+        // Limpiar el layout para evitar duplicados
+        layout_cat.removeAllViews();
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+
+        DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
+        CollectionReference categoriasRef = usuarioRef.collection("categorias");
+
+        categoriasRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String nombreCategoria = document.getString("Nombre");
+
+                        // Crear un nuevo botón para cada categoría
+                        Button categoriaButton = new Button(getActivity());
+                        categoriaButton.setText(nombreCategoria);
+                        categoriaButton.setLayoutParams(new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT));
+                        categoriaButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // Acciones al hacer clic en una categoría
+                                Toast.makeText(getActivity(), "Categoría seleccionada: " + nombreCategoria, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        // Añadir el botón al layout
+                        layout_cat.addView(categoriaButton);
+                    }
+                } else {
+                    Log.d("Firebase", "Error obteniendo categorías: ", task.getException());
+                }
+            }
+        });
+    }
 
 }

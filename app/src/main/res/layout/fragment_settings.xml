@@ -72,7 +72,7 @@
         android:clickable="true"
         android:padding="5dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/profile_picture_settings"
+        android:src="@drawable/blank"
         app:layout_constraintEnd_toEndOf="@id/guideLineEnd"
         app:layout_constraintStart_toStartOf="@id/guideLineStart"
         app:layout_constraintTop_toBottomOf="@id/title_settings" />
