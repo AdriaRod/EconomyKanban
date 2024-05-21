@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:padding="16dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="6dp"
+    style="@style/dialog_add_transaction_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Selecciona una categoría"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingBottom="8dp"
+            android:gravity="center"
+            android:textColor="@color/black" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:paddingBottom="8dp">
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <Button
+            android:id="@+id/categoriesDialogAccept"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/accept"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/blue"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:padding="12dp"
+            android:drawablePadding="8dp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

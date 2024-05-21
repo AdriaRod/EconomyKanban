@@ -2,11 +2,13 @@ package com.econok.economykanban.fragments;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,6 +27,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -41,6 +45,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -79,6 +84,8 @@ public class CategoriesFragment extends Fragment {
     //PopUp Menu para seleccionar (ADD, EDITAR, ELIMINAR)
     ImageView three_dots_btn;
     TextView btnAdd, btnEdit, btnDelete;
+    FloatingActionButton openDialog;
+    private Dialog dialog;
     private Boolean isClicked;
 
     //SPINNER DE FILTROS
@@ -149,6 +156,17 @@ public class CategoriesFragment extends Fragment {
         // Configura el texto inicial de los RadioButtons
         updateMonthsText();
 
+        // Inicializar el Dialog
+        dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.dialog_categories);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(false);
+        //esto es para que el fondo sea transparente
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
         // Configura los listeners de los RadioButtons
         previousMonthButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,6 +211,7 @@ public class CategoriesFragment extends Fragment {
         btnAdd = view.findViewById(R.id.addBtn);
         btnEdit= view.findViewById(R.id.editBtn);
         btnDelete = view.findViewById(R.id.removeBtn);
+        openDialog = view.findViewById(R.id.openDialog);
         isClicked = false;
 
         //Inicializamos el spinner (que no es spinner es un textView que queda mejor)
@@ -220,6 +239,7 @@ public class CategoriesFragment extends Fragment {
                     btnAdd.setVisibility(View.VISIBLE);
                     btnEdit.setVisibility(View.VISIBLE);
                     btnDelete.setVisibility(View.VISIBLE);
+                    openDialog.setVisibility(View.VISIBLE);
 
                     isClicked = true;
 
@@ -334,18 +354,35 @@ public class CategoriesFragment extends Fragment {
                     btnEdit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            editSelec=!editSelec;
-                            if(editSelec) {
-                                btnEdit.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                                adapter.setEditModeEnabled(editSelec);
-                            }else{
-                                btnEdit.setBackgroundColor(Color.TRANSPARENT);
+                            openDialog.setVisibility(View.VISIBLE);
+                            editSelec = !editSelec;
+
+                            if (editSelec) {
+                                btnEdit.setBackgroundColor(Color.parseColor("#FFFFFF")); // Color blanco
+                            } else {
+                                btnEdit.setBackgroundColor(Color.TRANSPARENT); // Transparente
                                 adapter.resetSelectedItems();
-                                adapter.setEditModeEnabled(editSelec);
                             }
+
+                            adapter.setEditModeEnabled(editSelec);
                         }
                     });
 
+                    openDialog.setOnClickListener(new View.OnClickListener(){
+                        @Override
+                        public void onClick(View v) {
+                            dialog.show();
+                        }
+                    });
+
+                    Button acceptButton = dialog.findViewById(R.id.categoriesDialogAccept);
+                    acceptButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Cerrar el diálogo de momento
+                            dialog.dismiss();
+                        }
+                    });
 
                 } else {
                     // Cambiar el color del SVG del botón a su color original
@@ -358,6 +395,7 @@ public class CategoriesFragment extends Fragment {
                     btnAdd.setVisibility(View.INVISIBLE);
                     btnEdit.setVisibility(View.INVISIBLE);
                     btnDelete.setVisibility(View.INVISIBLE);
+                    openDialog.setVisibility(View.INVISIBLE);
 
                     isClicked = false;
                 }
