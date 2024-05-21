@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -626,6 +627,19 @@ public class CategoriesFragment extends Fragment {
 
                     // Agregar el nuevo RadioButton al RadioGroup
                     radioGroupCategories.addView(newRadioButton);
+
+                    // Configurar los márgenes (por ejemplo, 16dp a la derecha)
+                    int marginInDp = 16; // Cambia esto según tus necesidades
+                    int marginInPixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, marginInDp, getResources().getDisplayMetrics());
+
+// Obtener los parámetros de diseño del nuevo RadioButton
+                    RadioGroup.LayoutParams params = (RadioGroup.LayoutParams) newRadioButton.getLayoutParams();
+
+// Establecer el margen a la derecha
+                    params.setMargins(0, 0, marginInPixels, 0);
+
+// Aplicar los parámetros de diseño actualizados al RadioButton
+                    newRadioButton.setLayoutParams(params);
 
                     // Opcional: seleccionar el nuevo RadioButton
                     newRadioButton.setChecked(false);
