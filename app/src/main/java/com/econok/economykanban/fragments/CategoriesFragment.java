@@ -99,8 +99,10 @@ public class CategoriesFragment extends Fragment {
     private RecyclerView recyclerView;
     private CardAdapter adapter;
     private List<CardItem> cardList;
+
     private Boolean editSelec;
     private LinearLayout layout_cat;
+    private ArrayList<String> transaccionList = new ArrayList<>();
     public CategoriesFragment() {
         // Required empty public constructor
     }
@@ -139,7 +141,7 @@ public class CategoriesFragment extends Fragment {
         //********** PARA EL RECYCLER VIEW ************
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        cardList=new ArrayList<>();
         adapter = new CardAdapter(getContext(), cardList);
         recyclerView.setAdapter(adapter);
 
@@ -382,6 +384,7 @@ public class CategoriesFragment extends Fragment {
                         public void onClick(View v) {
                             dialog.show();
                             cargarCategorias();
+                            showSelectedItems();
                         }
                     });
 
@@ -463,6 +466,24 @@ public class CategoriesFragment extends Fragment {
         //lastSelectedButton = btnGlobal;
 
         return view;
+    }
+
+    // Método para obtener los elementos seleccionados desde el adaptador
+    public List<CardItem> getSelectedItemsFromAdapter() {
+        if (adapter != null) {
+            return adapter.getSelectedItems();
+        }
+        return new ArrayList<>(); // O manejar el caso de null apropiadamente
+    }
+
+    // Ejemplo de cómo usar el método en algún lugar de tu fragmento
+    public void showSelectedItems() {
+        List<CardItem> selectedItems = getSelectedItemsFromAdapter();
+        // Aquí puedes manejar los elementos seleccionados como necesites
+        for (CardItem item : selectedItems) {
+            Log.d("Selected Item", item.getTitle());
+            Toast.makeText(getActivity(), "Has seleccionado "+selectedItems.stream().count()+" elementos", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setButtonStyle(RadioButton button, boolean isSelected) {
@@ -731,6 +752,25 @@ public class CategoriesFragment extends Fragment {
 
         DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
         CollectionReference categoriasRef = usuarioRef.collection("categorias");
+        CollectionReference transRef=usuarioRef.collection("transacciones");
+        List<CardItem> selectedItems = getSelectedItemsFromAdapter();
+
+
+        for (CardItem item : selectedItems) {
+            transRef.whereEqualTo("concepto",item.getTitle()).get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    transaccionList.add(document.getId());
+                                }
+                            } else {
+                                Log.d("Firebase", "Error obteniendo transacciones: ", task.getException());
+                            }
+                        }
+                    });
+        }
 
         categoriasRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -750,6 +790,8 @@ public class CategoriesFragment extends Fragment {
                             public void onClick(View v) {
                                 // Acciones al hacer clic en una categoría
                                 Toast.makeText(getActivity(), "Categoría seleccionada: " + nombreCategoria, Toast.LENGTH_SHORT).show();
+                                actualizarCategoria(transaccionList,nombreCategoria);
+                                dialog.dismiss();
                             }
                         });
 
@@ -761,6 +803,31 @@ public class CategoriesFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void actualizarCategoria(ArrayList<String> transaccionList,String nombreCategoria){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
+        CollectionReference transRef=usuarioRef.collection("transacciones");
+
+        for (String transaccionId : transaccionList) {
+            DocumentReference transaccionRef = usuarioRef.collection("transacciones").document(transaccionId);
+            transaccionRef.update("categoria", nombreCategoria)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("Firebase", "Categoría actualizada correctamente para la transacción " + transaccionId);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w("Firebase", "Error actualizando categoría para la transacción " + transaccionId, e);
+                        }
+                    });
+        }
+
     }
 
 }
