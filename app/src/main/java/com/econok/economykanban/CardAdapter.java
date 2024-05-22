@@ -41,15 +41,18 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         CardItem currentItem = cardList.get(position);
 
         holder.titleTextView.setText(currentItem.getTitle());
-        holder.transactionTypeTextView.setText(currentItem.getTransactionType());
-        holder.transactionTextView.setText(String.valueOf(currentItem.getTransactionNumber()));
 
-        // Cambiar el color del texto según el tipo de transacción
+        String transactionTypeText;
         if (currentItem.getTransactionType().equals("Income")) {
+            transactionTypeText = context.getString(R.string.income);
             holder.transactionTypeTextView.setTextColor(Color.parseColor("#32DA6E"));
         } else {
+            transactionTypeText = context.getString(R.string.expense);
             holder.transactionTypeTextView.setTextColor(Color.parseColor("#ED918A"));
         }
+        holder.transactionTypeTextView.setText(transactionTypeText);
+
+        holder.transactionTextView.setText(String.valueOf(currentItem.getTransactionNumber()));
 
         // Configurar la selección del elemento si está en modo de edición
         if (isEditModeEnabled) {
@@ -100,7 +103,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         return selectedItems;
     }
 
-
     public static class CardViewHolder extends RecyclerView.ViewHolder {
         public TextView titleTextView;
         public TextView transactionTypeTextView;
@@ -114,4 +116,3 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         }
     }
 }
-

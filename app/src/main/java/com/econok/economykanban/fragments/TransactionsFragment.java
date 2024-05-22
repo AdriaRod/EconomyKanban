@@ -672,9 +672,6 @@ public class TransactionsFragment extends Fragment {
         }
     }
 
-
-
-
     @Override
     public void onStart() {
         super.onStart();
