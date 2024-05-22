@@ -79,6 +79,19 @@
         app:layout_constraintStart_toEndOf="@id/transactionTextView"
         app:layout_constraintTop_toTopOf="@id/currentDateTransactions" />
 
+    <!-- fecha -->
+    <TextView
+        android:id="@+id/small_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="date"
+
+        android:fontFamily="@font/poppins_light"
+        android:textSize="10dp"
+        android:textColor="@color/bottom_nav_item_color"
+
+        app:layout_constraintBottom_toTopOf="@+id/currentDateTransactions"/>
+
     <View
         style="@style/line_item_card"
         android:layout_width="0dp"

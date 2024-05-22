@@ -10,21 +10,21 @@
 
     <!-- guideLines -->
     <androidx.constraintlayout.widget.Guideline
-        android:id="guideLineTop"
+        android:id="@+id/guideLineTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent=".17"/>
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="guideLineStart"
+        android:id="@+id/guideLineStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent=".1"/>
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="guideLineEnd"
+        android:id="@+id/guideLineEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
