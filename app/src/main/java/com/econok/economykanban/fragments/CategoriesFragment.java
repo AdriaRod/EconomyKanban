@@ -106,6 +106,7 @@ public class CategoriesFragment extends Fragment {
     private String catID;
     private ArrayList<String> transaccionList = new ArrayList<>();
     private ArrayList<String> transaccionCatList = new ArrayList<>();
+    private List<RadioButton> radioButtonsList = new ArrayList<>();
     public CategoriesFragment() {
         // Required empty public constructor
     }
@@ -270,6 +271,8 @@ public class CategoriesFragment extends Fragment {
                         }
                     });
 
+
+
                     btnAdd.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -330,6 +333,9 @@ public class CategoriesFragment extends Fragment {
 
                                     // Agregar el nuevo RadioButton al RadioGroup
                                     radioGroupCategories.addView(newRadioButton);
+
+                                    // Añadir el RadioButton a la lista
+                                    radioButtonsList.add(newRadioButton);
 
                                     // Opcional: seleccionar el nuevo RadioButton
                                     newRadioButton.setChecked(false);
@@ -684,6 +690,9 @@ public class CategoriesFragment extends Fragment {
                     // Agregar el nuevo RadioButton al RadioGroup
                     radioGroupCategories.addView(newRadioButton);
 
+                    // Añadir el RadioButton a la lista
+                    radioButtonsList.add(newRadioButton);
+
                     lastSelectedButton=newRadioButton;
 
                     // Configurar los márgenes (por ejemplo, 16dp a la derecha)
@@ -889,7 +898,7 @@ public class CategoriesFragment extends Fragment {
                         catID=document.getId();
                         Log.d("Categoria","ID categoria:"+catID,task.getException());
                         Toast.makeText(getActivity(), "ID categoria:"+catID, Toast.LENGTH_SHORT).show();
-                        eliminarCategoria(catID);
+                        eliminarCategoria(catID,cat);
                         break;
                     }
                 }
@@ -898,7 +907,7 @@ public class CategoriesFragment extends Fragment {
 
     }
 
-    private void eliminarCategoria(String catID){
+    private void eliminarCategoria(String catID,String cat){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
@@ -913,6 +922,7 @@ public class CategoriesFragment extends Fragment {
                 newLastSelectedButton[0]=btnNa;
                 newLastSelectedButton[0].setChecked(true);
                 setButtonStyle(btnNa,true);
+                eliminarRadioButton(cat);
 
 
                 Toast.makeText(getActivity(), "Categoria eliminada con exito", Toast.LENGTH_SHORT).show();
@@ -924,4 +934,15 @@ public class CategoriesFragment extends Fragment {
             }
         });
     }
+
+    private void eliminarRadioButton(String radioButtonName) {
+        for (RadioButton radioButton : radioButtonsList) {
+            if (radioButton.getText().toString().equals(radioButtonName)) {
+                radioGroupCategories.removeView(radioButton);
+                radioButtonsList.remove(radioButton);
+                break;
+            }
+        }
+    }
+
 }
