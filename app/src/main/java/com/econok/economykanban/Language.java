@@ -3,6 +3,7 @@ package com.econok.economykanban;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.RadioGroup;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class Language extends AppCompatActivity {
     private Button btnCancel;
-
+    private RadioGroup languageRadioGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,16 +26,13 @@ public class Language extends AppCompatActivity {
             return insets;
         });
 
-
         btnCancel = findViewById(R.id.btn_cancel);
         btnCancel.setOnClickListener(v -> {
-
             irASettingsFragment();
-
         });
 
 
-    }//fin del OnCreate
+    }
 
     private void irASettingsFragment() {
         Intent intent = new Intent(this, Central.class);
