@@ -103,7 +103,9 @@ public class CategoriesFragment extends Fragment {
 
     private Boolean editSelec;
     private LinearLayout layout_cat;
+    private String catID;
     private ArrayList<String> transaccionList = new ArrayList<>();
+    private ArrayList<String> transaccionCatList = new ArrayList<>();
     public CategoriesFragment() {
         // Required empty public constructor
     }
@@ -258,7 +260,8 @@ public class CategoriesFragment extends Fragment {
                                     .setMessage("¿Esta seguro que desea borrar la categoria "+boton+"?")
                                     .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
-                                            Toast.makeText(getActivity(), "Categoria borrada", Toast.LENGTH_SHORT).show();;
+                                            Toast.makeText(getActivity(), "Categoria borrada", Toast.LENGTH_SHORT).show();
+                                            borrarCategoria(boton);
                                         }
                                     })
                                     .setNegativeButton("No", null)
@@ -848,6 +851,76 @@ public class CategoriesFragment extends Fragment {
                 } else {
                     Log.d(TAG, "Error obteniendo categorias: ", task.getException());
                 }
+            }
+        });
+    }
+
+    private void borrarCategoria(String cat){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
+        CollectionReference categoriasRef = usuarioRef.collection("categorias");
+        CollectionReference transaccionesRef = usuarioRef.collection("transacciones");
+
+        transaccionesRef.whereEqualTo("etiqueta",cat).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        transaccionCatList.add(document.getId());
+                    }
+                } else {
+                    Log.d("Firebase", "Error obteniendo transacciones: ", task.getException());
+                }
+                actualizarCategoria(transaccionCatList,"n/a");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+
+        categoriasRef.whereEqualTo("Nombre",cat).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document : task.getResult()){
+                        catID=document.getId();
+                        Log.d("Categoria","ID categoria:"+catID,task.getException());
+                        Toast.makeText(getActivity(), "ID categoria:"+catID, Toast.LENGTH_SHORT).show();
+                        eliminarCategoria(catID);
+                        break;
+                    }
+                }
+            }
+        });
+
+    }
+
+    private void eliminarCategoria(String catID){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
+        CollectionReference categoriasRef = usuarioRef.collection("categorias");
+
+        categoriasRef.document(catID).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                visualizarTransacciones("n/a");
+                lastSelectedButton=btnNa;
+                lastSelectedButton.setChecked(true);
+                newLastSelectedButton[0]=btnNa;
+                newLastSelectedButton[0].setChecked(true);
+                setButtonStyle(btnNa,true);
+
+
+                Toast.makeText(getActivity(), "Categoria eliminada con exito", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "Error al eliminar categoria", Toast.LENGTH_SHORT).show();
             }
         });
     }

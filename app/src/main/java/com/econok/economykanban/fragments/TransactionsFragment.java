@@ -97,7 +97,8 @@ public class TransactionsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         cardList = new ArrayList<>();
-        visualizarTransacciones();
+        //visualizarTransacciones();
+        //updateMonthsText();
     }
 
     @Override
@@ -307,7 +308,8 @@ public class TransactionsFragment extends Fragment {
 
                     crearTransaccion(concept, quantity, type, fechaFormateada);
 
-                    visualizarTransacciones();
+                    //visualizarTransacciones();
+                    updateMonthsText();
                     // Limpiar los campos del diálogo al guardar
                     conceptEditText.setText("");
                     quantityEditText.setText("");
@@ -510,7 +512,8 @@ public class TransactionsFragment extends Fragment {
                     // Código para la acción de All
                     btnFilters.setText(getString(str_all));
                     //Mostrar todas
-                    visualizarTransacciones();
+                    //visualizarTransacciones();
+                    updateMonthsText();
                     return true;
                 } else if (itemId == R.id.item_2) {
                     // Código para la acción de Income
@@ -676,7 +679,8 @@ public class TransactionsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        visualizarTransacciones();
+       // visualizarTransacciones();
+        updateMonthsText();
         actualizarBalanceTextView();
     }
 
