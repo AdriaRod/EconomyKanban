@@ -2,44 +2,31 @@ package com.econok.economykanban;
 
 import static android.content.ContentValues.TAG;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.Window;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.viewpager.widget.ViewPager;
 
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Toast;
-
-//import com.econok.economykanban.databinding.ActivityCentralBinding;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.econok.economykanban.fragments.CustomViewPager;
 import com.econok.economykanban.fragments.SectionsPagerAdapter;
+import com.econok.economykanban.fragments.SettingsFragment;
 import com.econok.economykanban.fragments.TransactionsFragment;
-import com.google.accompanist.systemuicontroller.SystemUiController;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -66,6 +53,8 @@ public class Central extends AppCompatActivity {
     private Drawable profileImage;
     private GoogleSignInClient mGoogleSignInClient;
     private boolean doubleBackToExitPressedOnce = false;
+
+    private CustomViewPager viewPager1;
 
   //  ActivityCentralBinding binding;
 
@@ -145,7 +134,7 @@ public class Central extends AppCompatActivity {
         sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
 
         //3
-        CustomViewPager viewPager1 = findViewById(R.id.view_pager);
+         viewPager1 = findViewById(R.id.view_pager);
 
         // Para deshabilitar el desplazamiento
         viewPager1.setSwipeEnabled(false);
@@ -211,11 +200,16 @@ public class Central extends AppCompatActivity {
             }
         });
 
-
+        // Revisar si se debe abrir el SettingsFragment
+        if (getIntent().getBooleanExtra("openSettings", false)) {
+            loadSettingsFragment();
+        }
 
     }//final del OnCreate
 
-
+    private void loadSettingsFragment() {
+        viewPager1.setCurrentItem(3); // Suponiendo que el SettingsFragment está en la posición 3 del ViewPager
+    }
 
     @Override
     public void onBackPressed() {

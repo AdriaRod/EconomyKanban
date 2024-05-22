@@ -1,6 +1,8 @@
 package com.econok.economykanban;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +11,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class Language extends AppCompatActivity {
+    private Button btnCancel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +24,21 @@ public class Language extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
+        btnCancel = findViewById(R.id.btn_cancel);
+        btnCancel.setOnClickListener(v -> {
+
+            irASettingsFragment();
+
+        });
+
+
+    }//fin del OnCreate
+
+    private void irASettingsFragment() {
+        Intent intent = new Intent(this, Central.class);
+        intent.putExtra("openSettings", true);
+        startActivity(intent);
     }
 }
