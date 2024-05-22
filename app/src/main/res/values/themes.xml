@@ -353,6 +353,7 @@
         <item name="cardElevation">0dp</item>
     </style>
 
+    <!-- TODO: DESDE AQUI COPIAR, PEGAR Y MODIFICAR EN EL THEME DARK MODE -->
     <!-- MANAGE ACCOUNT ACTIVITY -->
     <style name="action_button">
         <item name="android:backgroundTint">@color/transparent</item>
@@ -394,5 +395,11 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <!--  LANGUAGE ACTIVITY -->
+    <style name="language_radio_button">
+        <item name="android:layoutDirection">rtl</item>
+        <item name="android:fontFamily">@font/poppins_light</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 
 </resources>

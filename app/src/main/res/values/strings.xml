@@ -10,7 +10,7 @@
     <string name="Register">Register</string>
     <string name="or">Or</string>
 
-    <style name="shape_desc">A shape</style>
+    <string name="shape_desc">A shape</string>
 
     <string name="AlrAcc">Already have an account</string>
     <string name="contWith">Or continue with</string>
@@ -116,6 +116,9 @@
     <string name="delete_account">Delete account</string>
     <string name="manage_acc_action3">If you log out your data will be in the Cloud, but if you want to delete all your data you should Delete Account.</string>
 
+    <!-- _____________________ LANGUAGE ACTIVITY _______________________ -->
+    <string name="english">English</string>
+    <string name="espanish">Spanish</string>
 
 
 </resources>

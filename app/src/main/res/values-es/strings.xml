@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Economy Kanban</string>
+    <string name="Login">Iniciar sesión</string>
+    <string name="SubLogin">SubLogin</string>
+    <string name="Email">Correo electrónico</string>
+    <string name="Passw">Contraseña</string>
+    <string name="cPassw">Confirmar contraseña</string>
+    <string name="cLogin">Iniciar sesión</string>
+    <string name="cSignUp">Registrarse</string>
+    <string name="Register">Registrarse</string>
+    <string name="or">O</string>
+
+    <string name="shape_desc">Una forma</string>
+
+    <string name="AlrAcc">¿Ya tienes una cuenta?</string>
+    <string name="contWith">O continúa con</string>
+
+    <!-- Welcome Screen -->
+    <string name="welcome_title">Domina tus finanzas personales</string>
+    <string name="welcome_paragraph">Toma control de tus gastos, ahorra para tus metas y controla tu futuro</string>
+    <string name="welcome_login_btn">Iniciar sesión</string>
+    <string name="welcome_register_btn">Registrarse</string>
+
+    <!-- Register Screen -->
+    <string name="register_title">Crear cuenta</string>
+    <string name="register_paragraph">Crea una cuenta para tomar el control de tu futuro financiero</string>
+    <string name="register_email">Correo electrónico</string>
+    <string name="register_passwd">Contraseña</string>
+    <string name="register_confirm_passwd">Confirmar contraseña</string>
+    <string name="register_signUp">Registrarse</string>
+    <string name="register_have_an_account">¿Ya tienes una cuenta?</string>
+    <string name="google_sign_up">Registrarse con Google</string>
+
+    <!-- Login Screen -->
+    <string name="login_title">Inicia sesión aquí</string>
+    <string name="login_paragraph">¡Bienvenido de nuevo, te hemos extrañado!</string>
+    <string name="fPassw">¿Olvidaste tu contraseña?</string>
+    <string name="singIn">Iniciar sesión</string>
+    <string name="CreateAcc">Crear nueva cuenta</string>
+    <string name="google_login">Iniciar sesión con Google</string>
+
+    <!-- Bottom navigation menu -->
+    <string name="transactions">Transacciones</string>
+    <string name="Categories">Categorías</string>
+    <string name="Graphics">Gráficos</string>
+    <string name="Settings">Configuraciones</string>
+
+    <!-- Toast Messages for the user [Register and Login] -->
+    <string name="toast_fill_all_fields">Por favor, completa todos los campos</string>
+    <string name="toast_short_password">Contraseña muy corta, por favor usa 6 o más caracteres</string>
+    <string name="toast_fail_save_user">Error al guardar el usuario</string>
+    <string name="toast_email_already_use">El correo electrónico ya está en uso</string>
+    <string name="toast_login_error">Error al iniciar sesión</string>
+    <string name="toast_sing_up_failed">Error al registrarse</string>
+    <string name="toast_error_uploading_file">Error al subir el archivo</string>
+    <string name="toast_welcome">¡Bienvenido!</string>
+    <string name="toast_incorrect">Usuario o contraseña incorrectos</string>
+
+    <!-- Dialog texts -->
+    <string name="concept">Concepto</string>
+    <string name="quantity">Cantidad</string>
+    <string name="income">Ingreso</string>
+    <string name="expense">Gasto</string>
+    <string name="accept">Aceptar</string>
+    <string name="noContentToast">Por favor, completa todos los campos</string>
+
+    <!-- Fragments -->
+    <string name="date_format">MMMM d, Y</string>
+
+    <!-- POP UP MENU -->
+    <string name="all">Todo</string>
+    <string name="Income">Ingreso</string>
+    <string name="Expense">Todo</string>
+
+    <!-- 3 DOTS OPTION ITEMS -->
+    <string name="add">Agregar</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Eliminar</string>
+
+    <!-- categories -->
+    <string name="Global_cat">Global</string>
+    <string name="na_cat">n/a</string>
+    <string name="food_cat">Alimentos</string>
+    <string name="home_cat">Hogar</string>
+    <string name="health_cat">Salud</string>
+    <string name="entertainment_cat">Entretenimiento</string>
+    <string name="saves_cat">Ahorros</string>
+    <string name="others_cat">Otros</string>
+    <string name="gym_cat">Gimnasio</string>
+    <string name="transport_cat">Transporte</string>
+    <string name="education_cat">Educación</string>
+    <string name="clothes_cat">Ropa</string>
+    <string name="debts_cat">Deudas</string>
+
+    <!-- Settings Fragments -->
+    <string name="settings">Configuraciones</string>
+    <string name="edit_profile">Editar perfil</string>
+
+    <!-- settings -->
+    <string name="language">Idioma</string>
+    <string name="currency">Moneda</string>
+    <string name="darkmode">Modo oscuro</string>
+    <string name="notifications">Notificaciones</string>
+    <string name="manage_account">Gestionar cuenta</string>
+
+    <!-- Manage Account -->
+    <string name="cancel">Cancelar</string>
+    <string name="done">Listo</string>
+    <string name="place_new_picture">Colocar nueva foto</string>
+    <string name="name">Nombre</string>
+    <string name="lastname">Apellido</string>
+    <string name="manage_acc_action1">Ingresa tu nombre y añade tu foto de perfil opcional.</string>
+    <string name="manage_acc_action2">Puedes cambiar tu contraseña rápida y seguramente.</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="delete_account">Eliminar cuenta</string>
+    <string name="manage_acc_action3">Si cierras sesión, tus datos estarán en la Nube, pero si quieres eliminar todos tus datos debes eliminar la cuenta.</string>
+
+    <!-- _____________________ LANGUAGE ACTIVITY _______________________ -->
+    <string name="english">Inglés</string>
+    <string name="espanish">Español</string>
+</resources>
