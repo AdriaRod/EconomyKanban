@@ -107,12 +107,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         public TextView titleTextView;
         public TextView transactionTypeTextView;
         public TextView transactionTextView;
+        public TextView fechaTextview;
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.currentDateTransactions);
             transactionTypeTextView = itemView.findViewById(R.id.tagTextView);
             transactionTextView = itemView.findViewById(R.id.transactionTextView);
+            fechaTextview=itemView.findViewById(R.id.small_date);
         }
     }
 }

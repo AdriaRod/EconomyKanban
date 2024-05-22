@@ -836,9 +836,10 @@ public class CategoriesFragment extends Fragment {
                         String concepto = document.getString("concepto");
                         String tipo = document.getString("tipo");
                         String cantidad = document.getString("cantidad");
+                        String fecha=document.getString("fecha");
 
                         // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
-                        cardList.add(new CardItem(concepto,tipo,concepto,cantidad));
+                        cardList.add(new CardItem(concepto,tipo,concepto,cantidad,fecha));
                     }
                     // Actualizar la interfaz de usuario con la nueva lista de tarjetas
                     adapter.notifyDataSetChanged();

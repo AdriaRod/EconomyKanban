@@ -84,13 +84,15 @@
         android:id="@+id/small_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="date"
+        android:layout_marginStart="16dp"
 
         android:fontFamily="@font/poppins_light"
-        android:textSize="10dp"
+        android:text="date"
         android:textColor="@color/bottom_nav_item_color"
 
-        app:layout_constraintBottom_toTopOf="@+id/currentDateTransactions"/>
+        android:textSize="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/currentDateTransactions"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <View
         style="@style/line_item_card"

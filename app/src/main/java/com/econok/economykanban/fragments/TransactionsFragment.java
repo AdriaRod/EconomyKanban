@@ -380,9 +380,10 @@ public class TransactionsFragment extends Fragment {
                         String concepto = document.getString("concepto");
                         String tipo = document.getString("tipo");
                         String cantidad = document.getString("cantidad");
+                        String fecha=document.getString("fecha");
 
                         // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
-                        cardList.add(new CardItem(concepto,tipo,concepto,cantidad));
+                        cardList.add(new CardItem(concepto,tipo,tipo,cantidad,fecha));
                     }
                     // Actualizar la interfaz de usuario con la nueva lista de tarjetas
                     if (adapter != null) {
@@ -554,7 +555,7 @@ public class TransactionsFragment extends Fragment {
                                 String fecha=document.getString("fecha");
 
                                 // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
-                                cardList.add(new CardItem(concepto,tipo,fecha,cantidad));
+                                cardList.add(new CardItem(concepto,tipo,fecha,cantidad,fecha));
                             }
                             // Definir un comparador personalizado para ordenar por fecha de cada tarjeta
                             Comparator<CardItem> comparator = new Comparator<CardItem>() {
@@ -603,7 +604,7 @@ public class TransactionsFragment extends Fragment {
                                 String fecha=document.getString("fecha");
 
                                 // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
-                                cardList.add(new CardItem(concepto,tipo,fecha,cantidad));
+                                cardList.add(new CardItem(concepto,tipo,fecha,cantidad,fecha));
                             }
                             // Definir un comparador personalizado para ordenar por fecha de cada tarjeta
                             Comparator<CardItem> comparator = new Comparator<CardItem>() {
@@ -647,8 +648,8 @@ public class TransactionsFragment extends Fragment {
                             String concepto = document.getString("concepto");
                             String tipo = document.getString("tipo");
                             String cantidad = document.getString("cantidad");
-
-                            cardList.add(new CardItem(concepto, tipo, fecha, cantidad));
+                            String dia=document.getString("fecha");
+                            cardList.add(new CardItem(concepto, tipo, null, cantidad,dia));
                         }
                     }
                     adapter.notifyDataSetChanged();
