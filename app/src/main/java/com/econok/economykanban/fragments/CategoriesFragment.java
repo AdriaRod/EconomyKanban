@@ -10,17 +10,6 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.view.ContextThemeWrapper;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -39,6 +28,15 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.view.ContextThemeWrapper;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.econok.economykanban.CardAdapter;
 import com.econok.economykanban.CardItem;
 import com.econok.economykanban.R;
@@ -51,7 +49,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -88,6 +85,7 @@ public class CategoriesFragment extends Fragment {
     FloatingActionButton openDialog;
     private Dialog dialog;
     private Boolean isClicked;
+
 
     //SPINNER DE FILTROS
     TextView btnFilters;
@@ -131,6 +129,7 @@ public class CategoriesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
 
         visualizarCategorias();
+        int str_cancel = R.string.cancel;
 
         editSelec=true;
         //______________________________ FECHA _______________________
@@ -272,20 +271,24 @@ public class CategoriesFragment extends Fragment {
                             mAuth= FirebaseAuth.getInstance();
                             DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
                             CollectionReference categoriasRef = usuarioRef.collection("categorias");
+                            int str_new_category = R.string.new_category;
+                            int str_add = R.string.add;
 
                             // Crear un cuadro de diálogo de entrada
                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                            builder.setTitle("Nuevo RadioButton");
+                            builder.setTitle(getString(str_new_category));
 
                             // Establecer el diseño del cuadro de diálogo
                             final EditText input = new EditText(getContext());
                             builder.setView(input);
 
                             // Configurar los botones del cuadro de diálogo
-                            builder.setPositiveButton("Agregar", new DialogInterface.OnClickListener() {
+                            builder.setPositiveButton(getString(str_add), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     String radioButtonName = input.getText().toString();
+                                    int str_success = R.string.cat_add_succesfully;
+                                    int str_error = R.string.cat_add_error;
 
                                     // Crear el mapa de datos para la transacción
                                     Map<String, Object> categoria = new HashMap<>();
@@ -296,14 +299,14 @@ public class CategoriesFragment extends Fragment {
                                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                 @Override
                                                 public void onSuccess(DocumentReference documentReference) {
-                                                    Toast.makeText(getActivity(), "Category added succesfully", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(getActivity(), getString(str_success), Toast.LENGTH_SHORT).show();
                                                     Log.d(TAG, "Categoria agregada correctamente");
                                                 }
                                             })
                                             .addOnFailureListener(new OnFailureListener() {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
-                                                    Toast.makeText(getActivity(), "Error adding category", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(getActivity(), getString(str_error), Toast.LENGTH_SHORT).show();
                                                     Log.w(TAG, "Error al agregar categoria  ", e);
                                                 }
                                             });
@@ -340,8 +343,10 @@ public class CategoriesFragment extends Fragment {
                                         }
                                     });
                                 }
+
                             });
-                            builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+
+                            builder.setNegativeButton(getString(str_cancel), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.cancel();

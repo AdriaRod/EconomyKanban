@@ -9,6 +9,7 @@
     <string name="cSignUp">Sign Up</string>
     <string name="Register">Register</string>
     <string name="or">Or</string>
+    <string name="cancel">Cancel</string>
 
     <string name="shape_desc">A shape</string>
 
@@ -120,5 +121,9 @@
     <string name="english">English</string>
     <string name="espanish">Spanish</string>
 
+    <!-- DIALOG NUEVA CATEGORIA -->
+    <string name="new_category">New category</string>
+    <string name="cat_add_succesfully">Category added succesfully</string>
+    <string name="cat_add_error">Error adding category</string>
 
 </resources>

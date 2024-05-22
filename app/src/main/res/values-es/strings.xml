@@ -119,4 +119,10 @@
     <!-- _____________________ LANGUAGE ACTIVITY _______________________ -->
     <string name="english">Inglés</string>
     <string name="espanish">Español</string>
+
+    <!-- DIALOG NUEVA CATEGORIA -->
+    <string name="new_category">Nueva categoria</string>
+    <string name="cat_add_succesfully">Categoría añadida correctamente</string>
+    <string name="cat_add_error">Error al añadir categoría</string>
+
 </resources>
