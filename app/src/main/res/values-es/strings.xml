@@ -66,7 +66,7 @@
     <string name="noContentToast">Por favor, completa todos los campos</string>
 
     <!-- Fragments -->
-    <string name="date_format">d 'de' MMMM, Y</string>
+    <string name="date_format">MMMM d, Y</string>
 
     <!-- POP UP MENU -->
     <string name="all">Todo</string>

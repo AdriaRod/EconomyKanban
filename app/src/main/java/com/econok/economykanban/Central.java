@@ -2,6 +2,8 @@ package com.econok.economykanban;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,7 +17,6 @@ import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
@@ -25,7 +26,6 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.econok.economykanban.fragments.CustomViewPager;
 import com.econok.economykanban.fragments.SectionsPagerAdapter;
-import com.econok.economykanban.fragments.SettingsFragment;
 import com.econok.economykanban.fragments.TransactionsFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -42,6 +42,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.Locale;
 
 
 public class Central extends AppCompatActivity {
@@ -204,6 +206,7 @@ public class Central extends AppCompatActivity {
         if (getIntent().getBooleanExtra("openSettings", false)) {
             loadSettingsFragment();
         }
+        
 
     }//final del OnCreate
 

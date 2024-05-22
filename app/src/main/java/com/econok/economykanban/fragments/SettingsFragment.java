@@ -24,7 +24,6 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.econok.economykanban.Language;
 import com.econok.economykanban.Login;
 import com.econok.economykanban.ManageAccount;
 import com.econok.economykanban.R;
@@ -99,14 +98,6 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        // _________________ RELATIVE LAYOUT: LANGUAGE _____________
-        language = view.findViewById(R.id.language);
-        language.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToLanguage();
-            }
-        });
 
 
 
@@ -156,10 +147,7 @@ public class SettingsFragment extends Fragment {
         startActivity(intent);
     }
 
-    private void goToLanguage() {
-        Intent intent = new Intent(getActivity(), Language.class);
-        startActivity(intent);
-    }
+
 
     private void irLogin(){
         Intent intent=new Intent(getActivity(), Login.class);
