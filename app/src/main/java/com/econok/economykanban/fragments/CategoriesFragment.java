@@ -531,54 +531,10 @@ public class CategoriesFragment extends Fragment {
             lastSelectedButton = selectedButton;
             newLastSelectedButton[0]=selectedButton;
             if(v.getId()==R.id.radioButtonNa){
-                transaccionesRef.whereEqualTo("etiqueta","n/a").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            cardList.clear();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                // Extraer los datos de la transacción
-                                String concepto = document.getString("concepto");
-                                String tipo = document.getString("tipo");
-                                String cantidad = document.getString("cantidad");
-
-                                // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
-                                cardList.add(new CardItem(concepto,tipo,concepto,cantidad));
-                            }
-                            // Actualizar la interfaz de usuario con la nueva lista de tarjetas
-                            adapter.notifyDataSetChanged();
-                            calcularBalance(); // Calcular el nuevo saldo
-                            actualizarBalanceTextView(); // Actualizar el texto del balanceTextView
-                        } else {
-                            Log.d(TAG, "Error obteniendo categorias: ", task.getException());
-                        }
-                    }
-                });
+                visualizarTransacciones("n/a");
             } else if (newLastSelectedButton[0].isChecked()) {
                 String categoria=newLastSelectedButton[0].getText().toString();
-                transaccionesRef.whereEqualTo("etiqueta",categoria).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            cardList.clear();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                // Extraer los datos de la transacción
-                                String concepto = document.getString("concepto");
-                                String tipo = document.getString("tipo");
-                                String cantidad = document.getString("cantidad");
-
-                                // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
-                                cardList.add(new CardItem(concepto,tipo,concepto,cantidad));
-                            }
-                            // Actualizar la interfaz de usuario con la nueva lista de tarjetas
-                            adapter.notifyDataSetChanged();
-                            calcularBalance(); // Calcular el nuevo saldo
-                            actualizarBalanceTextView(); // Actualizar el texto del balanceTextView
-                        } else {
-                            Log.d(TAG, "Error obteniendo categorias: ", task.getException());
-                        }
-                    }
-                });
+                visualizarTransacciones(categoria);
             }
         }
     };
@@ -824,6 +780,7 @@ public class CategoriesFragment extends Fragment {
                                 Toast.makeText(getActivity(), "Categoría seleccionada: " + nombreCategoria, Toast.LENGTH_SHORT).show();
                                 actualizarCategoria(transaccionList,nombreCategoria);
                                 dialog.dismiss();
+                                visualizarTransacciones(lastSelectedButton.getText().toString());
                             }
                         });
 
@@ -849,6 +806,8 @@ public class CategoriesFragment extends Fragment {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Log.d("Firebase", "Categoría actualizada correctamente para la transacción " + transaccionId);
+                            newLastSelectedButton[0].setOnClickListener(radioButtonClickListener);
+                            transaccionList.clear();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -861,4 +820,34 @@ public class CategoriesFragment extends Fragment {
 
     }
 
+    private void visualizarTransacciones(String categoria){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        mAuth= FirebaseAuth.getInstance();
+        DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
+        // Obtener la referencia a la subcolección "transacciones" del usuario
+        CollectionReference transaccionesRef = usuarioRef.collection("transacciones");
+        transaccionesRef.whereEqualTo("etiqueta",categoria).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    cardList.clear();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        // Extraer los datos de la transacción
+                        String concepto = document.getString("concepto");
+                        String tipo = document.getString("tipo");
+                        String cantidad = document.getString("cantidad");
+
+                        // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
+                        cardList.add(new CardItem(concepto,tipo,concepto,cantidad));
+                    }
+                    // Actualizar la interfaz de usuario con la nueva lista de tarjetas
+                    adapter.notifyDataSetChanged();
+                    calcularBalance(); // Calcular el nuevo saldo
+                    actualizarBalanceTextView(); // Actualizar el texto del balanceTextView
+                } else {
+                    Log.d(TAG, "Error obteniendo categorias: ", task.getException());
+                }
+            }
+        });
+    }
 }
