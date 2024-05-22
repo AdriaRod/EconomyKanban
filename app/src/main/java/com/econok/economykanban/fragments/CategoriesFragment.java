@@ -484,7 +484,7 @@ public class CategoriesFragment extends Fragment {
         // Aquí puedes manejar los elementos seleccionados como necesites
         for (CardItem item : selectedItems) {
             Log.d("Selected Item", item.getTitle());
-            Toast.makeText(getActivity(), "Has seleccionado "+selectedItems.stream().count()+" elementos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Has seleccionado "+item.getTitle()+" con fecha "+item.getFecha(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -745,7 +745,7 @@ public class CategoriesFragment extends Fragment {
 
 
         for (CardItem item : selectedItems) {
-            transRef.whereEqualTo("concepto",item.getTitle()).get()
+            transRef.whereEqualTo("concepto",item.getTitle()).whereEqualTo("fecha",item.getFecha()).get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
