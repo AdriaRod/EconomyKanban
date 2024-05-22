@@ -251,9 +251,10 @@ public class CategoriesFragment extends Fragment {
                     btnDelete.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            String boton=lastSelectedButton.getText().toString();
                             new AlertDialog.Builder(getActivity())
                                     .setTitle("Borrar categoria")
-                                    .setMessage("¿Esta seguro que desea borrar esta categoria?")
+                                    .setMessage("¿Esta seguro que desea borrar la categoria "+boton+"?")
                                     .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
                                             Toast.makeText(getActivity(), "Categoria borrada", Toast.LENGTH_SHORT).show();;
@@ -328,6 +329,7 @@ public class CategoriesFragment extends Fragment {
 
                                     // Opcional: seleccionar el nuevo RadioButton
                                     newRadioButton.setChecked(false);
+                                    newRadioButton.setOnClickListener(radioButtonClickListener);
 
                                     lastSelectedButton=newRadioButton;
 
@@ -434,7 +436,7 @@ public class CategoriesFragment extends Fragment {
         btnNa = view.findViewById(R.id.radioButtonNa);
 
         // Establecer los estilos por defecto
-        setButtonStyle(btnGlobal, true);
+        setButtonStyle(btnGlobal, false);
         setButtonStyle(btnFood, false);
         setButtonStyle(btnHome, false);
         setButtonStyle(btnHealth, false);
@@ -463,7 +465,7 @@ public class CategoriesFragment extends Fragment {
         btnNa.setOnClickListener(radioButtonClickListener);
 
         // Establecer lastSelectedButton como el botón de comida por defecto
-        //lastSelectedButton = btnGlobal;
+        lastSelectedButton = btnGlobal;
 
         return view;
     }
@@ -697,6 +699,8 @@ public class CategoriesFragment extends Fragment {
                     // Agregar el nuevo RadioButton al RadioGroup
                     radioGroupCategories.addView(newRadioButton);
 
+                    lastSelectedButton=newRadioButton;
+
                     // Configurar los márgenes (por ejemplo, 16dp a la derecha)
                     int marginInDp = 16; // Cambia esto según tus necesidades
                     int marginInPixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, marginInDp, getResources().getDisplayMetrics());
@@ -712,6 +716,8 @@ public class CategoriesFragment extends Fragment {
 
                     // Opcional: seleccionar el nuevo RadioButton
                     newRadioButton.setChecked(false);
+
+                    newRadioButton.setOnClickListener(radioButtonClickListener);
 
                     lastSelectedButton=newRadioButton;
 
