@@ -54,6 +54,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
         holder.transactionTextView.setText(String.valueOf(currentItem.getTransactionNumber()));
 
+        holder.fechaTextview.setText(String.valueOf(currentItem.getFecha()));
+
         // Configurar la selección del elemento si está en modo de edición
         if (isEditModeEnabled) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {

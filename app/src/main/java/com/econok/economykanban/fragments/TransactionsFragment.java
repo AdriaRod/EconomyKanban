@@ -380,10 +380,10 @@ public class TransactionsFragment extends Fragment {
                         String concepto = document.getString("concepto");
                         String tipo = document.getString("tipo");
                         String cantidad = document.getString("cantidad");
-                        String fecha=document.getString("fecha");
+                        String dia=document.getString("fecha");
 
                         // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
-                        cardList.add(new CardItem(concepto,tipo,tipo,cantidad,fecha));
+                        cardList.add(new CardItem(concepto,tipo,tipo,cantidad,dia));
                     }
                     // Actualizar la interfaz de usuario con la nueva lista de tarjetas
                     if (adapter != null) {
@@ -552,10 +552,10 @@ public class TransactionsFragment extends Fragment {
                                 // Extraer los datos de la transacción
                                 String concepto = document.getString("concepto");
                                 String cantidad = document.getString("cantidad");
-                                String fecha=document.getString("fecha");
+                                String dia=document.getString("fecha");
 
                                 // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
-                                cardList.add(new CardItem(concepto,tipo,fecha,cantidad,fecha));
+                                cardList.add(new CardItem(concepto,tipo,dia,cantidad,dia));
                             }
                             // Definir un comparador personalizado para ordenar por fecha de cada tarjeta
                             Comparator<CardItem> comparator = new Comparator<CardItem>() {
@@ -601,10 +601,10 @@ public class TransactionsFragment extends Fragment {
                                 // Extraer los datos de la transacción
                                 String concepto = document.getString("concepto");
                                 String cantidad = document.getString("cantidad");
-                                String fecha=document.getString("fecha");
+                                String dia=document.getString("fecha");
 
                                 // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
-                                cardList.add(new CardItem(concepto,tipo,fecha,cantidad,fecha));
+                                cardList.add(new CardItem(concepto,tipo,dia,cantidad,dia));
                             }
                             // Definir un comparador personalizado para ordenar por fecha de cada tarjeta
                             Comparator<CardItem> comparator = new Comparator<CardItem>() {
@@ -637,7 +637,7 @@ public class TransactionsFragment extends Fragment {
         CollectionReference transaccionesRef = usuarioRef.collection("transacciones");
 
         // Obtener todas las transacciones del usuario
-        transaccionesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        transaccionesRef.orderBy("fecha",Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -649,7 +649,7 @@ public class TransactionsFragment extends Fragment {
                             String tipo = document.getString("tipo");
                             String cantidad = document.getString("cantidad");
                             String dia=document.getString("fecha");
-                            cardList.add(new CardItem(concepto, tipo, null, cantidad,dia));
+                            cardList.add(new CardItem(concepto, tipo, dia, cantidad,dia));
                         }
                     }
                     adapter.notifyDataSetChanged();
