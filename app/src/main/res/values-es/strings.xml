@@ -125,4 +125,10 @@
     <string name="cat_add_succesfully">Categoría añadida correctamente</string>
     <string name="cat_add_error">Error al añadir categoría</string>
 
+    <!-- _________________________ FORGOT PASSWORD ACTIVITY __________________________-->
+    <string name="forgot_title">¿Olvidaste tu contraseña?</string>
+    <string name="forgot_text">Introduce tu correo para recuperarla.</string>
+    <string name="btn_send_recovery_email">Enviar correo de recuperación</string>
+    <string name="btn_return_login">Volver a Iniciar Sesión</string>
+
 </resources>

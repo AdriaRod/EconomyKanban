@@ -8,6 +8,28 @@
     tools:context=".Login"
     style="@style/WRL_SCREEN">
 
+    <!-- guideLines -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="guideLineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".17"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="guideLineStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".1"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="guideLineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".9"/>
+
     <!--    shapes-->
 
     <ImageView
@@ -71,7 +93,7 @@
             android:gravity="center"
             android:text="@string/login_title"
             style="@style/TITLE"
-            android:textSize="25sp" />
+            />
 
         <TextView
             android:id="@+id/textView6"
@@ -96,7 +118,8 @@
             android:gravity="center_vertical"
             android:hint="@string/Email"
             android:inputType="text"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            />
 
         <EditText
             android:id="@+id/passwd_editText"
@@ -130,8 +153,7 @@
             android:fontFamily="@font/gabarito_bold"
             style="@style/PRIMARY_BUTTON"
             android:text="@string/singIn"
-            android:textSize="18sp"
-            app:cornerRadius="10dp" />
+             />
 
         <Button
             android:id="@+id/btn_register"

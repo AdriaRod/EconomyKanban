@@ -13,6 +13,7 @@
     <style name="TITLE">
         <item name="android:textColor">@color/pink</item>
         <item name="fontFamily">@font/gabarito_bold</item>
+        <item name="android:textSize">25sp</item>
     </style>
 
     <!-- Welcome paragrapht if dark mode on -->
@@ -32,6 +33,8 @@
         <item name="backgroundTint">@color/pink</item>
         <item name="android:textColor">@color/white</item>
         <item name="fontFamily">@font/gabarito_bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="cornerRadius">10dp</item>
     </style>
 
     <!-- Secondary button if dark mode on -->
@@ -314,6 +317,20 @@
         <item name="android:fontFamily">@font/poppins_light</item>
         <item name="android:drawableTint">@color/white</item>
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- FORGOT PASSWORD ACTIVITY -->
+    <style name="forgot_text">
+        <item name="android:textColor">@color/light_gray</item>
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/poppins_light</item>
+    </style>
+
+    <style name="forgot_secondary_button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:background">@drawable/button_border_black</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
 

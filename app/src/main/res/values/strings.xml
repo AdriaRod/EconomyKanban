@@ -125,5 +125,11 @@
     <string name="new_category">New category</string>
     <string name="cat_add_succesfully">Category added succesfully</string>
     <string name="cat_add_error">Error adding category</string>
+    
+    <!-- _________________________ FORGOT PASSWORD ACTIVITY __________________________-->
+    <string name="forgot_title">Forgot your password?</string>
+    <string name="forgot_text">Enter your email to recover it.</string>
+    <string name="btn_send_recovery_email">Send recovery email</string>
+    <string name="btn_return_login">Return to login</string>
 
 </resources>
