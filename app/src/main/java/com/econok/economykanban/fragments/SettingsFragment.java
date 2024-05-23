@@ -17,9 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -61,6 +63,10 @@ public class SettingsFragment extends Fragment {
     private ImageView user2;
     private UCrop.Options options;
     private Drawable persona;
+    private Switch darkModeSwitch;
+    private SharedPreferences sharedPreferences;
+    private static final String PREFS_NAME = "settings_prefs";
+    private static final String DARK_MODE_KEY = "dark_mode";
     private static final int REQUEST_GALLERY_PERMISSION=2020;
 
     private RelativeLayout manage_account, language;
@@ -89,6 +95,23 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
+
+        //DARK MODE
+        darkModeSwitch = view.findViewById(R.id.dark_mode_switch);
+        sharedPreferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+
+        // Set the switch to the current state
+        boolean isDarkMode = sharedPreferences.getBoolean(DARK_MODE_KEY, false);
+        darkModeSwitch.setChecked(isDarkMode);
+        setAppTheme(isDarkMode);
+
+        darkModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(DARK_MODE_KEY, isChecked);
+            editor.apply();
+            setAppTheme(isChecked);
+        });
+
         // _________________ RELATIVE LAYOUT: MANAGE ACCOUNT _____________
         manage_account = view.findViewById(R.id.manage_account);
         manage_account.setOnClickListener(new View.OnClickListener() {
@@ -97,9 +120,6 @@ public class SettingsFragment extends Fragment {
                 goToManageAccount();
             }
         });
-
-
-
 
         user2 = view.findViewById(R.id.ProfilePicture);
         options = new UCrop.Options();
@@ -131,6 +151,14 @@ public class SettingsFragment extends Fragment {
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    private void setAppTheme(boolean isDarkMode) {
+        if (isDarkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 
     private void goToManageAccount() {
