@@ -35,6 +35,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -45,7 +46,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Register extends AppCompatActivity {
-
+    boolean existe;
     private Button botonregistro,googleR;
     //private SignInButton googleR;
     private EditText correo,password,rpassword;
@@ -107,8 +108,9 @@ public class Register extends AppCompatActivity {
                 }
                 else if(passUser.equals(rpassUser)==false){
                     Toast.makeText(Register.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else if (correo_en_uso(emailUser)==false) {
+                    Toast.makeText(Register.this, "El correco electronico proporcionado ya existe", Toast.LENGTH_SHORT).show();
+                } else {
                     registerUser(emailUser, passUser);
                 }
             }
@@ -295,6 +297,21 @@ public class Register extends AppCompatActivity {
                 + '/' + getResources().getResourceEntryName(R.drawable.blank));
 
         return imagenPredeterminadaUri.toString();
+    }
+
+    private boolean correo_en_uso(String email){
+            mFirestore.collection("usuarios").whereEqualTo("correo",email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if(task.isSuccessful()){
+                        existe=true;
+                    }
+                    else {
+                        existe=false;
+                    }
+                }
+            });
+        return existe;
     }
 
     @Override

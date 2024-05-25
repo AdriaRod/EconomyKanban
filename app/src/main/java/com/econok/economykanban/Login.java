@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -54,6 +55,7 @@ public class Login extends AppCompatActivity {
     private EditText pass,mail;
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
+    private TextView forgot;
 
     private static final int RC_SIGN_IN = 123;
     //private Button forgetPass;
@@ -74,8 +76,7 @@ public class Login extends AppCompatActivity {
         pass=findViewById(R.id.passwd_editText);
         mAuth=FirebaseAuth.getInstance();
         googleButton=findViewById(R.id.btn_google);
-        //forgetPass=findViewById(R.id.forgetPass);
-
+        forgot=findViewById(R.id.forgot);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("159235896101-tbr4e83cc1tp77pnjj7er02gtm17ldc2.apps.googleusercontent.com")
@@ -110,6 +111,13 @@ public class Login extends AppCompatActivity {
                 }else{
                     loginUser(emailUser,passUser);
                 }
+            }
+        });
+
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recuperarContraseña();
             }
         });
 
@@ -256,5 +264,9 @@ public class Login extends AppCompatActivity {
         if(user!=null){
             openMain();
         }
+    }
+    public void recuperarContraseña() {
+        Intent intent = new Intent(Login.this, ForgotPassword.class);
+        startActivity(intent);
     }
 }
