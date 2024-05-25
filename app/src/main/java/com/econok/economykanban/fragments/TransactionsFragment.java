@@ -72,6 +72,7 @@ public class TransactionsFragment extends Fragment {
     TextView btnAdd, btnEdit, btnDelete, btnFilters;
     private Boolean isClicked;
 
+    int cantInt,total=0;
 
 
     //_____________________estas de abajo estaban de antes xd________________________
@@ -105,6 +106,8 @@ public class TransactionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_transactions, container, false);
+
+        visualizarTransacciones();
 
         //______________________________ FECHA (current date) _______________________
         currentDateTextView = view.findViewById(R.id.currentDateTransactions);
@@ -372,26 +375,17 @@ public class TransactionsFragment extends Fragment {
         CollectionReference transaccionesRef = usuarioRef.collection("transacciones");
 
         // Obtener todas las transacciones del usuario
-        transaccionesRef.orderBy("fecha", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        transaccionesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    cardList.clear();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         // Extraer los datos de la transacción
-                        String concepto = document.getString("concepto");
-                        String tipo = document.getString("tipo");
                         String cantidad = document.getString("cantidad");
-                        String dia=document.getString("fecha");
-
-                        // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
-                        cardList.add(new CardItem(concepto,tipo,tipo,cantidad,dia));
+                        cantInt=Integer.parseInt(cantidad);
+                        total=total+cantInt;
                     }
-                    // Actualizar la interfaz de usuario con la nueva lista de tarjetas
-                    if (adapter != null) {
-                        adapter.notifyDataSetChanged();
-                    }
-
+                    Toast.makeText(getActivity(), "Balance total:"+total, Toast.LENGTH_SHORT).show();
                     calcularBalance(); // Calcular el nuevo saldo
                     actualizarBalanceTextView(); // Actualizar el texto del balanceTextView
                 } else {
@@ -656,6 +650,8 @@ public class TransactionsFragment extends Fragment {
                         }
                     }
                     adapter.notifyDataSetChanged();
+                    calcularBalance(); // Calcular el nuevo saldo
+                    actualizarBalanceTextView(); // Actualizar el texto del balanceTextView;
                 } else {
                     Log.d(TAG, "Error obteniendo transacciones: ", task.getException());
                 }
