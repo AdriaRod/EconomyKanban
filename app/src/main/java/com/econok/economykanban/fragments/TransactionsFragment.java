@@ -385,7 +385,8 @@ public class TransactionsFragment extends Fragment {
                         cantInt=Integer.parseInt(cantidad);
                         total=total+cantInt;
                     }
-                    Toast.makeText(getActivity(), "Balance total:"+total, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Balance total:"+total, Toast.LENGTH_SHORT)
+                    // .show();
                     calcularBalance(); // Calcular el nuevo saldo
                     actualizarBalanceTextView(); // Actualizar el texto del balanceTextView
                 } else {
@@ -419,6 +420,46 @@ public class TransactionsFragment extends Fragment {
 
     private void actualizarBalanceTextView() {
         String formattedBalance = String.format(Locale.getDefault(), "%d", (int) balance);
+        balanceTextView.setText(formattedBalance);
+    }
+
+
+    private void calcularBalanceTotal() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
+        CollectionReference transaccionesRef = usuarioRef.collection("transacciones");
+
+        // Obtener todas las transacciones del usuario
+        transaccionesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    double totalIncome = 0.0;
+                    double totalExpense = 0.0;
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String cantidad = document.getString("cantidad");
+                        if (cantidad != null && !cantidad.isEmpty()) {
+                            double amount = Double.parseDouble(cantidad);
+                            if (amount > 0) {
+                                totalIncome += amount;
+                            } else {
+                                totalExpense += amount;
+                            }
+                        }
+                    }
+                    double balanceTotal = totalIncome + totalExpense;
+                    actualizarBalanceTotalTextView(balanceTotal);
+                } else {
+                    Log.d(TAG, "Error obteniendo transacciones: ", task.getException());
+                }
+            }
+        });
+    }
+
+
+    private void actualizarBalanceTotalTextView(double balanceTotal) {
+        String formattedBalance = String.format(Locale.getDefault(), "%d", (int) balanceTotal);
         balanceTextView.setText(formattedBalance);
     }
 
