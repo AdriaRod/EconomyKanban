@@ -385,8 +385,7 @@ public class TransactionsFragment extends Fragment {
                         cantInt=Integer.parseInt(cantidad);
                         total=total+cantInt;
                     }
-                    //Toast.makeText(getActivity(), "Balance total:"+total, Toast.LENGTH_SHORT)
-                    // .show();
+                    Toast.makeText(getActivity(), "Balance total:"+total, Toast.LENGTH_SHORT).show();
                     calcularBalance(); // Calcular el nuevo saldo
                     actualizarBalanceTextView(); // Actualizar el texto del balanceTextView
                 } else {
@@ -420,46 +419,6 @@ public class TransactionsFragment extends Fragment {
 
     private void actualizarBalanceTextView() {
         String formattedBalance = String.format(Locale.getDefault(), "%d", (int) balance);
-        balanceTextView.setText(formattedBalance);
-    }
-
-
-    private void calcularBalanceTotal() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
-        DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
-        CollectionReference transaccionesRef = usuarioRef.collection("transacciones");
-
-        // Obtener todas las transacciones del usuario
-        transaccionesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    double totalIncome = 0.0;
-                    double totalExpense = 0.0;
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        String cantidad = document.getString("cantidad");
-                        if (cantidad != null && !cantidad.isEmpty()) {
-                            double amount = Double.parseDouble(cantidad);
-                            if (amount > 0) {
-                                totalIncome += amount;
-                            } else {
-                                totalExpense += amount;
-                            }
-                        }
-                    }
-                    double balanceTotal = totalIncome + totalExpense;
-                    actualizarBalanceTotalTextView(balanceTotal);
-                } else {
-                    Log.d(TAG, "Error obteniendo transacciones: ", task.getException());
-                }
-            }
-        });
-    }
-
-
-    private void actualizarBalanceTotalTextView(double balanceTotal) {
-        String formattedBalance = String.format(Locale.getDefault(), "%d", (int) balanceTotal);
         balanceTextView.setText(formattedBalance);
     }
 
@@ -520,6 +479,90 @@ public class TransactionsFragment extends Fragment {
         }
     }
 
+    private void incomeMonth(){
+        String tipo="Income";
+        switch (currentMonthButton.getText().toString()){
+            case "ene":
+                mostrarIncome("01",tipo);
+                break;
+            case "feb":
+                mostrarIncome("02",tipo);
+                break;
+            case "mar":
+                mostrarIncome("03",tipo);
+                break;
+            case "abr":
+                mostrarIncome("04",tipo);
+                break;
+            case "may":
+                mostrarIncome("05",tipo);
+                break;
+            case "jun":
+                mostrarIncome("06",tipo);
+                break;
+            case "jul":
+                mostrarIncome("07",tipo);
+                break;
+            case "ago":
+                mostrarIncome("08",tipo);
+                break;
+            case "sept":
+                mostrarIncome("09",tipo);
+                break;
+            case "oct":
+                mostrarIncome("10",tipo);
+                break;
+            case "nov":
+                mostrarIncome("11",tipo);
+                break;
+            case "dic":
+                mostrarIncome("12",tipo);
+                break;
+        }
+    }
+
+    private void expenseMonth(){
+        String tipo="Expense";
+        switch (currentMonthButton.getText().toString()){
+            case "ene":
+                mostrarExpense("01",tipo);
+                break;
+            case "feb":
+                mostrarExpense("02",tipo);
+                break;
+            case "mar":
+                mostrarExpense("03",tipo);
+                break;
+            case "abr":
+                mostrarExpense("04",tipo);
+                break;
+            case "may":
+                mostrarExpense("05",tipo);
+                break;
+            case "jun":
+                mostrarExpense("06",tipo);
+                break;
+            case "jul":
+                mostrarExpense("07",tipo);
+                break;
+            case "ago":
+                mostrarExpense("08",tipo);
+                break;
+            case "sept":
+                mostrarExpense("09",tipo);
+                break;
+            case "oct":
+                mostrarExpense("10",tipo);
+                break;
+            case "nov":
+                mostrarExpense("11",tipo);
+                break;
+            case "dic":
+                mostrarExpense("12",tipo);
+                break;
+        }
+    }
+
     // Método para obtener la abreviatura del nombre del mes a partir de su número
     private String getMonthAbbreviation(int month) {
         DateFormatSymbols dfs = new DateFormatSymbols();
@@ -554,13 +597,15 @@ public class TransactionsFragment extends Fragment {
                     // Código para la acción de Income
                     btnFilters.setText(getString(str_income));
                     //Mostrar income
-                    mostrarIncome("Income");
+                    //mostrarIncome("Income");
+                    incomeMonth();
                     return true;
                 } else if (itemId == R.id.item_3) {
                     // Código para la acción de Expense
                     btnFilters.setText(getString(str_expense));
                     //Mostrar expense
-                    mostrarExpense("Expense");
+                    //mostrarExpense("Expense");
+                    expenseMonth();
                     return true;
                 }
                 return false;
@@ -571,7 +616,7 @@ public class TransactionsFragment extends Fragment {
         popupMenu.show();
     }
 
-    private void mostrarIncome(String tipo){
+    private void mostrarIncome(String mes,String tipo){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         mAuth= FirebaseAuth.getInstance();
         DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
@@ -587,13 +632,16 @@ public class TransactionsFragment extends Fragment {
                             // Limpiar la lista actual de tarjetas antes de cargar nuevas transacciones
                             cardList.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                // Extraer los datos de la transacción
-                                String concepto = document.getString("concepto");
-                                String cantidad = document.getString("cantidad");
-                                String dia=document.getString("fecha");
+                                String fecha = document.getString("fecha");
+                                if (fecha != null && obtenerMesDeFecha(fecha).equals(mes)) {
+                                    // Extraer los datos de la transacción
+                                    String concepto = document.getString("concepto");
+                                    String cantidad = document.getString("cantidad");
+                                    String dia = document.getString("fecha");
 
-                                // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
-                                cardList.add(new CardItem(concepto,tipo,dia,cantidad,dia));
+                                    // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
+                                    cardList.add(new CardItem(concepto, tipo, dia, cantidad, dia));
+                                }
                             }
                             // Definir un comparador personalizado para ordenar por fecha de cada tarjeta
                             Comparator<CardItem> comparator = new Comparator<CardItem>() {
@@ -620,7 +668,7 @@ public class TransactionsFragment extends Fragment {
                 });
     }
 
-    private void mostrarExpense(String tipo){
+    private void mostrarExpense(String mes,String tipo){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         mAuth= FirebaseAuth.getInstance();
         DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
@@ -636,13 +684,16 @@ public class TransactionsFragment extends Fragment {
                             // Limpiar la lista actual de tarjetas antes de cargar nuevas transacciones
                             cardList.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                // Extraer los datos de la transacción
-                                String concepto = document.getString("concepto");
-                                String cantidad = document.getString("cantidad");
-                                String dia=document.getString("fecha");
+                                String fecha = document.getString("fecha");
+                                if (fecha != null && obtenerMesDeFecha(fecha).equals(mes)) {
+                                    // Extraer los datos de la transacción
+                                    String concepto = document.getString("concepto");
+                                    String cantidad = document.getString("cantidad");
+                                    String dia = document.getString("fecha");
 
-                                // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
-                                cardList.add(new CardItem(concepto,tipo,dia,cantidad,dia));
+                                    // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
+                                    cardList.add(new CardItem(concepto, tipo, dia, cantidad, dia));
+                                }
                             }
                             // Definir un comparador personalizado para ordenar por fecha de cada tarjeta
                             Comparator<CardItem> comparator = new Comparator<CardItem>() {
