@@ -72,7 +72,7 @@ public class TransactionsFragment extends Fragment {
     TextView btnAdd, btnEdit, btnDelete, btnFilters;
     private Boolean isClicked;
 
-    int cantInt,total=0;
+    private double cantInt,total=0;
 
 
     //_____________________estas de abajo estaban de antes xd________________________
@@ -382,7 +382,7 @@ public class TransactionsFragment extends Fragment {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         // Extraer los datos de la transacción
                         String cantidad = document.getString("cantidad");
-                        cantInt=Integer.parseInt(cantidad);
+                        cantInt=Double.parseDouble(cantidad);
                         total=total+cantInt;
                     }
                     Toast.makeText(getActivity(), "Balance total:"+total, Toast.LENGTH_SHORT).show();

@@ -53,6 +53,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DateFormatSymbols;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -103,7 +104,7 @@ public class CategoriesFragment extends Fragment {
 
     private Boolean editSelec;
     private LinearLayout layout_cat;
-    private String catID;
+    private String catID,categoria="";
     private ArrayList<String> transaccionList = new ArrayList<>();
     private ArrayList<String> transaccionCatList = new ArrayList<>();
     private List<RadioButton> radioButtonsList = new ArrayList<>();
@@ -540,10 +541,11 @@ public class CategoriesFragment extends Fragment {
             lastSelectedButton = selectedButton;
             newLastSelectedButton[0]=selectedButton;
             if(v.getId()==R.id.radioButtonNa){
-                visualizarTransacciones("n/a");
+                categoria="n/a";
+                updateMonthsText();
             } else if (newLastSelectedButton[0].isChecked()) {
-                String categoria=newLastSelectedButton[0].getText().toString();
-                visualizarTransacciones(categoria);
+                categoria=newLastSelectedButton[0].getText().toString();
+                updateMonthsText();
             }
         }
     };
@@ -611,8 +613,6 @@ public class CategoriesFragment extends Fragment {
     }
 
 
-
-
     //______________________________________ ON VIEW CREATED _________________________________
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -652,7 +652,51 @@ public class CategoriesFragment extends Fragment {
         previousMonthButton.setChecked(false);
         currentMonthButton.setChecked(true);
         nextMonthButton.setChecked(false);
+
+        transMes(categoria);
     }
+
+    private void transMes(String tipo){
+        switch (currentMonthButton.getText().toString()){
+            case "ene":
+                visualizarTransacciones("01",tipo);
+                break;
+            case "feb":
+                visualizarTransacciones("02",tipo);
+                break;
+            case "mar":
+                visualizarTransacciones("03",tipo);
+                break;
+            case "abr":
+                visualizarTransacciones("04",tipo);
+                break;
+            case "may":
+                visualizarTransacciones("05",tipo);
+                break;
+            case "jun":
+                visualizarTransacciones("06",tipo);
+                break;
+            case "jul":
+                visualizarTransacciones("07",tipo);
+                break;
+            case "ago":
+                visualizarTransacciones("08",tipo);
+                break;
+            case "sept":
+                visualizarTransacciones("09",tipo);
+                break;
+            case "oct":
+                visualizarTransacciones("10",tipo);
+                break;
+            case "nov":
+                visualizarTransacciones("11",tipo);
+                break;
+            case "dic":
+                visualizarTransacciones("12",tipo);
+                break;
+        }
+    }
+
 
     // Método para obtener la abreviatura del nombre del mes a partir de su número
     private String getMonthAbbreviation(int month) {
@@ -792,7 +836,7 @@ public class CategoriesFragment extends Fragment {
                                 Toast.makeText(getActivity(), "Categoría seleccionada: " + nombreCategoria, Toast.LENGTH_SHORT).show();
                                 actualizarCategoria(transaccionList,nombreCategoria);
                                 dialog.dismiss();
-                                visualizarTransacciones(lastSelectedButton.getText().toString());
+                                transMes(lastSelectedButton.getText().toString());
                             }
                         });
 
@@ -832,7 +876,7 @@ public class CategoriesFragment extends Fragment {
 
     }
 
-    private void visualizarTransacciones(String categoria){
+    private void visualizarTransacciones(String mes,String categoria){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         mAuth= FirebaseAuth.getInstance();
         DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
@@ -844,14 +888,14 @@ public class CategoriesFragment extends Fragment {
                 if (task.isSuccessful()) {
                     cardList.clear();
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        // Extraer los datos de la transacción
-                        String concepto = document.getString("concepto");
-                        String tipo = document.getString("tipo");
-                        String cantidad = document.getString("cantidad");
-                        String dia=document.getString("fecha");
-
-                        // Crear un objeto de tarjeta (Card) con los datos de la transacción y añadirlo a la lista de tarjetas
-                        cardList.add(new CardItem(concepto,tipo,null,cantidad,dia));
+                        String fecha = document.getString("fecha");
+                        if (fecha != null && obtenerMesDeFecha(fecha).equals(mes)) {
+                            String concepto = document.getString("concepto");
+                            String tipo = document.getString("tipo");
+                            String cantidad = document.getString("cantidad");
+                            String dia=document.getString("fecha");
+                            cardList.add(new CardItem(concepto, tipo, dia, cantidad,dia));
+                        }
                     }
                     // Actualizar la interfaz de usuario con la nueva lista de tarjetas
                     adapter.notifyDataSetChanged();
@@ -916,7 +960,7 @@ public class CategoriesFragment extends Fragment {
         categoriasRef.document(catID).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                visualizarTransacciones("n/a");
+                transMes("n/a");
                 lastSelectedButton=btnNa;
                 lastSelectedButton.setChecked(true);
                 newLastSelectedButton[0]=btnNa;
@@ -942,6 +986,18 @@ public class CategoriesFragment extends Fragment {
                 radioButtonsList.remove(radioButton);
                 break;
             }
+        }
+    }
+
+    private String obtenerMesDeFecha(String fecha) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+        try {
+            Date date = sdf.parse(fecha);
+            SimpleDateFormat sdfMes = new SimpleDateFormat("MM", Locale.getDefault());
+            return sdfMes.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "";
         }
     }
 
