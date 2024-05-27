@@ -4,8 +4,6 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,7 +19,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
@@ -46,8 +43,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.Locale;
-
 
 public class Central extends AppCompatActivity {
 
@@ -63,13 +58,14 @@ public class Central extends AppCompatActivity {
 
     private CustomViewPager viewPager1;
 
-  //  ActivityCentralBinding binding;
+    private SharedPreferences sharedPreferences;
+    private TransactionsFragment transactionsFragment;
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
 
         SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         boolean isDarkMode = sharedPreferences.getBoolean(DARK_MODE_KEY, false);
@@ -80,8 +76,8 @@ public class Central extends AppCompatActivity {
         }
         setContentView(R.layout.activity_central);
 
-        //FIREBASE
-        mFirestore= FirebaseFirestore.getInstance();
+        // FIREBASE
+        mFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -89,7 +85,7 @@ public class Central extends AppCompatActivity {
                 .requestEmail()
                 .build();
 
-        mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         FirebaseApp.initializeApp(/*context=*/ this);
         FirebaseAppCheck firebaseAppCheck = FirebaseAppCheck.getInstance();
@@ -119,7 +115,7 @@ public class Central extends AppCompatActivity {
                                 @Override
                                 public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                                     // Establecer la imagen como ícono del perfil en el menú
-                                    profileImage=resource;
+                                    profileImage = resource;
                                     invalidateOptionsMenu();
                                 }
 
@@ -138,37 +134,31 @@ public class Central extends AppCompatActivity {
             });
         }
 
-        //1
+        // Leer el símbolo de la moneda seleccionada de SharedPreferences
+        sharedPreferences = getSharedPreferences("CurrencyPrefs", MODE_PRIVATE);
+        String selectedCurrencySymbol = sharedPreferences.getString("selectedCurrencySymbol", "€"); // Valor por defecto: €
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        TransactionsFragment transactionsFragment = new TransactionsFragment();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragment_container, transactionsFragment, "transactionsFragmentTag");
-        transaction.commit();
+        // Inicializar y pasar el símbolo de la moneda al fragmento
+        transactionsFragment = new TransactionsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("currencySymbol", selectedCurrencySymbol);
+        transactionsFragment.setArguments(bundle);
 
-        //2
+        fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, transactionsFragment, "transactionsFragmentTag")
+                .commit();
+
+        // Configurar el adaptador del ViewPager
         sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-
-        //3
-         viewPager1 = findViewById(R.id.view_pager);
-
-        // Para deshabilitar el desplazamiento
+        viewPager1 = findViewById(R.id.view_pager);
         viewPager1.setSwipeEnabled(false);
-
-//        // Para habilitar el desplazamiento
-//        viewPager1.setSwipeEnabled(true);
-
         viewPager1.setAdapter(sectionsPagerAdapter);
 
-
-        //4
         BottomNavigationView mybottomNavView = findViewById(R.id.bottomNavigationView);
-
-        //6
         mybottomNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                 int itemId = item.getItemId();
 
                 if (itemId == R.id.transactions) {
@@ -189,14 +179,12 @@ public class Central extends AppCompatActivity {
                     viewPager1.setCurrentItem(3);
                 }
                 return false;
-            }
+                }
         });
 
-        //para cambiar de fragment haciendo slide
         viewPager1.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -205,27 +193,26 @@ public class Central extends AppCompatActivity {
                     prevMenuItem.setChecked(false);
                 } else {
                     mybottomNavView.getMenu().getItem(0).setChecked(false);
-                    mybottomNavView.getMenu().getItem(position).setChecked(true);
-                    removeBadge(mybottomNavView, mybottomNavView.getMenu().getItem(position).getItemId());
                 }
+                mybottomNavView.getMenu().getItem(position).setChecked(true);
+                removeBadge(mybottomNavView, mybottomNavView.getMenu().getItem(position).getItemId());
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
+
+
 
         // Revisar si se debe abrir el SettingsFragment
         if (getIntent().getBooleanExtra("openSettings", false)) {
             loadSettingsFragment();
         }
-        
-
-    }//final del OnCreate
+    }
 
     private void loadSettingsFragment() {
-        viewPager1.setCurrentItem(3); // Suponiendo que el SettingsFragment está en la posición 3 del ViewPager
+        viewPager1.setCurrentItem(3);
     }
 
     @Override
@@ -240,25 +227,17 @@ public class Central extends AppCompatActivity {
         Toast.makeText(Central.this, "Presiona ATRÁS de nuevo para salir", Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
-
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
     }
 
-
-    //5
     public static void removeBadge(BottomNavigationView bottomNavigationView, @IdRes int itemId) {
-        BottomNavigationItemView itemView = bottomNavigationView.findViewById(itemId); //Esto aparece subrayado en rojo pero funciona (asi que si no saben no toquen gracias xd)
+        BottomNavigationItemView itemView = bottomNavigationView.findViewById(itemId);
         if (itemView.getChildCount() == 4) {
             itemView.removeViewAt(3);
         }
     }
-
-
-
-
-
 }

@@ -132,4 +132,7 @@
     <string name="btn_send_recovery_email">Send recovery email</string>
     <string name="btn_return_login">Return to login</string>
 
+    <!-- ACTIVITY CURRENCY -->
+    <string name="text_currency">Select your currency. This will only change the currency symbol; it does not perform a conversion between currencies.</string>
+
 </resources>

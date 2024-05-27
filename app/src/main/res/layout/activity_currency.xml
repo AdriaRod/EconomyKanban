@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Currency">
+
+    <!-- guide lines -->
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLineStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".1"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".9"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".05"/>
+
+
+    <!-- diseño -->
+
+    <Button
+        android:id="@+id/btn_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/done"
+        style="@style/action_button"
+
+        app:layout_constraintTop_toTopOf="@id/guideLineTop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="1"
+        />
+
+    <TextView
+        android:id="@+id/text_currency"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_currency"
+        style="@style/action_text"
+
+        app:layout_constraintTop_toBottomOf="@+id/btn_done"
+        app:layout_constraintEnd_toEndOf="@id/guideLineEnd"
+        app:layout_constraintStart_toStartOf="@id/guideLineStart"
+        />
+
+    <RadioGroup
+        android:id="@+id/currency_radio_group"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@+id/text_currency"
+        app:layout_constraintEnd_toEndOf="@id/guideLineEnd"
+        app:layout_constraintStart_toStartOf="@id/guideLineStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias=".05">
+
+        <RadioButton
+            android:id="@+id/euro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="€"
+            android:button="@null"
+            android:gravity="center"
+            style="@style/currency_radio_group"
+            />
+
+        <RadioButton
+            android:id="@+id/dolar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="$"
+            android:button="@null"
+            android:gravity="center"
+            style="@style/currency_radio_group"
+            android:layout_marginTop="10dp"
+            />
+
+        <RadioButton
+            android:id="@+id/libra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="£"
+            android:button="@null"
+            android:gravity="center"
+            style="@style/currency_radio_group"
+            android:layout_marginTop="10dp"
+            />
+
+        <RadioButton
+            android:id="@+id/yuan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="¥"
+            android:button="@null"
+            android:gravity="center"
+            style="@style/currency_radio_group"
+            android:layout_marginTop="10dp"
+            />
+
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

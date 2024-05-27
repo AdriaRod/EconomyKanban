@@ -3,6 +3,8 @@ package com.econok.economykanban.fragments;
 import static android.content.ContentValues.TAG;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -57,7 +59,7 @@ public class TransactionsFragment extends Fragment {
 
     //******************* VARIABLES *********************
     //fecha
-    private TextView currentDateTextView;
+    private TextView currentDateTextView, currencyTextView;
 
     //selector de meses
     private RadioButton previousMonthButton;
@@ -107,6 +109,8 @@ public class TransactionsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_transactions, container, false);
 
         visualizarTransacciones();
+
+
 
         //______________________________ FECHA (current date) _______________________
         currentDateTextView = view.findViewById(R.id.currentDateTransactions);
@@ -328,6 +332,7 @@ public class TransactionsFragment extends Fragment {
                 }
             }
         });
+
 
 
         return view;

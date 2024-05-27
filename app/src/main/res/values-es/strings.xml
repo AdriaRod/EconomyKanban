@@ -131,4 +131,7 @@
     <string name="btn_send_recovery_email">Enviar correo de recuperación</string>
     <string name="btn_return_login">Volver a Iniciar Sesión</string>
 
+    <!-- ACTIVITY CURRENCY -->
+    <string name="text_currency">Seleccione su moneda. Esto solo cambiará el símbolo de la moneda; no realizará una conversión entre monedas.</string>
+
 </resources>

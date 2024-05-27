@@ -19,6 +19,9 @@
         android:theme="@style/Theme.EconomyKanban"
         tools:targetApi="31">
         <activity
+            android:name=".Currency"
+            android:exported="false" />
+        <activity
             android:name=".ForgotPassword"
             android:exported="false" />
         <activity
