@@ -225,6 +225,7 @@ public class CategoriesFragment extends Fragment {
         btnSelect.setBackgroundColor(Color.TRANSPARENT); // Transparente
         btnSelect.setPaintFlags(btnSelect.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         btnDelete = view.findViewById(R.id.removeBtn);
+        btnDelete.setBackgroundColor(Color.TRANSPARENT); // Transparente
         btnDelete.setPaintFlags(btnDelete.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         openDialog = view.findViewById(R.id.openDialog);
         isClicked = false;
