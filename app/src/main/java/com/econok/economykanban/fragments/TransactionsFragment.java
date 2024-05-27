@@ -32,7 +32,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -182,7 +181,7 @@ public class TransactionsFragment extends Fragment {
         //Inicializamos el button de los 3 puntos
         btnFilters = view.findViewById(R.id.btnTypes);
         btnAdd = view.findViewById(R.id.addBtn);
-        btnEdit= view.findViewById(R.id.editBtn);
+        btnEdit= view.findViewById(R.id.selectBtn);
         btnDelete = view.findViewById(R.id.removeBtn);
         isClicked = false;
 
