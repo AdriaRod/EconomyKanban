@@ -75,7 +75,7 @@
 
     <!-- 3 DOTS OPTION ITEMS -->
     <string name="add">Agregar</string>
-    <string name="edit">Editar</string>
+    <string name="select">Seleccionar</string>
     <string name="delete">Eliminar</string>
 
     <!-- categories -->

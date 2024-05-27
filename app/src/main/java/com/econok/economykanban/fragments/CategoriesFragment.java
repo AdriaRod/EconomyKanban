@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -81,7 +82,7 @@ public class CategoriesFragment extends Fragment {
 
     //PopUp Menu para seleccionar (ADD, EDITAR, ELIMINAR)
     ImageView three_dots_btn;
-    TextView btnAdd, btnEdit, btnDelete;
+    Button btnAdd, btnSelect, btnDelete;
     FloatingActionButton openDialog;
     private Dialog dialog;
     private Boolean isClicked;
@@ -218,8 +219,13 @@ public class CategoriesFragment extends Fragment {
         //Inicializamos el button de los 3 puntos
         three_dots_btn = view.findViewById(R.id.btn_popUpMenu);
         btnAdd = view.findViewById(R.id.addBtn);
-        btnEdit= view.findViewById(R.id.editBtn);
+        btnAdd.setBackgroundColor(Color.TRANSPARENT); // Transparente
+        btnAdd.setPaintFlags(btnAdd.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        btnSelect = view.findViewById(R.id.selectBtn);
+        btnSelect.setBackgroundColor(Color.TRANSPARENT); // Transparente
+        btnSelect.setPaintFlags(btnSelect.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         btnDelete = view.findViewById(R.id.removeBtn);
+        btnDelete.setPaintFlags(btnDelete.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         openDialog = view.findViewById(R.id.openDialog);
         isClicked = false;
 
@@ -246,9 +252,10 @@ public class CategoriesFragment extends Fragment {
 
                     // Mostrar los botones
                     btnAdd.setVisibility(View.VISIBLE);
-                    btnEdit.setVisibility(View.VISIBLE);
+                    btnSelect.setVisibility(View.VISIBLE);
                     btnDelete.setVisibility(View.VISIBLE);
                     openDialog.setVisibility(View.VISIBLE);
+                    btnFilters.setVisibility(View.INVISIBLE);
 
                     isClicked = true;
 
@@ -373,22 +380,23 @@ public class CategoriesFragment extends Fragment {
                     });
 
 
-                    btnEdit.setOnClickListener(new View.OnClickListener() {
+                    btnSelect.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             openDialog.setVisibility(View.VISIBLE);
                             editSelec = !editSelec;
 
                             if (editSelec) {
-                                btnEdit.setBackgroundColor(Color.parseColor("#FFFFFF")); // Color blanco
+                                btnSelect.setBackgroundColor(Color.parseColor("#CBD6FF")); // Azul claro
                             } else {
-                                btnEdit.setBackgroundColor(Color.TRANSPARENT); // Transparente
+                                btnSelect.setBackgroundColor(Color.TRANSPARENT); // Transparente
                                 adapter.resetSelectedItems();
                             }
 
                             adapter.setEditModeEnabled(editSelec);
                         }
                     });
+
 
                     openDialog.setOnClickListener(new View.OnClickListener(){
                         @Override
@@ -414,12 +422,13 @@ public class CategoriesFragment extends Fragment {
                     editSelec=false;
                     adapter.resetSelectedItems();
                     adapter.setEditModeEnabled(editSelec);
-                    btnEdit.setBackgroundColor(Color.TRANSPARENT);
+                    btnSelect.setBackgroundColor(Color.TRANSPARENT);
                     // Ocultar los botones
                     btnAdd.setVisibility(View.INVISIBLE);
-                    btnEdit.setVisibility(View.INVISIBLE);
+                    btnSelect.setVisibility(View.INVISIBLE);
                     btnDelete.setVisibility(View.INVISIBLE);
                     openDialog.setVisibility(View.INVISIBLE);
+                    btnFilters.setVisibility(View.VISIBLE);
 
                     isClicked = false;
                 }

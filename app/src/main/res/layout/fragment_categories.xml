@@ -226,7 +226,7 @@
             <!-- HIDE SETTINGS BUTTONS -->
 
 
-            <TextView
+            <Button
                 android:id="@+id/addBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -234,25 +234,29 @@
                 android:drawableLeft="@drawable/plus"
                 style="@style/option_field"
                 android:visibility="invisible"
-                app:layout_constraintEnd_toStartOf="@id/editBtn"
+                app:layout_constraintEnd_toStartOf="@id/selectBtn"
                 app:layout_constraintTop_toTopOf="@id/btn_popUpMenu"
                 app:layout_constraintBottom_toBottomOf="@id/btn_popUpMenu"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="10dp"
                 />
 
-            <TextView
-                android:id="@+id/editBtn"
+            <Button
+                android:id="@+id/selectBtn"
                 style="@style/option_field"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:drawableLeft="@drawable/pencil"
-                android:text="@string/edit"
+                android:text="@string/select"
                 android:visibility="invisible"
+
                 app:layout_constraintBottom_toBottomOf="@id/btn_popUpMenu"
                 app:layout_constraintEnd_toStartOf="@id/removeBtn"
-                app:layout_constraintTop_toTopOf="@id/btn_popUpMenu" />
+                app:layout_constraintTop_toTopOf="@id/btn_popUpMenu"
+                app:layout_constraintStart_toEndOf="@id/addBtn"/>
 
-            <TextView
+            <Button
                 android:id="@+id/removeBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -263,6 +267,7 @@
                 app:layout_constraintEnd_toStartOf="@id/btn_popUpMenu"
                 app:layout_constraintTop_toTopOf="@id/btn_popUpMenu"
                 app:layout_constraintBottom_toBottomOf="@id/btn_popUpMenu"
+                app:layout_constraintStart_toEndOf="@id/selectBtn"
                 />
 
             <!-- HORIZONTAL SCROLL DE CATEGORIES  -->
