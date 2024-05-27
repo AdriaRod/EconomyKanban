@@ -1,8 +1,10 @@
 package com.econok.economykanban;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.RadioGroup;
 
@@ -18,34 +20,46 @@ public class Currency extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_currency);
 
-        // BTN DONE
-        done = findViewById(R.id.btn_done);
-        done.setOnClickListener(v -> {
-            irASettingsFragment();
-        });
-
-
-        // PARA CAMBIAR LA MONEDA
+        //Inicializar
         currencyRadioGroup = findViewById(R.id.currency_radio_group);
-        currencyRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                String selectedCurrencySymbol = "";
-                if (checkedId == R.id.euro) {
-                    selectedCurrencySymbol = "€";
-                } else if (checkedId == R.id.dolar) {
-                    selectedCurrencySymbol = "$";
-                } else if (checkedId == R.id.libra) {
-                    selectedCurrencySymbol = "£";
-                } else if (checkedId == R.id.yuan) {
-                    selectedCurrencySymbol = "¥";
-                }
+        done = findViewById(R.id.btn_done);
 
+        //Click en el boton "done"
+        done.setOnClickListener(v -> {
 
+            // Obtener el ID de la moneda seleccionada
+            int checkedId = currencyRadioGroup.getCheckedRadioButtonId();
+            String selectedCurrencySymbol = "";
 
-
+            // Asignar el símbolo de la moneda seleccionada
+            if (checkedId == R.id.euro) {
+                selectedCurrencySymbol = "€";
+            } else if (checkedId == R.id.dolar) {
+                selectedCurrencySymbol = "$";
+            } else if (checkedId == R.id.libra) {
+                selectedCurrencySymbol = "£";
+            } else if (checkedId == R.id.yuan) {
+                selectedCurrencySymbol = "¥";
             }
+
+            Bundle bundle = new Bundle();
+            bundle.putString("monedaFromCurrencyActivity", selectedCurrencySymbol);
+
+            Intent intent = new Intent(this, Central.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+
+
+
+            Log.i(TAG, "Simbolo de moneda: " + selectedCurrencySymbol);
+
+
+//            irASettingsFragment();
         });
+
+
+
+
 
 
 
@@ -58,5 +72,6 @@ public class Currency extends AppCompatActivity {
         startActivity(intent);
 
     }
+
 
 }

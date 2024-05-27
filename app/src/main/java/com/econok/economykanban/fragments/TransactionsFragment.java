@@ -110,6 +110,26 @@ public class TransactionsFragment extends Fragment {
 
         visualizarTransacciones();
 
+        //MONEDA
+
+        currencyTextView = view.findViewById(R.id.currency_tv);
+
+        Bundle args = getArguments();
+        if (args != null) {
+            String moneda = args.getString("MonedaFromCentral");
+            if (moneda != null) {
+                // Haz lo que necesites hacer con el valor de la moneda aquí
+                Log.i(TAG, "Simbolo de moneda asdasd: " + moneda );
+                currencyTextView.setText(moneda);
+            }
+        } else {
+            // Maneja el caso en que getArguments() devuelve null
+            Log.i(TAG, "Simbolo de moneda: devuelve null");
+        }
+
+
+
+
 
 
         //______________________________ FECHA (current date) _______________________
@@ -335,6 +355,8 @@ public class TransactionsFragment extends Fragment {
 
 
 
+
+
         return view;
     }
 
@@ -389,7 +411,7 @@ public class TransactionsFragment extends Fragment {
                         cantInt=Integer.parseInt(cantidad);
                         total=total+cantInt;
                     }
-                    Toast.makeText(getActivity(), "Balance total:"+total, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "Balance total:"+total, Toast.LENGTH_SHORT).show();
                     calcularBalance(); // Calcular el nuevo saldo
                     actualizarBalanceTextView(); // Actualizar el texto del balanceTextView
                 } else {

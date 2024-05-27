@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
@@ -42,6 +43,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import androidx.fragment.app.FragmentManager;
+
 
 
 public class Central extends AppCompatActivity {
@@ -209,6 +212,34 @@ public class Central extends AppCompatActivity {
         if (getIntent().getBooleanExtra("openSettings", false)) {
             loadSettingsFragment();
         }
+
+
+        //Para obtener la moneda
+            //Obtenemos el bundle del intent
+        Bundle bundle2 = getIntent().getExtras();
+        if (bundle2 != null) {
+            String moneda = bundle2.getString("monedaFromCurrencyActivity");
+            Log.i(TAG, "Monedilla1: " + moneda);
+            if (moneda != null) {
+                // Crear un nuevo Bundle para pasar la moneda al fragmento
+                Bundle args = new Bundle();
+                args.putString("MonedaFromCentral", moneda);
+
+                // Crear una instancia de TransactionsFragment y establecer los argumentos
+                TransactionsFragment fragment = new TransactionsFragment();
+                fragment.setArguments(args);
+
+                // Iniciar el fragmento utilizando FragmentManager y FragmentTransaction
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, fragment);
+                fragmentTransaction.commit();
+            }
+            Log.i(TAG, "Monedilla2: " + moneda);
+        }
+
+
+
     }
 
     private void loadSettingsFragment() {
