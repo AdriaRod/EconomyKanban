@@ -18,7 +18,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     private Context context;
     private List<CardItem> selectedItems = new ArrayList<>();
     private boolean isEditModeEnabled = false;
-    private String currencySymbol; // Variable para almacenar el símbolo de moneda
+    private String currencySymbol = "€"; // Variable para almacenar el símbolo de moneda, por defecto el de €
 
     public CardAdapter(Context context, List<CardItem> cardList) {
         this.context = context;
