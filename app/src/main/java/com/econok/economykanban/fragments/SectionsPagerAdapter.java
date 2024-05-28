@@ -1,37 +1,32 @@
 package com.econok.economykanban.fragments;
 
 import android.content.Context;
+import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
+import androidx.fragment.app.FragmentPagerAdapter;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    //    @StringRes
-//    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_1, R.string.tab_text_2};
     private final Context mContext;
+    private final String currencySymbol;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm) {
+    public SectionsPagerAdapter(Context context, FragmentManager fm, String currencySymbol) {
         super(fm);
         mContext = context;
+        this.currencySymbol = currencySymbol;
     }
 
     @Override
     public Fragment getItem(int position) {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-
-//        return PlaceholderFragment.newInstance(position + 1);
-
-        //sustituimos el fragmento único por nuestros cuatro fragmentos, así, el método getItem devuelve el fragmento
-        // que corresponde a la posición que se le pasa a la clase Fragment como argumento
-
         switch (position) {
             case 0:
-                return new TransactionsFragment();
+                TransactionsFragment transactionsFragment = new TransactionsFragment();
+                Bundle args = new Bundle();
+                args.putString("MonedaFromCentral", currencySymbol);
+                transactionsFragment.setArguments(args);
+                return transactionsFragment;
             case 1:
                 return new CategoriesFragment();
             case 2:
@@ -40,19 +35,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 return new SettingsFragment();
             default:
                 return null;
-
-//                return int 0;
-//                return new PlaceholderFragment();
-
         }
-
     }
-
-//    @Nullable
-//    @Override
-//    public CharSequence getPageTitle(int position) {
-//        return mContext.getResources().getString(TAB_TITLES[position]);
-//    }
 
     @Override
     public int getCount() {

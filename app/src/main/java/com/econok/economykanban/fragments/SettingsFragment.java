@@ -95,6 +95,12 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
+
+
+
+
+
+
         //GO TO CURRENCY
         currency = view.findViewById(R.id.currency);
         currency.setOnClickListener(v -> {

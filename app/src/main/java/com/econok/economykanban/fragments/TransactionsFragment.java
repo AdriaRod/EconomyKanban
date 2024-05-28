@@ -101,6 +101,15 @@ public class TransactionsFragment extends Fragment {
         cardList = new ArrayList<>();
         //visualizarTransacciones();
         //updateMonthsText();
+//        Bundle args = getArguments();
+//        if (args != null) {
+//            String currencySymbol = args.getString("MonedaFromCentral");
+//            Log.i(TAG, "Simbolo de moneda: " + currencySymbol);
+//        } else {
+//            Log.i(TAG, "Simbolo de moneda: getArguments() devuelve null");
+//        }
+
+
     }
 
     @Override
@@ -110,24 +119,22 @@ public class TransactionsFragment extends Fragment {
 
         visualizarTransacciones();
 
-        //MONEDA
 
+// Encontrar el TextView en la vista inflada
         currencyTextView = view.findViewById(R.id.currency_tv);
 
+        // Obtener los argumentos y configurar el TextView
         Bundle args = getArguments();
         if (args != null) {
-            String moneda = args.getString("MonedaFromCentral");
-            if (moneda != null) {
-                // Haz lo que necesites hacer con el valor de la moneda aquí
-                Log.i(TAG, "Simbolo de moneda asdasd: " + moneda );
-                currencyTextView.setText(moneda);
+            String currencySymbol = args.getString("MonedaFromCentral");
+            if (currencySymbol != null) {
+                // Configurar el TextView con el símbolo de la moneda
+                Log.i(TAG, "Simbolo de moneda: " + currencySymbol);
+                currencyTextView.setText(currencySymbol);
             }
         } else {
-            // Maneja el caso en que getArguments() devuelve null
-            Log.i(TAG, "Simbolo de moneda: devuelve null");
+            Log.i(TAG, "Simbolo de moneda: getArguments() devuelve null");
         }
-
-
 
 
 
