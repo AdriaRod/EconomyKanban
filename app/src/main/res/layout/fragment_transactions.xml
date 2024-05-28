@@ -80,6 +80,7 @@
     <!-- Divisa -->
 
     <TextView
+        android:id="@+id/currency_tv"
         style="@style/currency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

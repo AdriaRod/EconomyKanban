@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.econok.economykanban.Currency;
 import com.econok.economykanban.Login;
 import com.econok.economykanban.ManageAccount;
 import com.econok.economykanban.R;
@@ -68,7 +69,7 @@ public class SettingsFragment extends Fragment {
     private static final String DARK_MODE_KEY = "dark_mode";
     private static final int REQUEST_GALLERY_PERMISSION=2020;
 
-    private RelativeLayout manage_account, language;
+    private RelativeLayout manage_account, currency;
 
 
 
@@ -93,6 +94,12 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
+
+        //GO TO CURRENCY
+        currency = view.findViewById(R.id.currency);
+        currency.setOnClickListener(v -> {
+            irCurrency();
+        });
 
 
         //DARK MODE
@@ -170,6 +177,13 @@ public class SettingsFragment extends Fragment {
     private void irLogin(){
         Intent intent=new Intent(getActivity(), Login.class);
         startActivity(intent);
+    }
+
+    private void irCurrency(){
+
+        Intent intent = new Intent(getActivity(), Currency.class);
+        startActivity(intent);
+
     }
 
     public void onStart() {

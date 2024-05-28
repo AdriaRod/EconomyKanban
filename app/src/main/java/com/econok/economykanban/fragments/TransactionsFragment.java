@@ -3,6 +3,8 @@ package com.econok.economykanban.fragments;
 import static android.content.ContentValues.TAG;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -57,7 +59,7 @@ public class TransactionsFragment extends Fragment {
 
     //******************* VARIABLES *********************
     //fecha
-    private TextView currentDateTextView;
+    private TextView currentDateTextView, currencyTextView;
 
     //selector de meses
     private RadioButton previousMonthButton;
@@ -107,6 +109,28 @@ public class TransactionsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_transactions, container, false);
 
         visualizarTransacciones();
+
+        //MONEDA
+
+        currencyTextView = view.findViewById(R.id.currency_tv);
+
+        Bundle args = getArguments();
+        if (args != null) {
+            String moneda = args.getString("MonedaFromCentral");
+            if (moneda != null) {
+                // Haz lo que necesites hacer con el valor de la moneda aquí
+                Log.i(TAG, "Simbolo de moneda asdasd: " + moneda );
+                currencyTextView.setText(moneda);
+            }
+        } else {
+            // Maneja el caso en que getArguments() devuelve null
+            Log.i(TAG, "Simbolo de moneda: devuelve null");
+        }
+
+
+
+
+
 
         //______________________________ FECHA (current date) _______________________
         currentDateTextView = view.findViewById(R.id.currentDateTransactions);
@@ -330,6 +354,9 @@ public class TransactionsFragment extends Fragment {
         });
 
 
+
+
+
         return view;
     }
 
@@ -384,7 +411,7 @@ public class TransactionsFragment extends Fragment {
                         cantInt=Double.parseDouble(cantidad);
                         total=total+cantInt;
                     }
-                    Toast.makeText(getActivity(), "Balance total:"+total, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "Balance total:"+total, Toast.LENGTH_SHORT).show();
                     calcularBalance(); // Calcular el nuevo saldo
                     actualizarBalanceTextView(); // Actualizar el texto del balanceTextView
                 } else {
