@@ -1,6 +1,7 @@
 package com.econok.economykanban;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Window;
@@ -22,6 +23,8 @@ public class Central extends AppCompatActivity {
     private FirebaseFirestore mFirestore;
     private SharedPreferences sharedPreferences;
     private CustomViewPager viewPager1;
+    private CardAdapter cardAdapter;
+    private String currencySymbol; // Variable para almacenar el símbolo de moneda
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,11 @@ public class Central extends AppCompatActivity {
         if (moneda == null) {
             moneda = sharedPreferences.getString("selectedCurrencySymbol", "€"); // Valor por defecto: €
         }
+
+        
+
+
+
 
         // Configurar el adaptador del ViewPager
         sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), moneda);
@@ -82,5 +90,9 @@ public class Central extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {
             }
         });
+
+
+
     }
+
 }

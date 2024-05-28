@@ -34,11 +34,19 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_card_layout, parent, false);
         return new CardViewHolder(view);
+
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
         CardItem currentItem = cardList.get(position);
+
+        //MONEDA
+
+
+
+
 
         holder.titleTextView.setText(currentItem.getTitle());
 
@@ -55,6 +63,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.transactionTextView.setText(String.valueOf(currentItem.getTransactionNumber()));
 
         holder.fechaTextview.setText(String.valueOf(currentItem.getFecha()));
+
+
 
         // Configurar la selección del elemento si está en modo de edición
         if (isEditModeEnabled) {
@@ -110,6 +120,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         public TextView transactionTypeTextView;
         public TextView transactionTextView;
         public TextView fechaTextview;
+        public TextView monedaTextView;
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -117,6 +128,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             transactionTypeTextView = itemView.findViewById(R.id.tagTextView);
             transactionTextView = itemView.findViewById(R.id.transactionTextView);
             fechaTextview=itemView.findViewById(R.id.small_date);
+            monedaTextView=itemView.findViewById(R.id.divisaTextView);
         }
     }
+
+
 }

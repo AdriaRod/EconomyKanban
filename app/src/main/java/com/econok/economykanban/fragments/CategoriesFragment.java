@@ -90,7 +90,7 @@ public class CategoriesFragment extends Fragment {
 
 
     //SPINNER DE FILTROS
-    TextView btnFilters;
+    TextView btnFilters, currencyTextView;
 
     //HORIZONTAL SCROLL DE LAS CATEGORIAS
     private RadioGroup radioGroupCategories;
@@ -135,6 +135,29 @@ public class CategoriesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
+
+        //MONEDA
+        // Encontrar el TextView en la vista inflada
+        currencyTextView = view.findViewById(R.id.textView11);
+
+        // Obtener los argumentos y configurar el TextView
+        Bundle args = getArguments();
+        if (args != null) {
+            String currencySymbol = args.getString("MonedaFromCentral");
+            if (currencySymbol != null) {
+                // Configurar el TextView con el símbolo de la moneda
+                Log.i(TAG, "[CATEGORIES] Simbolo de moneda: " + currencySymbol);
+                currencyTextView.setText(currencySymbol);
+            }
+        } else {
+            Log.i(TAG, "[CATEGORIES] Simbolo de moneda: getArguments() devuelve null");
+        }
+
+
+
+
+
+
 
         visualizarCategorias();
         int str_cancel = R.string.cancel;

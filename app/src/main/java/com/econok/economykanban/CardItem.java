@@ -7,6 +7,7 @@ public class CardItem {
     private String transactionNumber;
     private String fecha;
 
+
     public CardItem(String title, String transactionType, String tag, String transaction, String fecha) {
         this.title = title;
         this.transactionType = transactionType;

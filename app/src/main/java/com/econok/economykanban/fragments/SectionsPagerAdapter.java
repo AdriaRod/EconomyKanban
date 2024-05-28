@@ -28,7 +28,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 transactionsFragment.setArguments(args);
                 return transactionsFragment;
             case 1:
-                return new CategoriesFragment();
+                CategoriesFragment categoriesFragment = new CategoriesFragment();
+                Bundle categoriesArgs = new Bundle();
+                categoriesArgs.putString("MonedaFromCentral", currencySymbol);
+                categoriesFragment.setArguments(categoriesArgs);
+                return categoriesFragment;
             case 2:
                 return new GraphicsFragment();
             case 3:
