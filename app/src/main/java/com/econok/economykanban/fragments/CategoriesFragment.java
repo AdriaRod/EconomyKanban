@@ -148,10 +148,15 @@ public class CategoriesFragment extends Fragment {
                 // Configurar el TextView con el símbolo de la moneda
                 Log.i(TAG, "[CATEGORIES] Simbolo de moneda: " + currencySymbol);
                 currencyTextView.setText(currencySymbol);
+
+                adapter = new CardAdapter(getContext(), cardList);
+                adapter.updateCurrencySymbol(currencySymbol);
             }
         } else {
             Log.i(TAG, "[CATEGORIES] Simbolo de moneda: getArguments() devuelve null");
         }
+
+        //asasd
 
 
 
@@ -1033,5 +1038,12 @@ public class CategoriesFragment extends Fragment {
             return "";
         }
     }
+
+//    // Método para actualizar el símbolo de la moneda en el adaptador
+//    private void updateCurrencySymbolInAdapter(String currencySymbol) {
+//        if (adapter != null) {
+//            adapter.updateCurrencySymbol(currencySymbol);
+//        }
+//    }
 
 }

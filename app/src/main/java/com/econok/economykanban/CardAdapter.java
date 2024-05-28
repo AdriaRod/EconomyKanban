@@ -18,6 +18,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     private Context context;
     private List<CardItem> selectedItems = new ArrayList<>();
     private boolean isEditModeEnabled = false;
+    private String currencySymbol; // Variable para almacenar el símbolo de moneda
 
     public CardAdapter(Context context, List<CardItem> cardList) {
         this.context = context;
@@ -63,6 +64,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.transactionTextView.setText(String.valueOf(currentItem.getTransactionNumber()));
 
         holder.fechaTextview.setText(String.valueOf(currentItem.getFecha()));
+        holder.monedaTextView.setText(currencySymbol);
 
 
 
@@ -130,6 +132,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             fechaTextview=itemView.findViewById(R.id.small_date);
             monedaTextView=itemView.findViewById(R.id.divisaTextView);
         }
+    }
+
+    // Método para actualizar el símbolo de la moneda
+    public void updateCurrencySymbol(String currencySymbol) {
+        this.currencySymbol = currencySymbol;
+        notifyDataSetChanged(); // Notificar al adaptador que los datos han cambiado
     }
 
 
