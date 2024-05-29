@@ -133,6 +133,10 @@ public class GraphicsFragment extends Fragment {
     }
 
     private void updateBarChart(float totalIncome, float totalExpense) {
+        if (!isAdded()) {
+            return;
+        }
+
         // Get current month
         Calendar calendar = Calendar.getInstance();
         int currentMonthIndex = calendar.get(Calendar.MONTH);
@@ -141,7 +145,7 @@ public class GraphicsFragment extends Fragment {
         Log.d(TAG, "Total EXP: " + totalExpense);
 
         // Verificar si el tema actual es oscuro o claro
-        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        int currentNightMode = requireContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         boolean isNightMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES;
 
         // Establecer el color del texto según el modo de noche

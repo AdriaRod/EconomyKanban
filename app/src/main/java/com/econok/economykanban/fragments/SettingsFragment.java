@@ -240,14 +240,23 @@ public class SettingsFragment extends Fragment {
     }
 
     private void cargarNuevaImagen(Uri imagenUri) {
-        Glide.with(getActivity())
-                .load(imagenUri)
-                .circleCrop()
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .into(user2);
-        Glide.get(getActivity().getApplicationContext()).clearMemory();
+        if (!isAdded()) {
+            return;
+        }
+
+        if (getView() != null) {
+            // Fragmento adjunto a la actividad y vista disponible, puedes cargar la imagen
+            Glide.with(this)
+                    .load(imagenUri)
+                    .circleCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(user2);
+        } else {
+            //Log.d("Error");
+        }
     }
+
 
     private Uri obtenerNuevaImagenSeleccionada() {
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
