@@ -2,6 +2,7 @@ package com.econok.economykanban;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     private Context context;
     private List<CardItem> selectedItems = new ArrayList<>();
     private boolean isEditModeEnabled = false;
-    private String currencySymbol = "€"; // Variable para almacenar el símbolo de moneda, por defecto el de €
+    private String currencySymbol = "$"; // Variable para almacenar el símbolo de moneda, por
+    // defecto el de €
 
     public CardAdapter(Context context, List<CardItem> cardList) {
         this.context = context;
@@ -35,20 +37,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_card_layout, parent, false);
         return new CardViewHolder(view);
-
-
     }
 
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
         CardItem currentItem = cardList.get(position);
 
-        //MONEDA
-
-
-
-
-
+        // MONEDA
         holder.titleTextView.setText(currentItem.getTitle());
 
         String transactionTypeText;
@@ -64,10 +59,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.transactionTextView.setText(String.valueOf(currentItem.getTransactionNumber()));
 
         holder.fechaTextview.setText(String.valueOf(currentItem.getFecha()));
-        holder.monedaTextView.setText(currencySymbol);
 
-
-
+        // Actualizar el símbolo de la moneda
+        Log.d("CardAdapter", "Binding view with currency symbol: " + getCurrencySymbol());
+        holder.monedaTextView.setText(getCurrencySymbol());
         // Configurar la selección del elemento si está en modo de edición
         if (isEditModeEnabled) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +97,19 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         }
     }
 
+    public void updateCurrencySymbol(String currencySymbol) {
+        Log.d("CardAdapter", "Currency symbol updated to: " + currencySymbol);
+        this.currencySymbol = currencySymbol;
+        Log.d("CardAdapter", "Currency symbol updated to2: " + currencySymbol);
+        notifyDataSetChanged(); // Notificar al adaptador que los datos han cambiado
+        notifyItemRangeChanged(0, getItemCount()); // Notifica cambios en todos los elementos
+    }
+
+    public String getCurrencySymbol() {
+        return currencySymbol;
+    }
+
+
     // Restablecer la lista de elementos seleccionados cuando salgas del modo de edición
     public void resetSelectedItems() {
         selectedItems.clear();
@@ -124,21 +132,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         public TextView fechaTextview;
         public TextView monedaTextView;
 
-        public CardViewHolder(@NonNull View itemView) {
+        public CardViewHolder(View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.currentDateTransactions);
             transactionTypeTextView = itemView.findViewById(R.id.tagTextView);
             transactionTextView = itemView.findViewById(R.id.transactionTextView);
-            fechaTextview=itemView.findViewById(R.id.small_date);
-            monedaTextView=itemView.findViewById(R.id.divisaTextView);
+            fechaTextview = itemView.findViewById(R.id.small_date);
+            monedaTextView = itemView.findViewById(R.id.divisaTextView);
         }
     }
 
-    // Método para actualizar el símbolo de la moneda
-    public void updateCurrencySymbol(String currencySymbol) {
-        this.currencySymbol = currencySymbol;
-        notifyDataSetChanged(); // Notificar al adaptador que los datos han cambiado
-    }
-
-
 }
+

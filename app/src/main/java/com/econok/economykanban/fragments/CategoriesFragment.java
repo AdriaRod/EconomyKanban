@@ -57,6 +57,7 @@ import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -78,7 +79,7 @@ public class CategoriesFragment extends Fragment {
     private RadioButton previousMonthButton;
     private RadioButton currentMonthButton;
     private RadioButton nextMonthButton;
-    private int currentMonthIndex = 5; // Junio por defecto
+    private int currentMonthIndex = Calendar.getInstance().get(Calendar.MONTH);
     private ImageView nextButton, previousButton;
 
     //PopUp Menu para seleccionar (ADD, EDITAR, ELIMINAR)
@@ -131,16 +132,34 @@ public class CategoriesFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        Bundle args = getArguments();
+        if (args != null) {
+            String currencySymbol = args.getString("MonedaFromCentral");
+            if (currencySymbol != null) {
+                adapter.updateCurrencySymbol(currencySymbol);
+
+            }
+            adapter.notifyDataSetChanged();
+            adapter.notifyItemRangeChanged(0, 200); // Notifica cambios en todos los elementos
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
 
-        //MONEDA
-        // Encontrar el TextView en la vista inflada
-        currencyTextView = view.findViewById(R.id.textView11);
+        // MONEDA
+        TextView currencyTextView = view.findViewById(R.id.textView11);
 
-        // Obtener los argumentos y configurar el TextView
+        // Inicializar el RecyclerView
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // Obtener los argumentos y configurar el TextView y el adaptador
         Bundle args = getArguments();
         if (args != null) {
             String currencySymbol = args.getString("MonedaFromCentral");
@@ -149,11 +168,18 @@ public class CategoriesFragment extends Fragment {
                 Log.i(TAG, "[CATEGORIES] Simbolo de moneda: " + currencySymbol);
                 currencyTextView.setText(currencySymbol);
 
+                // Configurar el adaptador
                 adapter = new CardAdapter(getContext(), cardList);
+                // Establecer el adaptador en el RecyclerView
+                recyclerView.setAdapter(adapter);
+
+                // Actualizar el símbolo de moneda en el adaptador
                 adapter.updateCurrencySymbol(currencySymbol);
+            } else {
+                Log.i(TAG, "[CATEGORIES] currencySymbol es null");
             }
         } else {
-            Log.i(TAG, "[CATEGORIES] Simbolo de moneda: getArguments() devuelve null");
+            Log.i(TAG, "[CATEGORIES] getArguments() devuelve null");
         }
 
         //asasd
