@@ -297,20 +297,19 @@ public class TransactionsFragment extends Fragment {
                             seleccionar.setBackgroundColor(Color.parseColor("#CBD6FF")); // Azul claro
                         } else {
                             seleccionar.setBackgroundColor(Color.TRANSPARENT); // Transparente
-//                            adapter.resetSelectedItems();
+                            adapter.resetSelectedItems();
                         }
 
-//                        adapter.setEditModeEnabled(editSelec);
+                        adapter.setEditModeEnabled(editSelec);
                     }
                 });
-
 
                         // CLICK EN ELIMINAR
 
                 eliminar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        showSelectedItems();
                     }
                 });
 
@@ -472,6 +471,26 @@ public class TransactionsFragment extends Fragment {
 
 
         return view;
+    }
+
+    public List<CardItem> getSelectedItemsFromAdapter() {
+        if (adapter != null) {
+            return adapter.getSelectedItems();
+        }
+        return new ArrayList<>(); // O manejar el caso de null apropiadamente
+    }
+
+    public void showSelectedItems() {
+        List<CardItem> selectedItems = getSelectedItemsFromAdapter();
+        // Aquí puedes manejar los elementos seleccionados como necesites
+        for (CardItem item : selectedItems) {
+            if(selectedItems.stream().count()<=0){
+                Toast.makeText(getContext(), "Por favor seleccione al menos una transacción", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                eliminarTransaccion(item.getTitle(),item.getFecha() );
+            }
+        }
     }
 
     public void crearTransaccion(String concept,String quantity,String type,String fecha){
@@ -902,6 +921,49 @@ public class TransactionsFragment extends Fragment {
             e.printStackTrace();
             return "";
         }
+    }
+
+    private void eliminarTransaccion(String concepto,String fecha){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+
+        DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
+        CollectionReference transRef=usuarioRef.collection("transacciones");
+        List<CardItem> selectedItems = getSelectedItemsFromAdapter();
+
+        transRef.whereEqualTo("concepto",concepto).whereEqualTo("fecha",fecha).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                transRef.document(document.getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        updateMonthsText();
+                                    }
+                                });
+                            }
+                        } else {
+                            Log.d("Firebase", "Error obteniendo transacciones: ", task.getException());
+                        }
+                    }
+                });
+
+        trespuntosazul.setColorFilter(null);
+
+        seleccionar.setBackgroundColor(Color.TRANSPARENT);
+        editSelec=false;
+
+        // Ocultar los botones
+        eliminar.setVisibility(View.INVISIBLE);
+        seleccionar.setVisibility(View.INVISIBLE);
+        //Mostrar el de Seleccionar el tipo
+        btnFilters.setVisibility(View.VISIBLE);
+
+        isClicked = false;
+        adapter.setEditModeEnabled(editSelec);
+
     }
 
     @Override
