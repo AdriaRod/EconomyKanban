@@ -191,6 +191,50 @@
             <!-- TODO: NO SE SI DEJAR ESTE BOTON DE SETTINGS, EN ESTE LAYOUT (TRANSACTIONS) -->
             <!-- BUTTON DE SETTINGS -->
 
+            <ImageView
+                android:id="@+id/btn_popUpMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/blue_three_dots"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias=".95"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias=".03"
+                />
+
+            <!-- HIDE BUTTONS -->
+            <Button
+                android:id="@+id/selectBtn"
+                style="@style/option_field"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:drawableLeft="@drawable/pencil"
+                android:text="@string/select"
+                android:visibility="invisible"
+
+                app:layout_constraintBottom_toBottomOf="@id/btnTypes"
+                app:layout_constraintEnd_toStartOf="@id/removeBtn"
+                app:layout_constraintTop_toTopOf="@id/btnTypes"
+                app:layout_constraintStart_toEndOf="@id/btnTypes"/>
+
+            <Button
+                android:id="@+id/removeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delete"
+                android:drawableLeft="@drawable/trash"
+                style="@style/option_field_remove"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toStartOf="@id/btn_popUpMenu"
+                app:layout_constraintTop_toTopOf="@id/btnTypes"
+                app:layout_constraintBottom_toBottomOf="@id/btnTypes"
+                app:layout_constraintStart_toEndOf="@id/selectBtn"
+                />
+
             <!-- SELECT TYPE -->
             <TextView
                 android:id="@+id/btnTypes"

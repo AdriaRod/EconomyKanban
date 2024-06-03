@@ -3,9 +3,9 @@ package com.econok.economykanban.fragments;
 import static android.content.ContentValues.TAG;
 
 import android.app.Dialog;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -91,6 +92,10 @@ public class TransactionsFragment extends Fragment {
     private Boolean isIncome = null;
     private String currencySymbol = "";
 
+    private ImageView trespuntosazul;
+    private Button seleccionar, eliminar;
+    private Boolean editSelec;
+
 
     public TransactionsFragment() {
         // Required empty public constructor
@@ -127,6 +132,8 @@ public class TransactionsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_transactions, container, false);
 
         visualizarTransacciones();
+
+
 
         // MONEDA
         // Encontrar el TextView en la vista inflada
@@ -247,6 +254,86 @@ public class TransactionsFragment extends Fragment {
                 showPopupMenu(v);
             }
         });
+
+
+        // ____________________________ BOTON 3 PUNTOS AZULES _____________________________
+
+        //Inicializamos cosas
+        trespuntosazul = view.findViewById(R.id.btn_popUpMenu);
+
+        seleccionar = view.findViewById(R.id.selectBtn);
+        seleccionar.setBackgroundColor(Color.TRANSPARENT); // Transparente
+        seleccionar.setPaintFlags(seleccionar.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+        eliminar = view.findViewById(R.id.removeBtn);
+        eliminar.setBackgroundColor(Color.TRANSPARENT); // Transparente
+        eliminar.setPaintFlags(eliminar.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+        isClicked = false;
+        editSelec = true;
+
+        trespuntosazul.setOnClickListener(v -> {
+
+            if (!isClicked) {
+                // Cambiar el color del SVG del botón a un azul más claro
+                int color = ContextCompat.getColor(getContext(), R.color.light_blue);
+                trespuntosazul.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+
+                // Mostrar los botones
+                seleccionar.setVisibility(View.VISIBLE);
+                eliminar.setVisibility(View.VISIBLE);
+                //Ocultar el de Seleccionar el tipo
+                btnFilters.setVisibility(View.INVISIBLE);
+
+                isClicked = true;
+
+                        //CLICK EN SELECCIONAR
+                seleccionar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        editSelec = !editSelec;
+
+                        if (editSelec) {
+                            seleccionar.setBackgroundColor(Color.parseColor("#CBD6FF")); // Azul claro
+                        } else {
+                            seleccionar.setBackgroundColor(Color.TRANSPARENT); // Transparente
+//                            adapter.resetSelectedItems();
+                        }
+
+//                        adapter.setEditModeEnabled(editSelec);
+                    }
+                });
+
+
+                        // CLICK EN ELIMINAR
+
+                eliminar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+
+
+            } else {
+                // Cambiar el color del SVG del botón a su color original
+                trespuntosazul.setColorFilter(null);
+
+                seleccionar.setBackgroundColor(Color.TRANSPARENT);
+                editSelec=false;
+
+                // Ocultar los botones
+                eliminar.setVisibility(View.INVISIBLE);
+                seleccionar.setVisibility(View.INVISIBLE);
+                //Mostrar el de Seleccionar el tipo
+                btnFilters.setVisibility(View.VISIBLE);
+
+                isClicked = false;
+            }
+
+
+        });
+
 
         //___________________________ TRANSACCIONES ___________________________
 
