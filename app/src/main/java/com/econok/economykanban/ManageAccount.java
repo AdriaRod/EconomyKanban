@@ -59,7 +59,7 @@ import java.util.Map;
 public class ManageAccount extends AppCompatActivity {
 
     private Button btn_done;
-    private TextView logout,borrar,mail;
+    private TextView logout,borrar,mail,cambiar_pass;
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
     private GoogleSignInClient mGoogleSignInClient;
@@ -76,6 +76,7 @@ public class ManageAccount extends AppCompatActivity {
         logout = findViewById(R.id.logout);
         borrar=findViewById(R.id.delete);
         mail=findViewById(R.id.mail_locked);
+        cambiar_pass=findViewById(R.id.cambiar_pass);
         user2 = findViewById(R.id.picture);
         options = new UCrop.Options();
         user2.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -159,6 +160,13 @@ public class ManageAccount extends AppCompatActivity {
                         .setNegativeButton("No", null)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
+            }
+        });
+
+        cambiar_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recuperarContraseña();
             }
         });
 
@@ -474,5 +482,10 @@ public class ManageAccount extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    public void recuperarContraseña() {
+        Intent intent = new Intent(ManageAccount.this, ForgotPassword.class);
+        startActivity(intent);
     }
 }

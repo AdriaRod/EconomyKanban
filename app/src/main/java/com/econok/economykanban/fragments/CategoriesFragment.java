@@ -95,7 +95,7 @@ public class CategoriesFragment extends Fragment {
 
     //HORIZONTAL SCROLL DE LAS CATEGORIAS
     private RadioGroup radioGroupCategories;
-    private RadioButton btnGlobal, btnFood, btnHome, btnHealth, btnEntertainment, btnSaves, btnOthers, btnGym, btnTransport, btnEducation, btnClothes, btnDebts, btnNa;
+    private RadioButton btnNa;
     private RadioButton lastSelectedButton;
     private final RadioButton[] newLastSelectedButton={null};
 
@@ -495,51 +495,13 @@ public class CategoriesFragment extends Fragment {
 
         //*********************** RADIO GROUP DE CATEGORIAS *************************
         radioGroupCategories=view.findViewById(R.id.radioGroup);
-        btnGlobal = view.findViewById(R.id.radioButtonGlobal);
-        btnFood = view.findViewById(R.id.radioButtonFood);
-        btnHome = view.findViewById(R.id.radioButtonHome);
-        btnHealth = view.findViewById(R.id.radioButtonHealth);
-        btnEntertainment = view.findViewById(R.id.radioButtonEntertainment);
-        btnSaves = view.findViewById(R.id.radioButtonSaves);
-        btnOthers = view.findViewById(R.id.radioButtonOthers);
-        btnGym = view.findViewById(R.id.radioButtonGym);
-        btnTransport = view.findViewById(R.id.radioButtonTransport);
-        btnEducation = view.findViewById(R.id.radioButtonEducation);
-        btnClothes = view.findViewById(R.id.radioButtonClothes);
-        btnDebts = view.findViewById(R.id.radioButtonDebts);
         btnNa = view.findViewById(R.id.radioButtonNa);
 
-        // Establecer los estilos por defecto
-        setButtonStyle(btnGlobal, false);
-        setButtonStyle(btnFood, false);
-        setButtonStyle(btnHome, false);
-        setButtonStyle(btnHealth, false);
-        setButtonStyle(btnEntertainment, false);
-        setButtonStyle(btnSaves, false);
-        setButtonStyle(btnOthers, false);
-        setButtonStyle(btnGym, false);
-        setButtonStyle(btnTransport, false);
-        setButtonStyle(btnEducation, false);
-        setButtonStyle(btnClothes, false);
-        setButtonStyle(btnDebts, false);
-        setButtonStyle(btnNa, false);
 
-        btnGlobal.setOnClickListener(radioButtonClickListener);
-        btnFood.setOnClickListener(radioButtonClickListener);
-        btnHome.setOnClickListener(radioButtonClickListener);
-        btnHealth.setOnClickListener(radioButtonClickListener);
-        btnEntertainment.setOnClickListener(radioButtonClickListener);
-        btnSaves.setOnClickListener(radioButtonClickListener);
-        btnOthers.setOnClickListener(radioButtonClickListener);
-        btnGym.setOnClickListener(radioButtonClickListener);
-        btnTransport.setOnClickListener(radioButtonClickListener);
-        btnEducation.setOnClickListener(radioButtonClickListener);
-        btnClothes.setOnClickListener(radioButtonClickListener);
-        btnDebts.setOnClickListener(radioButtonClickListener);
         btnNa.setOnClickListener(radioButtonClickListener);
 
         // Establecer lastSelectedButton como el botón de comida por defecto
-        lastSelectedButton = btnGlobal;
+        lastSelectedButton = btnNa;
 
         return view;
     }

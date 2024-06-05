@@ -157,6 +157,7 @@
               app:layout_constraintEnd_toEndOf="@id/guideLineEnd"
               >
             <TextView
+                android:id="@+id/cambiar_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="********"

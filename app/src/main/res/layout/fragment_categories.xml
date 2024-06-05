@@ -289,69 +289,6 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/radioButtonGlobal"
-                        style="@style/categories_radio_button"
-                        android:text="@string/Global_cat"
-                        android:checked="true"
-                        />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonFood"
-                        style="@style/categories_radio_button"
-                        android:text="@string/food_cat"
-                        />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonHome"
-                        style="@style/categories_radio_button"
-                        android:text="@string/home_cat" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonHealth"
-                        style="@style/categories_radio_button"
-                        android:text="@string/health_cat" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonEntertainment"
-                        style="@style/categories_radio_button"
-                        android:text="@string/entertainment_cat" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonSaves"
-                        style="@style/categories_radio_button"
-                        android:text="@string/saves_cat" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonOthers"
-                        style="@style/categories_radio_button"
-                        android:text="@string/others_cat" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonGym"
-                        style="@style/categories_radio_button"
-                        android:text="@string/gym_cat" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonTransport"
-                        style="@style/categories_radio_button"
-                        android:text="@string/transport_cat" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonEducation"
-                        style="@style/categories_radio_button"
-                        android:text="@string/education_cat" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonClothes"
-                        style="@style/categories_radio_button"
-                        android:text="@string/clothes_cat" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonDebts"
-                        style="@style/categories_radio_button"
-                        android:text="@string/debts_cat" />
-
-                    <RadioButton
                         android:id="@+id/radioButtonNa"
                         style="@style/categories_radio_button"
                         android:text="@string/na_cat" />
