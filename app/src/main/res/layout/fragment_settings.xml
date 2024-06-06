@@ -77,22 +77,22 @@
         app:layout_constraintStart_toStartOf="@id/guideLineStart"
         app:layout_constraintTop_toBottomOf="@id/title_settings" />
 
-    <!-- Edit Profile Button -->
-    <Button
-        android:id="@+id/editar"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:backgroundTint="@color/white"
-        android:fontFamily="@font/poppins_semibold"
-        android:gravity="center"
-        android:padding="2dp"
-        android:text="@string/edit_profile"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@id/guideLineBottom"
-        app:layout_constraintEnd_toEndOf="@id/guideLineEnd"
-        app:layout_constraintStart_toStartOf="@id/guideLineStart"
-        app:layout_constraintTop_toBottomOf="@id/ProfilePicture" />
+<!--    &lt;!&ndash; Edit Profile Button &ndash;&gt;-->
+<!--    <Button-->
+<!--        android:id="@+id/editar"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:backgroundTint="@color/white"-->
+<!--        android:fontFamily="@font/poppins_semibold"-->
+<!--        android:gravity="center"-->
+<!--        android:padding="2dp"-->
+<!--        android:text="@string/edit_profile"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="12sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/guideLineBottom"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/guideLineEnd"-->
+<!--        app:layout_constraintStart_toStartOf="@id/guideLineStart"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/ProfilePicture" />-->
 
     <!-- CardView -->
     <androidx.cardview.widget.CardView
