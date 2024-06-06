@@ -101,20 +101,6 @@ public class SettingsFragment extends Fragment {
             currency = view.findViewById(R.id.currency);
             currency.setOnClickListener(v -> irCurrency());
 
-            darkModeSwitch = view.findViewById(R.id.dark_mode_switch);
-            sharedPreferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-
-            boolean isDarkMode = sharedPreferences.getBoolean(DARK_MODE_KEY, false);
-            darkModeSwitch.setChecked(isDarkMode);
-            setAppTheme(isDarkMode);
-
-            darkModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean(DARK_MODE_KEY, isChecked);
-                editor.apply();
-                setAppTheme(isChecked);
-            });
-
             manage_account = view.findViewById(R.id.manage_account);
             manage_account.setOnClickListener(v -> goToManageAccount());
 
@@ -142,15 +128,6 @@ public class SettingsFragment extends Fragment {
             return view;
         }
 
-        @Override
-        public void onResume() {
-            super.onResume();
-            // Aquí puedes agregar cualquier acción que desees realizar cada vez que el fragmento se reanude.
-            // Por ejemplo, podrías volver a verificar el estado del modo oscuro o recargar ciertos datos.
-            boolean isDarkMode = sharedPreferences.getBoolean(DARK_MODE_KEY, false);
-            setAppTheme(isDarkMode);
-        }
-
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -168,13 +145,6 @@ public class SettingsFragment extends Fragment {
             }
         }
 
-        private void setAppTheme(boolean isDarkMode) {
-            if (isDarkMode) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
-        }
 
         private void goToManageAccount() {
             Intent intent = new Intent(getActivity(), ManageAccount.class);

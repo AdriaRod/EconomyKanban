@@ -55,9 +55,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             holder.transactionTypeTextView.setTextColor(Color.parseColor("#ED918A"));
         }
         holder.transactionTypeTextView.setText(transactionTypeText);
-
         holder.transactionTextView.setText(String.valueOf(currentItem.getTransactionNumber()));
-
         holder.fechaTextview.setText(String.valueOf(currentItem.getFecha()));
 
         // Actualizar el símbolo de la moneda

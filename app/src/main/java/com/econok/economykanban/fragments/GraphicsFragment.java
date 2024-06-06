@@ -155,71 +155,69 @@ public class GraphicsFragment extends Fragment {
         Typeface typeface = ResourcesCompat.getFont(requireContext(), R.font.poppins_regular);
         MyValueFormatter formatter = new MyValueFormatter(typeface);
 
-        // Prepare data for the bar chart
+        //Creamos dos arrays para los datos de income/expense
         ArrayList<BarEntry> entriesIncome = new ArrayList<>();
         ArrayList<BarEntry> entriesExpense = new ArrayList<>();
 
-        // Datos de prueba para ingresos (Income)
+        //Esto crea las barras para incomes y expenses
         entriesIncome.add(new BarEntry(0, totalIncome));
-
-        // Datos de prueba para gastos (Expense)
         entriesExpense.add(new BarEntry(1, totalExpense));
 
         // Create bar data sets
         BarDataSet dataSetIncome = new BarDataSet(entriesIncome, "Income");
-        dataSetIncome.setValueTypeface(typeface); // Set the typeface for the data labels
+        dataSetIncome.setValueTypeface(typeface);
         dataSetIncome.setColor(Color.parseColor("#32DA6E"));
         dataSetIncome.setValueTextSize(11f);
-        dataSetIncome.setValueTextColor(textColor); // Establecer color del texto
+        dataSetIncome.setValueTextColor(textColor);
 
         BarDataSet dataSetExpense = new BarDataSet(entriesExpense, "Expense");
         dataSetExpense.setValueTypeface(typeface);
         dataSetExpense.setColor(Color.parseColor("#ED918A"));
         dataSetExpense.setValueTextSize(11f);
-        dataSetExpense.setValueTextColor(textColor); // Establecer color del texto
+        dataSetExpense.setValueTextColor(textColor);
 
         // Group the data sets
         BarData barData = new BarData(dataSetIncome, dataSetExpense);
-        barData.setBarWidth(0.3f); // set custom bar width
+        barData.setBarWidth(0.3f);
         barData.setHighlightEnabled(false);
         barData.setDrawValues(true);
 
-        // Setup X axis
+        // Establecemos X axis
         XAxis xAxis = barChart.getXAxis();
         xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{String.valueOf(currentMonthIndex)}));
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1);
         xAxis.setCenterAxisLabels(true);
-        xAxis.setTypeface(typeface); // Set the typeface for the X axis
-        xAxis.setDrawGridLines(false); // remove grid lines
-        xAxis.setDrawLabels(false); // show labels
+        xAxis.setTypeface(typeface);
+        xAxis.setDrawGridLines(false);
+        xAxis.setDrawLabels(false);
 
-        // Setup Y axis
+        // Establecemos Y axis
         YAxis yAxis = barChart.getAxisLeft();
         yAxis.setValueFormatter(formatter);
-        yAxis.setTypeface(typeface); // Set the typeface for the Y axis
+        yAxis.setTypeface(typeface);
         yAxis.setAxisMinimum(0);
-        yAxis.setDrawGridLines(false); // remove grid lines
+        yAxis.setDrawGridLines(false);
         yAxis.setDrawLabels(true);
         yAxis.setTextSize(12f);
-        yAxis.setTextColor(textColor); // Establecer color del texto
+        yAxis.setTextColor(textColor);
         YAxis yAxisRight = barChart.getAxisRight();
         yAxisRight.setDrawLabels(false);
         yAxisRight.setDrawGridLines(false);
 
-        // Apply data to the chart
+        // Inyecta los datos recibidos en la gráfica
         barChart.setData(barData);
         barChart.getDescription().setEnabled(false);
-        barChart.setFitBars(true); // make the x-axis fit exactly all bars
+        barChart.setFitBars(true);
 
-        // Configure legend
+        // Configurar leyenda
         Legend legend = barChart.getLegend();
         legend.setTextColor(textColor);
         legend.setTypeface(typeface);
         legend.setTextSize(10f);
         legend.setXEntrySpace(15f); //Margen entre textos de leyenda
 
-        barChart.invalidate(); // refresh
+        barChart.invalidate(); // Refresca los datos
     }
 
     private void updateChart() {

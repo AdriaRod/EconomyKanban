@@ -136,7 +136,6 @@ public class TransactionsFragment extends Fragment {
 
 
         // MONEDA
-        // Encontrar el TextView en la vista inflada
         TextView currencyTextView = view.findViewById(R.id.currency_tv);
 
         // Inicializar el RecyclerView
@@ -159,6 +158,9 @@ public class TransactionsFragment extends Fragment {
                 // Actualizar el símbolo de moneda en el adaptador
                 adapter.updateCurrencySymbol(currencySymbol);
 
+
+
+
             } else {
                 Log.i(TAG, "[CATEGORIES] currencySymbol es null");
             }
@@ -168,7 +170,6 @@ public class TransactionsFragment extends Fragment {
 
         //______________________________ FECHA (current date) _______________________
         currentDateTextView = view.findViewById(R.id.currentDateTransactions);
-        //*********************** CURRENT DATE *******************
         // Get the current date
         Date currentDate = new Date();
         int v_date = R.string.date_format;
@@ -338,8 +339,6 @@ public class TransactionsFragment extends Fragment {
 
         addTransaction = view.findViewById(R.id.addBtn);
         balanceTextView = view.findViewById(R.id.balanceTextView);
-
-
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -748,22 +747,16 @@ public class TransactionsFragment extends Fragment {
                 if (itemId == R.id.item_1) {
                     // Código para la acción de All
                     btnFilters.setText(getString(str_all));
-                    //Mostrar todas
-                    //visualizarTransacciones();
                     updateMonthsText();
                     return true;
                 } else if (itemId == R.id.item_2) {
                     // Código para la acción de Income
                     btnFilters.setText(getString(str_income));
-                    //Mostrar income
-                    //mostrarIncome("Income");
                     incomeMonth();
                     return true;
                 } else if (itemId == R.id.item_3) {
                     // Código para la acción de Expense
                     btnFilters.setText(getString(str_expense));
-                    //Mostrar expense
-                    //mostrarExpense("Expense");
                     expenseMonth();
                     return true;
                 }

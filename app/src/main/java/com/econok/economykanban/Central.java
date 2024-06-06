@@ -35,8 +35,6 @@ public class Central extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         sharedPreferences = getSharedPreferences("settings_prefs", Context.MODE_PRIVATE);
-        boolean isDarkMode = sharedPreferences.getBoolean("dark_mode", false);
-        AppCompatDelegate.setDefaultNightMode(isDarkMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_central);
 
         mFirestore = FirebaseFirestore.getInstance();
