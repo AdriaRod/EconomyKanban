@@ -89,46 +89,6 @@
               app:layout_constraintStart_toStartOf="@id/picture"
               />
 
-          <!-- Name and Lastname -->
-
-        <EditText
-            android:id="@+id/nameEditText"
-            style="@style/manage_account_edit_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-
-            android:hint="@string/name"
-            app:layout_constraintEnd_toEndOf="@id/guideLineEnd"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/guideLineStart"
-            app:layout_constraintTop_toBottomOf="@id/btn_new_picture" />
-
-        <EditText
-              android:id="@+id/LastnameEditText"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:hint="@string/lastname"
-              style="@style/manage_account_edit_text"
-
-              android:layout_marginTop="10dp"
-              app:layout_constraintTop_toBottomOf="@id/nameEditText"
-              app:layout_constraintEnd_toEndOf="@id/guideLineEnd"
-              app:layout_constraintStart_toStartOf="@id/guideLineStart" />
-
-          <TextView
-              android:id="@+id/text_action1"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:text="@string/manage_acc_action1"
-              style="@style/action_text"
-
-              android:layout_marginTop="5dp"
-              app:layout_constraintTop_toBottomOf="@id/LastnameEditText"
-              app:layout_constraintStart_toStartOf="@id/guideLineStart"
-              app:layout_constraintEnd_toEndOf="@id/guideLineEnd"
-              />
-
           <!-- MAIL & PASSWORD -->
           <TextView
               android:id="@+id/mail_locked"
@@ -139,7 +99,7 @@
 
 
               android:layout_marginTop="30dp"
-              app:layout_constraintTop_toBottomOf="@id/text_action1"
+              app:layout_constraintTop_toBottomOf="@id/btn_new_picture"
               app:layout_constraintEnd_toEndOf="@id/guideLineEnd"
               app:layout_constraintStart_toStartOf="@id/guideLineStart"
               />
