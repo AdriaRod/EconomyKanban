@@ -75,7 +75,8 @@
         android:src="@drawable/blank"
         app:layout_constraintEnd_toEndOf="@id/guideLineEnd"
         app:layout_constraintStart_toStartOf="@id/guideLineStart"
-        app:layout_constraintTop_toBottomOf="@id/title_settings" />
+        app:layout_constraintTop_toBottomOf="@id/title_settings"
+        app:layout_constraintBottom_toTopOf="@id/guideLineBottom"/>
 
 <!--    &lt;!&ndash; Edit Profile Button &ndash;&gt;-->
 <!--    <Button-->
