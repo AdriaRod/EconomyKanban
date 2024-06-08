@@ -26,7 +26,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class ForgotPassword extends AppCompatActivity {
     private EditText emailInput;
-    private Button resetPasswordButton,login;
+    private Button resetPasswordButton;
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
     private String email;
@@ -42,7 +42,6 @@ public class ForgotPassword extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         emailInput = findViewById(R.id.editText_ForgotMail);
         resetPasswordButton = findViewById(R.id.btn_send_recovery);
-        login=findViewById(R.id.btn_return_login);
 
         resetPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,14 +59,6 @@ public class ForgotPassword extends AppCompatActivity {
                 } else {
                     Toast.makeText(ForgotPassword.this, "Por favor, introduce tu email", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-
-
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openLogin();
             }
         });
 
@@ -109,8 +100,4 @@ public class ForgotPassword extends AppCompatActivity {
         return existe;
     }
 
-    public void openLogin() {
-        Intent intent = new Intent(ForgotPassword.this, Login.class);
-        startActivity(intent);
-    }
 }
