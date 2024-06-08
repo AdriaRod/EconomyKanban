@@ -42,6 +42,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DateFormatSymbols;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -236,15 +237,18 @@ public class GraphicsFragment extends Fragment {
                     float totalExpense = 0;
 
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        String type = document.getString("tipo");
-                        String quantity = document.getString("cantidad");
+                        String fecha = document.getString("fecha");
+                        if (fecha != null && obtenerMesDeFecha(fecha).equals(String.valueOf(currentMonthIndex + 1))) {
+                            String type = document.getString("tipo");
+                            String quantity = document.getString("cantidad");
 
-                        if (type != null && quantity != null) {
-                            double amount = Double.parseDouble(quantity);
-                            if (type.equals("Income")) {
-                                totalIncome += amount;
-                            } else if (type.equals("Expense")) {
-                                totalExpense += amount;
+                            if (type != null && quantity != null) {
+                                double amount = Double.parseDouble(quantity);
+                                if (type.equals("Income")) {
+                                    totalIncome += amount;
+                                } else if (type.equals("Expense")) {
+                                    totalExpense += amount;
+                                }
                             }
                         }
                     }
@@ -282,4 +286,18 @@ public class GraphicsFragment extends Fragment {
         String[] months = dfs.getShortMonths();
         return months[month];
     }
+
+    // Método para extraer el mes de una fecha en formato "dd/MM/yyyy HH:mm:ss"
+    private String obtenerMesDeFecha(String fecha) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+        try {
+            Date date = sdf.parse(fecha);
+            SimpleDateFormat sdfMes = new SimpleDateFormat("MM", Locale.getDefault());
+            return sdfMes.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
 }
+
