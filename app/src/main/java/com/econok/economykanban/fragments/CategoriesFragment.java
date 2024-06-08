@@ -684,40 +684,40 @@ public class CategoriesFragment extends Fragment {
 
     private void transMes(String tipo){
         switch (currentMonthButton.getText().toString()){
-            case "ene":
+            case "Ene":
                 visualizarTransacciones("01",tipo);
                 break;
-            case "feb":
+            case "Feb":
                 visualizarTransacciones("02",tipo);
                 break;
-            case "mar":
+            case "Mar":
                 visualizarTransacciones("03",tipo);
                 break;
-            case "abr":
+            case "Abr":
                 visualizarTransacciones("04",tipo);
                 break;
-            case "may":
+            case "May":
                 visualizarTransacciones("05",tipo);
                 break;
-            case "jun":
+            case "Jun":
                 visualizarTransacciones("06",tipo);
                 break;
-            case "jul":
+            case "Jul":
                 visualizarTransacciones("07",tipo);
                 break;
-            case "ago":
+            case "Ago":
                 visualizarTransacciones("08",tipo);
                 break;
-            case "sept":
+            case "Sept":
                 visualizarTransacciones("09",tipo);
                 break;
-            case "oct":
+            case "Oct":
                 visualizarTransacciones("10",tipo);
                 break;
-            case "nov":
+            case "Nov":
                 visualizarTransacciones("11",tipo);
                 break;
-            case "dic":
+            case "Dic":
                 visualizarTransacciones("12",tipo);
                 break;
         }

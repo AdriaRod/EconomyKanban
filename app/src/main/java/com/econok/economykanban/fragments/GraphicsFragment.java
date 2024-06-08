@@ -222,8 +222,43 @@ public class GraphicsFragment extends Fragment {
     }
 
     private void updateChart() {
-        FirebaseFirestore db;
-        db = FirebaseFirestore.getInstance();
+        String selectedMonth = getSelectedMonth();
+        obtenerTransaccionesPorMes(selectedMonth);
+    }
+
+    private String getSelectedMonth() {
+        switch (currentMonthButton.getText().toString()) {
+            case "Ene":
+                return "01";
+            case "Feb":
+                return "02";
+            case "Mar":
+                return "03";
+            case "Abr":
+                return "04";
+            case "May":
+                return "05";
+            case "Jun":
+                return "06";
+            case "Jul":
+                return "07";
+            case "Ago":
+                return "08";
+            case "Sept":
+                return "09";
+            case "Oct":
+                return "10";
+            case "Nov":
+                return "11";
+            case "Dic":
+                return "12";
+            default:
+                return "";
+        }
+    }
+
+    private void obtenerTransaccionesPorMes(final String mesFiltrado) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         DocumentReference usuarioRef = db.collection("usuarios").document(mAuth.getCurrentUser().getUid());
         CollectionReference transaccionesRef = usuarioRef.collection("transacciones");
@@ -235,18 +270,21 @@ public class GraphicsFragment extends Fragment {
                 if (task.isSuccessful()) {
                     float totalIncome = 0;
                     float totalExpense = 0;
-
+                    cardList.clear();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String fecha = document.getString("fecha");
-                        if (fecha != null && obtenerMesDeFecha(fecha).equals(String.valueOf(currentMonthIndex + 1))) {
-                            String type = document.getString("tipo");
-                            String quantity = document.getString("cantidad");
+                        Log.d("FechaFirebase", "Fecha recibida de Firebase: " + fecha);
 
-                            if (type != null && quantity != null) {
-                                double amount = Double.parseDouble(quantity);
-                                if (type.equals("Income")) {
+                        if (fecha != null && obtenerMesDeFecha(fecha).equals(mesFiltrado)) {
+                            String concepto = document.getString("concepto");
+                            String tipo = document.getString("tipo");
+                            String cantidad = document.getString("cantidad");
+
+                            if (tipo != null && cantidad != null) {
+                                double amount = Double.parseDouble(cantidad);
+                                if (tipo.equals("Income")) {
                                     totalIncome += amount;
-                                } else if (type.equals("Expense")) {
+                                } else if (tipo.equals("Expense")) {
                                     totalExpense += amount;
                                 }
                             }
@@ -257,12 +295,17 @@ public class GraphicsFragment extends Fragment {
                     Log.d(TAG, "Total Income: " + totalIncome);
                     Log.d(TAG, "Total Expense: " + totalExpense);
                     updateBarChart(totalIncome, totalExpense);
-
                 } else {
                     Log.d(TAG, "Error obteniendo transacciones: ", task.getException());
                 }
             }
         });
+    }
+
+    private String getMonthAbbreviation(int month) {
+        DateFormatSymbols dfs = new DateFormatSymbols();
+        String[] months = dfs.getShortMonths();
+        return months[month];
     }
 
     private void updateMonthsText() {
@@ -279,12 +322,46 @@ public class GraphicsFragment extends Fragment {
         previousMonthButton.setChecked(false);
         currentMonthButton.setChecked(true);
         nextMonthButton.setChecked(false);
-    }
 
-    private String getMonthAbbreviation(int month) {
-        DateFormatSymbols dfs = new DateFormatSymbols();
-        String[] months = dfs.getShortMonths();
-        return months[month];
+        Log.d("MES?", currentMonthButton.getText().toString());
+        switch (currentMonthButton.getText().toString()){
+            case "Ene":
+                obtenerTransaccionesPorMes("01");
+                break;
+            case "Feb":
+                obtenerTransaccionesPorMes("02");
+                break;
+            case "Mar":
+                obtenerTransaccionesPorMes("03");
+                break;
+            case "Abr":
+                obtenerTransaccionesPorMes("04");
+                break;
+            case "May":
+                obtenerTransaccionesPorMes("05");
+                break;
+            case "Jun":
+                obtenerTransaccionesPorMes("06");
+                break;
+            case "Jul":
+                obtenerTransaccionesPorMes("07");
+                break;
+            case "Ago":
+                obtenerTransaccionesPorMes("08");
+                break;
+            case "Sept":
+                obtenerTransaccionesPorMes("09");
+                break;
+            case "Oct":
+                obtenerTransaccionesPorMes("10");
+                break;
+            case "Nov":
+                obtenerTransaccionesPorMes("11");
+                break;
+            case "Dic":
+                obtenerTransaccionesPorMes("12");
+                break;
+        }
     }
 
     // Método para extraer el mes de una fecha en formato "dd/MM/yyyy HH:mm:ss"
@@ -293,11 +370,14 @@ public class GraphicsFragment extends Fragment {
         try {
             Date date = sdf.parse(fecha);
             SimpleDateFormat sdfMes = new SimpleDateFormat("MM", Locale.getDefault());
-            return sdfMes.format(date);
+            String mesDeFecha = sdfMes.format(date);
+            Log.d("FechaFormato", "Fecha convertida: " + date + ", Mes extraído: " + mesDeFecha);
+            return mesDeFecha;
         } catch (ParseException e) {
             e.printStackTrace();
             return "";
         }
     }
 }
+
 

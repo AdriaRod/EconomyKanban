@@ -597,41 +597,42 @@ public class TransactionsFragment extends Fragment {
         currentMonthButton.setChecked(true);
         nextMonthButton.setChecked(false);
 
+        Log.d("MES?", currentMonthButton.getText().toString());
         switch (currentMonthButton.getText().toString()){
-            case "ene":
+            case "Ene":
                 obtenerTransaccionesPorMes("01");
                 break;
-            case "feb":
+            case "Feb":
                 obtenerTransaccionesPorMes("02");
                 break;
-            case "mar":
+            case "Mar":
                 obtenerTransaccionesPorMes("03");
                 break;
-            case "abr":
+            case "Abr":
                 obtenerTransaccionesPorMes("04");
                 break;
-            case "may":
+            case "May":
                 obtenerTransaccionesPorMes("05");
                 break;
-            case "jun":
+            case "Jun":
                 obtenerTransaccionesPorMes("06");
                 break;
-            case "jul":
+            case "Jul":
                 obtenerTransaccionesPorMes("07");
                 break;
-            case "ago":
+            case "Ago":
                 obtenerTransaccionesPorMes("08");
                 break;
-            case "sept":
+            case "Sept":
                 obtenerTransaccionesPorMes("09");
                 break;
-            case "oct":
+            case "Oct":
                 obtenerTransaccionesPorMes("10");
                 break;
-            case "nov":
+            case "Nov":
                 obtenerTransaccionesPorMes("11");
                 break;
-            case "dic":
+            case "Dic":
                 obtenerTransaccionesPorMes("12");
                 break;
         }
@@ -640,40 +641,40 @@ public class TransactionsFragment extends Fragment {
     private void incomeMonth(){
         String tipo="Income";
         switch (currentMonthButton.getText().toString()){
-            case "ene":
+            case "Ene":
                 mostrarIncome("01",tipo);
                 break;
-            case "feb":
+            case "Feb":
                 mostrarIncome("02",tipo);
                 break;
-            case "mar":
+            case "Mar":
                 mostrarIncome("03",tipo);
                 break;
-            case "abr":
+            case "Abr":
                 mostrarIncome("04",tipo);
                 break;
-            case "may":
+            case "May":
                 mostrarIncome("05",tipo);
                 break;
-            case "jun":
+            case "Jun":
                 mostrarIncome("06",tipo);
                 break;
-            case "jul":
+            case "Jul":
                 mostrarIncome("07",tipo);
                 break;
-            case "ago":
+            case "Ago":
                 mostrarIncome("08",tipo);
                 break;
-            case "sept":
+            case "Sept":
                 mostrarIncome("09",tipo);
                 break;
-            case "oct":
+            case "Oct":
                 mostrarIncome("10",tipo);
                 break;
-            case "nov":
+            case "Nov":
                 mostrarIncome("11",tipo);
                 break;
-            case "dic":
+            case "Dic":
                 mostrarIncome("12",tipo);
                 break;
         }
@@ -682,40 +683,40 @@ public class TransactionsFragment extends Fragment {
     private void expenseMonth(){
         String tipo="Expense";
         switch (currentMonthButton.getText().toString()){
-            case "ene":
+            case "Ene":
                 mostrarExpense("01",tipo);
                 break;
-            case "feb":
+            case "Feb":
                 mostrarExpense("02",tipo);
                 break;
-            case "mar":
+            case "Mar":
                 mostrarExpense("03",tipo);
                 break;
-            case "abr":
+            case "Abr":
                 mostrarExpense("04",tipo);
                 break;
-            case "may":
+            case "May":
                 mostrarExpense("05",tipo);
                 break;
-            case "jun":
+            case "Jun":
                 mostrarExpense("06",tipo);
                 break;
-            case "jul":
+            case "Jul":
                 mostrarExpense("07",tipo);
                 break;
-            case "ago":
+            case "Ago":
                 mostrarExpense("08",tipo);
                 break;
-            case "sept":
+            case "Sept":
                 mostrarExpense("09",tipo);
                 break;
-            case "oct":
+            case "Oct":
                 mostrarExpense("10",tipo);
                 break;
-            case "nov":
+            case "Nov":
                 mostrarExpense("11",tipo);
                 break;
-            case "dic":
+            case "Dic":
                 mostrarExpense("12",tipo);
                 break;
         }
