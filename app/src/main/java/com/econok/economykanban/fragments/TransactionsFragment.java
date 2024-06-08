@@ -614,7 +614,7 @@ public class TransactionsFragment extends Fragment {
                 obtenerTransaccionesPorMes("05");
                 break;
             case "jun":
-                //obtenerTransaccionesPorMes("06");
+                obtenerTransaccionesPorMes("06");
                 break;
             case "jul":
                 obtenerTransaccionesPorMes("07");
